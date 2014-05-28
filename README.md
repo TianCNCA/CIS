@@ -1,4 +1,4 @@
-COMP3350_Project
+Client Information System
 ================
 
-The repo for our COMP3350 project
+This is the repo for our COMP3350 project.
