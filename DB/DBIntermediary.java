@@ -8,6 +8,20 @@
 ------------------------------------------------------*/
 public class DBIntermediary 
 {
+	private DB_Stub stubDB;
+	
+	/*------------------------------------------------------
+	* Main/Only Constructor
+	------------------------------------------------------*/
+	public DBIntermediary()
+	{
+		init();		
+	}
+	
+	/*------------------------------------------------------
+	* PUBLIC METHODS
+	------------------------------------------------------*/
+		
 	/*------------------------------------------------------
 	* insertClient:
 	* This class will take a Client Obj and that is it. It will
@@ -18,6 +32,8 @@ public class DBIntermediary
 	public Boolean insertClient( Client client )
 	{
 		Boolean didInsert = false;
+		
+		didInsert = stubDB.insert( client );
 		
 		return didInsert;
 	}
@@ -31,6 +47,8 @@ public class DBIntermediary
 	{
 		Boolean didDelete = false;
 		
+		didDelete = stubDB.delete( client );
+		
 		return didDelete;
 	}
 	
@@ -43,6 +61,8 @@ public class DBIntermediary
 	public Boolean updateClient( Client client )
 	{
 		Boolean didUpdate = false;
+		
+		didUpdate = stubDB.update( client );
 		
 		return didUpdate;
 	}
@@ -69,5 +89,21 @@ public class DBIntermediary
 		Client newClient = null;
 		
 		return newClient;
+	}
+	
+	
+	/*------------------------------------------------------
+	* PRIVATE METHODS
+	------------------------------------------------------*/
+	
+	/*------------------------------------------------------
+	* init:
+	* Setup the DB, load anydata that we already have in the DB
+	* up, and general DB setup.
+	------------------------------------------------------*/
+	private void init()
+	{
+		//This will eventually be replaced with the DB
+		stubDB = new DB_Stub();
 	}
 }
