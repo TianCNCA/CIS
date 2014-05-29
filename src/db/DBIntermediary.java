@@ -1,3 +1,8 @@
+package db;
+
+import buisness.Client;
+import db.DB_Stub;
+
 /*------------------------------------------------------
 * CLASS:			DBIntermediary
 *
@@ -31,9 +36,8 @@ public class DBIntermediary
 	------------------------------------------------------*/
 	public Boolean insertClient( Client client )
 	{
-		Boolean didInsert = false;
-		
-		didInsert = stubDB.insert( client );
+		Boolean didInsert 	= false;
+		didInsert 			= stubDB.insert( client );
 		
 		return didInsert;
 	}
@@ -45,9 +49,8 @@ public class DBIntermediary
 	------------------------------------------------------*/
 	public Boolean deleteClient( Client client )
 	{
-		Boolean didDelete = false;
-		
-		didDelete = stubDB.delete( client );
+		Boolean didDelete 	= false;
+		didDelete 			= stubDB.delete( client );
 		
 		return didDelete;
 	}
@@ -60,9 +63,8 @@ public class DBIntermediary
 	------------------------------------------------------*/
 	public Boolean updateClient( Client client )
 	{
-		Boolean didUpdate = false;
-		
-		didUpdate = stubDB.update( client );
+		Boolean didUpdate 	= false;
+		didUpdate 			= stubDB.update( client );
 		
 		return didUpdate;
 	}
@@ -72,7 +74,7 @@ public class DBIntermediary
 	* This class will find a client object already in the system,
 	* (hopefully) and return it to us.	
 	------------------------------------------------------*/
-	public Boolean readClient( int id )
+	public Client readClient( int id )
 	{
 		Client newClient = new Client();
 		
@@ -84,7 +86,7 @@ public class DBIntermediary
 	* This class will find a client object already in the system,
 	* (hopefully) and return it to us.	
 	------------------------------------------------------*/
-	public Boolean readClient( String firstName, String lastName )
+	public Client readClient( String firstName, String lastName )
 	{
 		Client newClient = null;
 		

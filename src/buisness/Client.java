@@ -46,4 +46,9 @@ public class Client
 	{
 		id = 0;
 	}
+	
+	public String toString()
+	{
+		return ( firstName + " " + lastName );
+	}
 }
