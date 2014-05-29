@@ -91,6 +91,11 @@ public class DBIntermediary
 		return newClient;
 	}
 	
+	public void DumpDB()
+	{
+		stubDB.dumpStub();
+	}
+	
 	
 	/*------------------------------------------------------
 	* PRIVATE METHODS

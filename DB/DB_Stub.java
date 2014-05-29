@@ -44,4 +44,17 @@ class DB_Stub
 		clientDB.remove( i );
 		clientDB.add( updateClient );
 	}
+	
+	public void dumpStub()
+	{
+		int i;
+		System.out.print("[");
+		
+		for ( i = 0; i < clientDB.size() - 1; i++) 
+		{
+			System.out.print( clientDB.get( i ) + ", " );
+		}
+		i++;
+		System.out.println( clientDB.get( i ) + "]" );
+	}
 }
