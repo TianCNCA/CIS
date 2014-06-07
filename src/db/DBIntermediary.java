@@ -98,6 +98,13 @@ public class DBIntermediary
 		stubDB.dumpStub();
 	}
 	
+	public Client search( String name )
+	{
+		Client foundClient = null;
+		
+		return foundClient;
+	}
+	
 	
 	/*------------------------------------------------------
 	* PRIVATE METHODS
