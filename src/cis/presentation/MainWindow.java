@@ -56,22 +56,6 @@ public class MainWindow extends Shell {
 		btnExit.setBounds(615, 323, 75, 25);
 		btnExit.setText("Exit");
 		
-		Button btnNewButton = new Button(this, SWT.NONE);
-		btnNewButton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent arg0) 
-			{
-				//Edit info based on the client selected
-				//TODO What do we want to pass here to the window?
-				//feel free to remove soap box if we don't have abnything for it
-				TableItem[] rowSelected;
-				rowSelected = table.getSelection();
-				//
-			}
-		});
-		btnNewButton.setBounds(590, 265, 137, 25);
-		btnNewButton.setText("Client Soapbox");
-		
 		Button btnNewButton_1 = new Button(this, SWT.NONE);
 		btnNewButton_1.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -84,7 +68,7 @@ public class MainWindow extends Shell {
 				//list[0] should contain First Name, will need to store them in a string
 			}
 		});
-		btnNewButton_1.setBounds(590, 211, 137, 25);
+		btnNewButton_1.setBounds(591, 257, 137, 25);
 		btnNewButton_1.setText("Edit Client Information");
 		
 		Button btnNewButton_2 = new Button(this, SWT.NONE);
@@ -96,7 +80,7 @@ public class MainWindow extends Shell {
 				//new ClientCreationWindow();
 			}
 		});
-		btnNewButton_2.setBounds(590, 153, 137, 25);
+		btnNewButton_2.setBounds(591, 199, 137, 25);
 		btnNewButton_2.setText("Add New Client");
 		
 		clientTextBox = new Text(this, SWT.BORDER);
@@ -111,7 +95,7 @@ public class MainWindow extends Shell {
 				String clientName = clientTextBox.getText();
 				if(clientName != "")
 				{
-					//search for the client
+					//TODO search for the client
 				}
 			}
 		});
