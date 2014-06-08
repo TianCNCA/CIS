@@ -1,49 +1,374 @@
 package buisness;
 
-/*------------------------------------------------------
-* CLASS:			Client
-*
-* REMARKS:			
-*
-------------------------------------------------------*/
+import java.util.*;
+
 public class Client 
 {
-	private String 	firstName;
-	private String 	lastName;
-	private int 	id;
+	private boolean active;
+	protected SoapBox visits;
 	
-	public Client( String firstName, String lastName )
-	{
-		this.firstName = firstName;
-		this.lastName 	= lastName;
-		setID();
-	}
+	//personal information
+	private String name;
+	private String address;
+	private String city;
+	private String province;
+	private String postCode;
+	private Date DOB;
+	private int homePhone;
+	private int workPhone;
 	
-	//Default constructor
+	private boolean physician;
+	private boolean physioTherapist;
+	private boolean chiropractor;
+	private boolean prev_experience;
+
+	private String reason;
+	
+	private Map<String, String> reports = new HashMap<String, String>();
+	
+	private boolean diet;
+	private boolean oral_medication;
+	private boolean insulin;
+	private boolean uncontrolled;
+
+	//Personal Habits and Lifestyle
+	private String occupation;
+	private String sports;
+	private String sleep_pattern;
+	
+	private int smoking;
+	private int alcohol;
+	private int stress;
+	private int appetite;
+  
 	public Client()
 	{
-		id = -999;
-		firstName = null;
-		lastName = null;
+		setActive(true);
+		this.visits = new SoapBox();
+    
+		physician = false;
+		physioTherapist = false;
+		chiropractor = false;
+		prev_experience = false;
+		
+		diet = false;
+		oral_medication = false;
+    	insulin = false;
+    	uncontrolled = false;
 	}
 	
-	public Boolean equals( Client rhs )
+	public Client( String name )
 	{
-		return ( this.id == rhs.getID() );
+		this.name = name;
+		setActive(true);
+		this.visits = new SoapBox();
+    
+		physician = false;
+		physioTherapist = false;
+		chiropractor = false;
+		prev_experience = false;
+		
+		diet = false;
+		oral_medication = false;
+    	insulin = false;
+    	uncontrolled = false;
+	}
+
+	public int getAge()
+	{
+		Date current = new Date();
+		int current_year = current.getYear();
+		int year = this.DOB.getYear();
+		int age = current_year - year;
+		return age;
 	}
 	
-	public String getFullName()
+	public void setActive(boolean active){
+		this.active = active;
+	}
+
+	public boolean isActive()
 	{
-		return ( firstName + lastName );
+		if(active == true)
+		{
+			Date date = visits.last().getDate();
+			Date today = new Date();
+			int year = date.getYear();
+			int this_year = today.getYear();
+			if(this_year>year)
+				setActive(false);
+		}
+		return active;
 	}
 	
-	public int getID()
+	public void addSoap(String info)
 	{
-		return id;
+		Date today = new Date();
+		visits.add(today, info);
 	}
 	
-	public void setID()
+	public void addSoap(Date date, String info)
 	{
-		id = 0;
+		visits.add(date, info);
 	}
+	
+	public Soap lastSoap()
+	{
+		return visits.last();
+	}
+	
+	public Soap[] getSoaps()
+	{
+		return visits.getSoaps();
+	}
+	
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+	
+	public void setAddress(String address)
+	{
+		this.address = address;
+	}
+	
+	public void setCity(String city)
+	{
+		this.city = city;
+	}
+	
+	public void setProvince(String province)
+	{
+		this.province = province;
+	}
+	
+	public void setPostCode(String postCode)
+	{
+		this.postCode = postCode;
+	}
+	
+	public void setDOB(String DOB)
+	{
+		this.DOB = new Date(DOB);
+	}
+	
+	public void homePhone(int phone)
+	{
+		this.homePhone = phone;
+	}
+	
+	public void workPhone(int phone)
+	{
+		this.workPhone = phone;
+	}
+	  
+	public String getName()
+	{
+		return name;
+	}
+	
+	public String getAddress()
+	{
+		return address;
+	}
+	
+	public String getCity()
+	{
+		return city;
+	}
+	
+	public String getProvince()
+	{
+		return province;
+	}
+	
+	public String getPostCode()
+	{
+		return postCode;
+	}
+	
+	public Date getDOB()
+	{
+    return DOB;
+	}
+	
+	public int homePhone()
+	{
+		return homePhone;
+	}
+	
+	public int workPhone()
+	{
+		return workPhone;
+	}
+
+	public void setPhysician(boolean physician)
+	{
+		this.physician = physician;
+	}
+	
+	public void setPhysioTherapist(boolean physioTherapist)
+	{
+		this.physioTherapist = physioTherapist;
+	}
+	
+	public void setChiropractor(boolean chiropractor)
+	{
+		this.chiropractor = chiropractor;
+	}
+	
+	public void setExperience(boolean experience)
+	{
+		this.prev_experience = experience;
+	}
+	
+	public boolean getPhysician()
+	{
+		return physician;
+	}
+	
+	public boolean getPhysioTherapist()
+	{
+		return physioTherapist;
+	}
+	
+	public boolean getChiropractor()
+	{
+		return chiropractor;
+	}
+	
+	public boolean getExperience()
+	{
+		return prev_experience;
+	}
+	
+	public void setReason(String reason)
+	{
+		this.reason = reason;
+	}
+
+	public String getReason()
+	{
+		return reason;
+	}
+	
+	public void set(String identifier, String report)
+	{
+		reports.put(identifier, report);
+	}
+	
+	public String get(String identifier)
+	{
+		return reports.get(identifier);
+	}
+	
+	public void setDiet(boolean diet)
+	{
+		this.diet = diet;
+	}
+	
+	public void setMedication(boolean oral_medication)
+	{
+		this.oral_medication = oral_medication;
+	}
+	
+	public void setInsulin(boolean insulin)
+	{
+		this.insulin = insulin;
+	}
+	
+	public void setUncontrolled(boolean uncontrolled)
+	{
+		this.uncontrolled = uncontrolled;
+	}
+	
+	public boolean getDiet()
+	{
+		return diet;
+	}
+	
+	public boolean getMedication()
+	{
+		return oral_medication;
+	}
+	
+	public boolean getInsulin()
+	{
+		return insulin;
+	}
+	
+	public boolean getUncontrolled()
+	{
+		return uncontrolled;
+	}
+	
+	public void setOccupation(String occupation)
+	{
+		this.occupation = occupation;
+	}
+	
+	public void setSports(String sports)
+	{
+		this.sports = sports;
+	}	
+	
+	public void set_sleep_pattern(String sleep_pattern)
+	{
+		this.sleep_pattern = sleep_pattern;
+	}
+	
+	public String getOccupation()
+	{
+		return occupation;
+	}
+	
+	public String getSports()
+	{
+		return sports;
+	}
+	
+	public String get_sleep_pattern()
+	{
+		return sleep_pattern;
+	}
+  
+	public void setSmoking(int smoking)
+	{
+		this.smoking = smoking;
+	}
+	
+	public void setAlcohol(int alcohol)
+	{
+		this.alcohol = alcohol;
+	}
+	
+	public void setStress(int stress)
+	{
+		this.stress = stress;
+	}
+	
+	public void setAppetite(int appetite)
+	{
+		this.appetite = appetite;
+	}
+  
+	public int getSmoking()
+	{
+		return smoking;
+	}
+	
+	public int getAlcohol()
+	{
+		return alcohol;
+	}
+	
+	public int getStress()
+	{
+		return stress;
+	}
+	
+	public int getAppetite()
+	{
+		return appetite;
+	}	
 }
