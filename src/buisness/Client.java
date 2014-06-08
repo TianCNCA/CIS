@@ -56,6 +56,23 @@ public class Client
     	insulin = false;
     	uncontrolled = false;
 	}
+	
+	public Client( String name )
+	{
+		this.name = name;
+		setActive(true);
+		this.visits = new SoapBox();
+    
+		physician = false;
+		physioTherapist = false;
+		chiropractor = false;
+		prev_experience = false;
+		
+		diet = false;
+		oral_medication = false;
+    	insulin = false;
+    	uncontrolled = false;
+	}
 
 	public int getAge()
 	{
