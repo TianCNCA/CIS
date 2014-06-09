@@ -1,0 +1,14 @@
+
+
+
+MainWindow ----- DBintermediary ---- DBstub
+	|					|
+	|					|
+	|					|(the MainWindow passes its reference of DB to the CreateClientWindow)
+	|					|
+CreateClientWindow-------
+	|		|			|
+	|		|			|(the created client is stored in DB through this reference)
+	|	Client----------
+	|
+	SWT (the swt libraries are the windows' dependencies)

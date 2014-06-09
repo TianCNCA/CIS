@@ -1,7 +1,7 @@
-package db;
+package cis.db;
 
-import buisness.Client;
-import db.DBStub;
+import cis.buisness.Client;
+import cis.db.DBStub;
 
 /*------------------------------------------------------
  * CLASS:			DBIntermediary

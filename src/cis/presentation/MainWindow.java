@@ -14,8 +14,7 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 
-import db.DBIntermediary;
-//import org.eclipse.wb.swt.SWTResourceManager; 
+import cis.db.DBIntermediary;
 
 public class MainWindow extends Shell {
 	private Text clientTextBox;
@@ -80,7 +79,7 @@ public class MainWindow extends Shell {
 			@Override
 			public void mouseUp(MouseEvent arg0) {
 				try {
-					CreatClientWindow window = new CreatClientWindow(dataBase);
+					CreateClientWindow window = new CreateClientWindow(dataBase);
 					window.open();
 				} catch (Exception e) {
 					e.printStackTrace();

@@ -1,8 +1,8 @@
-package db;
+package cis.db;
 
 import java.util.ArrayList;
 
-import buisness.Client;
+import cis.buisness.Client;
 
 /*------------------------------------------------------
 * CLASS:			DB_STub

@@ -1,13 +1,12 @@
 package tests;
 
 import static org.junit.Assert.*;
-import buisness.Client;
 
 import org.junit.Test;
 
+import cis.buisness.Client;
+import cis.db.DBIntermediary;
 import junit.*;
-
-import db.DBIntermediary;
 
 public class DBIntermediaryTest
 {

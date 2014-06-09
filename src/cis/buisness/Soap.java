@@ -1,4 +1,4 @@
-package buisness;
+package cis.buisness;
 
 import java.util.*;
 

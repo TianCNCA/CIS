@@ -20,10 +20,10 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 
-import db.DBIntermediary;
-import buisness.Client;
+import cis.buisness.Client;
+import cis.db.DBIntermediary;
 
-public class CreatClientWindow {
+public class CreateClientWindow {
 	private Text text_9;
 	private Text text_10;
 	private Text text_11;
@@ -49,18 +49,18 @@ public class CreatClientWindow {
 	 */
 	public static void main(String[] args) {
 		try {
-			CreatClientWindow window = new CreatClientWindow();
+			CreateClientWindow window = new CreateClientWindow();
 			window.open();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public CreatClientWindow() {
+	public CreateClientWindow() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public CreatClientWindow(DBIntermediary dataBase) {
+	public CreateClientWindow(DBIntermediary dataBase) {
 		this.dataBase = dataBase;
 	}
 	

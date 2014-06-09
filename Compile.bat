@@ -18,15 +18,7 @@ cd ..
 
 call setClasspath
 
-
-REM @echo on
-
-javac -d bin\ -cp %classpath%  src\buisness\*.java src\db\*.java src\cis\presentation\*.java
-
-REM javac -d bin\ -cp %classpath% src\srsys\objects\*.java src\srsys\persistence\*.java src\srsys\application\*.java src\srsys\business\*.java src\srsys\presentation\*.java
-
-REM javac -d bin\ -cp %classpath% src\tests\objectTests\*.java
-REM javac -d bin\ -cp %classpath% src\tests\businessTests\*.java
+javac -d bin\ -cp %classpath%  src\cis\buisness\*.java src\cis\db\*.java src\cis\presentation\*.java
 javac -d bin\ -cp %classpath% src\tests\C*.java
 
 pause

@@ -1,10 +1,10 @@
 package tests;
 
+import cis.buisness.Client;
 import junit.framework.TestCase;
 
 //import org.junit.Test;
 
-import buisness.Client;
 
 public class ClientTest extends TestCase 
 {
