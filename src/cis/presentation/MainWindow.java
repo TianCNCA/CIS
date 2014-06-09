@@ -1,5 +1,7 @@
 package cis.presentation;
 
+import java.util.ArrayList;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -14,7 +16,10 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 
+import cis.buisness.Client;
 import cis.db.DBIntermediary;
+import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.FocusEvent;
 
 public class MainWindow extends Shell {
 	private Text clientTextBox;
@@ -47,6 +52,27 @@ public class MainWindow extends Shell {
 	 */
 	public MainWindow(final Display display) {
 		super(display, SWT.SHELL_TRIM);
+		addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				ArrayList<Client> clients = dataBase.getAllClients();
+				final TableColumn [] columns = table.getColumns ();
+				for (int i=0; i<clients.size(); i++) //iterate through the whole list here and fill the table with data
+				{
+					
+					TableItem item = new TableItem (table, SWT.NONE);
+					for (int j=0; j<columns.length; j++)
+				    {
+						//TODO add text here from the DB
+						//item.setText (j, "Item " + i);
+						item.setText(clients.get(i).getName());
+						
+				    }
+				}
+				
+				 for (int i=0; i<columns.length; i++) columns [i].pack ();
+			}
+		});
 		dataBase = new DBIntermediary();
 		
 		Button btnExit = new Button(this, SWT.NONE);
@@ -127,17 +153,17 @@ public class MainWindow extends Shell {
 		createContents();
 		
 		//create 4 columns in the table
-		TableColumn lName = new TableColumn(table, SWT.NONE);
-		lName.setText("Last Name");
-		TableColumn fName= new TableColumn(table, SWT.NONE);
-		fName.setText("First Name");
+		TableColumn name = new TableColumn(table, SWT.NONE);
+		name.setText("Name");
+		//TableColumn fName= new TableColumn(table, SWT.NONE);
+		//fName.setText("First Name");
 		TableColumn address = new TableColumn(table, SWT.NONE);
 		address.setText("Address");
 		TableColumn city = new TableColumn(table, SWT.NONE);
 		city.setText("City");
 		
-		lName.setWidth(116);
-		fName.setWidth(100);
+		name.setWidth(116);
+		//ame.setWidth(100);
 		address.setWidth(146);
 		city.setWidth(140);
 		
@@ -147,18 +173,21 @@ public class MainWindow extends Shell {
 		lblClientInformationSystem.setBounds(36, 24, 500, 40);
 		lblClientInformationSystem.setText("Client Information System");
 		
-		final TableColumn [] columns = table.getColumns ();
-		for (int i=0; i<12; i++) //iterate through the whole list here and fill the table with data
+/*		final TableColumn [] columns = table.getColumns ();
+		ArrayList<Client> clients = dataBase.getAllClients();
+		for (int i=0; i<clients.size(); i++) //iterate through the whole list here and fill the table with data
 		{
 			TableItem item = new TableItem (table, SWT.NONE);
 			for (int j=0; j<columns.length; j++)
 		    {
 				//TODO add text here from the DB
 				//item.setText (j, "Item " + i);
+				item.setText(clients.get(i).getName());
+				
 		    }
 		}
 		
-		 for (int i=0; i<columns.length; i++) columns [i].pack ();
+		 for (int i=0; i<columns.length; i++) columns [i].pack ();*/
 	}
 
 	/**
