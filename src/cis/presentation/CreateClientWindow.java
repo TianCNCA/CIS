@@ -69,7 +69,7 @@ public class CreateClientWindow {
 	 */
 	public void open() {
 		final Display display = Display.getDefault();
-		Shell shlCreatClient = new Shell();
+		final Shell shlCreatClient = new Shell(display);
 		shlCreatClient.setSize(727, 441);
 		shlCreatClient.setText("Creat Client");
 		shlCreatClient.setLayout(new BorderLayout(0, 0));
@@ -368,7 +368,7 @@ public class CreateClientWindow {
 				client = new Client(text_12.getText());
 				dataBase.insertClient(client);
 				System.out.println(dataBase.DumpDB());
-				display.dispose();
+				shlCreatClient.dispose();
 			}
 		});
 		btnSave.setBounds(467, 368, 75, 25);
@@ -378,7 +378,7 @@ public class CreateClientWindow {
 		btnCancel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseUp(MouseEvent arg0) {
-				display.dispose();
+				shlCreatClient.dispose();
 			}
 		});
 		btnCancel.setBounds(576, 368, 75, 25);
