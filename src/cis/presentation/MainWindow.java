@@ -6,19 +6,22 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.widgets.List;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
-import org.eclipse.wb.swt.SWTResourceManager; 
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
+
+import db.DBIntermediary;
+//import org.eclipse.wb.swt.SWTResourceManager; 
 
 public class MainWindow extends Shell {
 	private Text clientTextBox;
 	private Table table;
-
+	private DBIntermediary dataBase;
+	
 	/**
 	 * Launch the application.
 	 * @param args
@@ -45,6 +48,7 @@ public class MainWindow extends Shell {
 	 */
 	public MainWindow(final Display display) {
 		super(display, SWT.SHELL_TRIM);
+		dataBase = new DBIntermediary();
 		
 		Button btnExit = new Button(this, SWT.NONE);
 		btnExit.addSelectionListener(new SelectionAdapter() {
@@ -72,6 +76,17 @@ public class MainWindow extends Shell {
 		btnNewButton_1.setText("Edit Client Information");
 		
 		Button btnNewButton_2 = new Button(this, SWT.NONE);
+		btnNewButton_2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(MouseEvent arg0) {
+				try {
+					CreatClientWindow window = new CreatClientWindow(dataBase);
+					window.open();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 		btnNewButton_2.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) 
@@ -128,7 +143,7 @@ public class MainWindow extends Shell {
 		city.setWidth(140);
 		
 		Label lblClientInformationSystem = new Label(this, SWT.NONE);
-		lblClientInformationSystem.setFont(SWTResourceManager.getFont("Segoe UI", 16, SWT.NORMAL));
+		//lblClientInformationSystem.setFont(SWTResourceManager.getFont("Segoe UI", 16, SWT.NORMAL));
 		lblClientInformationSystem.setAlignment(SWT.CENTER);
 		lblClientInformationSystem.setBounds(36, 24, 500, 40);
 		lblClientInformationSystem.setText("Client Information System");
@@ -140,7 +155,7 @@ public class MainWindow extends Shell {
 			for (int j=0; j<columns.length; j++)
 		    {
 				//TODO add text here from the DB
-				item.setText (j, "Item " + i);
+				//item.setText (j, "Item " + i);
 		    }
 		}
 		

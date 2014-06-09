@@ -1,11 +1,10 @@
-package buisness;
+package tests;
 
-import java.util.*;
-
-import org.junit.Test;
-
-import static org.junit.Assert.*;
 import junit.framework.TestCase;
+
+//import org.junit.Test;
+
+import buisness.Client;
 
 public class ClientTest extends TestCase 
 {
@@ -15,6 +14,7 @@ public class ClientTest extends TestCase
 		super(name);
 	}
 
+	@Override
 	protected void setUp() throws Exception 
 	{
 		super.setUp();
@@ -24,12 +24,12 @@ public class ClientTest extends TestCase
 		assertEquals(user.lastSoap(), null);
 	}
 
-	@Test
 	public void testSetUp()
 	{
 		
 	}
 	
+	@Override
 	protected void tearDown() throws Exception 
 	{
 		super.tearDown();

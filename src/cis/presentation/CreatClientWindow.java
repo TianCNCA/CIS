@@ -6,7 +6,9 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Button;
+
 import swing2swt.layout.BorderLayout;
+
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Label;
@@ -15,22 +17,32 @@ import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
+
+import db.DBIntermediary;
+import buisness.Client;
 
 public class CreatClientWindow {
-	private Text text;
-	private Text text_1;
-	private Text text_2;
-	private Text text_3;
-	private Text text_4;
-	private Text text_5;
-	private Text text_6;
-	private Text text_7;
-	private Text txtPrimaryReasonFor;
-	private Text text_8;
 	private Text text_9;
 	private Text text_10;
 	private Text text_11;
+	private Text text_12;
+	private Text text_13;
+	private Text text_14;
+	private Text text_15;
+	private Text text_16;
+	private Text text_17;
+	private Text text_18;
+	private Text text_19;
+	private Text text_20;
+	private Text text_21;
+	
+	
+	private DBIntermediary dataBase;
+	private Client client;
 
+	
 	/**
 	 * Launch the application.
 	 * @param args
@@ -44,11 +56,19 @@ public class CreatClientWindow {
 		}
 	}
 
+	public CreatClientWindow() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public CreatClientWindow(DBIntermediary dataBase) {
+		this.dataBase = dataBase;
+	}
+	
 	/**
 	 * Open the window.
 	 */
 	public void open() {
-		Display display = Display.getDefault();
+		final Display display = Display.getDefault();
 		Shell shlCreatClient = new Shell();
 		shlCreatClient.setSize(727, 441);
 		shlCreatClient.setText("Creat Client");
@@ -62,187 +82,198 @@ public class CreatClientWindow {
 		tabFolder.setBounds(0, 0, 711, 362);
 		
 		TabItem tbtmNewItem = new TabItem(tabFolder, SWT.NONE);
-		tbtmNewItem.setText("Client Information");
+		tbtmNewItem.setText("Empty Tab");
 		
 		Composite composite_1 = new Composite(tabFolder, SWT.NONE);
 		tbtmNewItem.setControl(composite_1);
-		composite_1.setLayout(new FormLayout());
+		composite_1.setEnabled(false);
 		
-		Label lblName = new Label(composite_1, SWT.NONE);
-		FormData fd_lblName = new FormData();
-		fd_lblName.top = new FormAttachment(0, 10);
-		fd_lblName.left = new FormAttachment(0, 10);
-		fd_lblName.bottom = new FormAttachment(0, 25);
-		fd_lblName.right = new FormAttachment(0, 59);
-		lblName.setLayoutData(fd_lblName);
-		lblName.setText("Name:");
+		TabItem tbtmTest = new TabItem(tabFolder, SWT.NONE);
+		tbtmTest.setText("Client Information");
 		
-		text = new Text(composite_1, SWT.BORDER);
-		FormData fd_text = new FormData();
-		fd_text.top = new FormAttachment(0, 10);
-		fd_text.right = new FormAttachment(lblName, 156, SWT.RIGHT);
-		fd_text.left = new FormAttachment(lblName, 17);
-		text.setLayoutData(fd_text);
+		Composite composite_4 = new Composite(tabFolder, SWT.NONE);
+		tbtmTest.setControl(composite_4);
+		composite_4.setLayout(new FormLayout());
 		
-		Label lblAddress = new Label(composite_1, SWT.NONE);
-		FormData fd_lblAddress = new FormData();
-		fd_lblAddress.left = new FormAttachment(text, 36);
-		fd_lblAddress.top = new FormAttachment(lblName, 0, SWT.TOP);
-		lblAddress.setLayoutData(fd_lblAddress);
-		lblAddress.setText("Address:");
+		Label label = new Label(composite_4, SWT.NONE);
+		label.setText("Name:");
+		FormData fd_label = new FormData();
+		fd_label.bottom = new FormAttachment(0, 25);
+		fd_label.top = new FormAttachment(0, 10);
+		fd_label.right = new FormAttachment(0, 59);
+		fd_label.left = new FormAttachment(0, 10);
+		label.setLayoutData(fd_label);
 		
-		text_1 = new Text(composite_1, SWT.BORDER);
-		FormData fd_text_1 = new FormData();
-		fd_text_1.top = new FormAttachment(text, -21);
-		fd_text_1.bottom = new FormAttachment(text, 0, SWT.BOTTOM);
-		fd_text_1.left = new FormAttachment(lblAddress, 7);
-		fd_text_1.right = new FormAttachment(100, -145);
-		text_1.setLayoutData(fd_text_1);
+		text_12 = new Text(composite_4, SWT.BORDER);
+		FormData fd_text_12 = new FormData();
+		fd_text_12.top = new FormAttachment(0, 10);
+		fd_text_12.right = new FormAttachment(label, 156, SWT.RIGHT);
+		fd_text_12.left = new FormAttachment(label, 17);
+		text_12.setLayoutData(fd_text_12);
 		
-		Label lblCity = new Label(composite_1, SWT.NONE);
-		FormData fd_lblCity = new FormData();
-		fd_lblCity.top = new FormAttachment(lblName, 35);
-		fd_lblCity.left = new FormAttachment(lblName, 0, SWT.LEFT);
-		lblCity.setLayoutData(fd_lblCity);
-		lblCity.setText("City:");
+		Label label_1 = new Label(composite_4, SWT.NONE);
+		label_1.setText("Address:");
+		FormData fd_label_1 = new FormData();
+		fd_label_1.top = new FormAttachment(label, 0, SWT.TOP);
+		fd_label_1.left = new FormAttachment(text_12, 36);
+		label_1.setLayoutData(fd_label_1);
 		
-		text_2 = new Text(composite_1, SWT.BORDER);
-		fd_text.bottom = new FormAttachment(text_2, -26);
-		FormData fd_text_2 = new FormData();
-		fd_text_2.top = new FormAttachment(lblCity, -3, SWT.TOP);
-		fd_text_2.left = new FormAttachment(lblCity, 6);
-		text_2.setLayoutData(fd_text_2);
+		text_13 = new Text(composite_4, SWT.BORDER);
+		FormData fd_text_13 = new FormData();
+		fd_text_13.bottom = new FormAttachment(text_12, 0, SWT.BOTTOM);
+		fd_text_13.top = new FormAttachment(text_12, -21);
+		fd_text_13.right = new FormAttachment(100, -145);
+		fd_text_13.left = new FormAttachment(label_1, 7);
+		text_13.setLayoutData(fd_text_13);
 		
-		Label lblProv = new Label(composite_1, SWT.NONE);
-		FormData fd_lblProv = new FormData();
-		fd_lblProv.top = new FormAttachment(lblCity, 0, SWT.TOP);
-		fd_lblProv.left = new FormAttachment(text_2, 18);
-		lblProv.setLayoutData(fd_lblProv);
-		lblProv.setText("Prov:");
+		Label label_2 = new Label(composite_4, SWT.NONE);
+		label_2.setText("City:");
+		FormData fd_label_2 = new FormData();
+		fd_label_2.top = new FormAttachment(label, 35);
+		fd_label_2.left = new FormAttachment(label, 0, SWT.LEFT);
+		label_2.setLayoutData(fd_label_2);
 		
-		text_3 = new Text(composite_1, SWT.BORDER);
-		FormData fd_text_3 = new FormData();
-		fd_text_3.top = new FormAttachment(lblCity, -3, SWT.TOP);
-		fd_text_3.left = new FormAttachment(lblProv, 17);
-		text_3.setLayoutData(fd_text_3);
+		text_14 = new Text(composite_4, SWT.BORDER);
+		fd_text_12.bottom = new FormAttachment(text_14, -26);
+		FormData fd_text_14 = new FormData();
+		fd_text_14.top = new FormAttachment(label_2, -3, SWT.TOP);
+		fd_text_14.left = new FormAttachment(label_2, 6);
+		text_14.setLayoutData(fd_text_14);
 		
-		Label lblPos = new Label(composite_1, SWT.NONE);
-		lblPos.setText("Postal Code:");
-		FormData fd_lblPos = new FormData();
-		fd_lblPos.top = new FormAttachment(lblCity, 0, SWT.TOP);
-		fd_lblPos.left = new FormAttachment(text_3, 35);
-		lblPos.setLayoutData(fd_lblPos);
+		Label label_3 = new Label(composite_4, SWT.NONE);
+		label_3.setText("Prov:");
+		FormData fd_label_3 = new FormData();
+		fd_label_3.top = new FormAttachment(label_2, 0, SWT.TOP);
+		fd_label_3.left = new FormAttachment(text_14, 18);
+		label_3.setLayoutData(fd_label_3);
 		
-		text_4 = new Text(composite_1, SWT.BORDER);
-		FormData fd_text_4 = new FormData();
-		fd_text_4.top = new FormAttachment(lblCity, 0, SWT.TOP);
-		fd_text_4.left = new FormAttachment(lblPos, 6);
-		text_4.setLayoutData(fd_text_4);
+		text_15 = new Text(composite_4, SWT.BORDER);
+		FormData fd_text_15 = new FormData();
+		fd_text_15.top = new FormAttachment(label_2, -3, SWT.TOP);
+		fd_text_15.left = new FormAttachment(label_3, 17);
+		text_15.setLayoutData(fd_text_15);
 		
-		Label lblAge = new Label(composite_1, SWT.NONE);
-		lblAge.setText("Age:");
-		FormData fd_lblAge = new FormData();
-		fd_lblAge.top = new FormAttachment(lblCity, 31);
-		fd_lblAge.left = new FormAttachment(lblName, 0, SWT.LEFT);
-		lblAge.setLayoutData(fd_lblAge);
+		Label label_4 = new Label(composite_4, SWT.NONE);
+		label_4.setText("Postal Code:");
+		FormData fd_label_4 = new FormData();
+		fd_label_4.top = new FormAttachment(label_2, 0, SWT.TOP);
+		fd_label_4.left = new FormAttachment(text_15, 35);
+		label_4.setLayoutData(fd_label_4);
 		
-		text_5 = new Text(composite_1, SWT.BORDER);
-		FormData fd_text_5 = new FormData();
-		fd_text_5.top = new FormAttachment(lblAge, 0, SWT.TOP);
-		fd_text_5.left = new FormAttachment(text_2, 0, SWT.LEFT);
-		text_5.setLayoutData(fd_text_5);
+		text_16 = new Text(composite_4, SWT.BORDER);
+		FormData fd_text_16 = new FormData();
+		fd_text_16.top = new FormAttachment(label_2, 0, SWT.TOP);
+		fd_text_16.left = new FormAttachment(label_4, 6);
+		text_16.setLayoutData(fd_text_16);
 		
-		Label lblDateOfBirth = new Label(composite_1, SWT.NONE);
-		lblDateOfBirth.setText("Date of Birth:");
-		FormData fd_lblDateOfBirth = new FormData();
-		fd_lblDateOfBirth.top = new FormAttachment(lblAge, 0, SWT.TOP);
-		fd_lblDateOfBirth.left = new FormAttachment(lblProv, 0, SWT.LEFT);
-		lblDateOfBirth.setLayoutData(fd_lblDateOfBirth);
+		Label label_5 = new Label(composite_4, SWT.NONE);
+		label_5.setText("Age:");
+		FormData fd_label_5 = new FormData();
+		fd_label_5.top = new FormAttachment(label_2, 31);
+		fd_label_5.left = new FormAttachment(label, 0, SWT.LEFT);
+		label_5.setLayoutData(fd_label_5);
 		
-		DateTime dateTime = new DateTime(composite_1, SWT.BORDER);
-		FormData fd_dateTime = new FormData();
-		fd_dateTime.bottom = new FormAttachment(text_5, 0, SWT.BOTTOM);
-		fd_dateTime.right = new FormAttachment(lblAddress, 0, SWT.RIGHT);
-		dateTime.setLayoutData(fd_dateTime);
+		text_17 = new Text(composite_4, SWT.BORDER);
+		FormData fd_text_17 = new FormData();
+		fd_text_17.top = new FormAttachment(label_5, 0, SWT.TOP);
+		fd_text_17.left = new FormAttachment(text_14, 0, SWT.LEFT);
+		text_17.setLayoutData(fd_text_17);
 		
-		Label lblPhone = new Label(composite_1, SWT.NONE);
-		lblPhone.setText("Phone: (Home)");
-		FormData fd_lblPhone = new FormData();
-		fd_lblPhone.top = new FormAttachment(lblAge, 29);
-		fd_lblPhone.left = new FormAttachment(lblName, 0, SWT.LEFT);
-		lblPhone.setLayoutData(fd_lblPhone);
+		Label label_6 = new Label(composite_4, SWT.NONE);
+		label_6.setText("Date of Birth:");
+		FormData fd_label_6 = new FormData();
+		fd_label_6.top = new FormAttachment(label_5, 0, SWT.TOP);
+		fd_label_6.left = new FormAttachment(label_3, 0, SWT.LEFT);
+		label_6.setLayoutData(fd_label_6);
 		
-		text_6 = new Text(composite_1, SWT.BORDER);
-		FormData fd_text_6 = new FormData();
-		fd_text_6.top = new FormAttachment(lblPhone, -3, SWT.TOP);
-		fd_text_6.left = new FormAttachment(lblPhone, 25);
-		fd_text_6.right = new FormAttachment(text, 0, SWT.RIGHT);
-		text_6.setLayoutData(fd_text_6);
+		DateTime dateTime_1 = new DateTime(composite_4, SWT.BORDER);
+		FormData fd_dateTime_1 = new FormData();
+		fd_dateTime_1.bottom = new FormAttachment(text_17, 0, SWT.BOTTOM);
+		fd_dateTime_1.right = new FormAttachment(label_1, 0, SWT.RIGHT);
+		dateTime_1.setLayoutData(fd_dateTime_1);
 		
-		Label lblPhonework = new Label(composite_1, SWT.NONE);
-		lblPhonework.setText("Phone: (Work)");
-		FormData fd_lblPhonework = new FormData();
-		fd_lblPhonework.top = new FormAttachment(lblPhone, 0, SWT.TOP);
-		fd_lblPhonework.left = new FormAttachment(lblAddress, 0, SWT.LEFT);
-		lblPhonework.setLayoutData(fd_lblPhonework);
+		Label label_7 = new Label(composite_4, SWT.NONE);
+		label_7.setText("Phone: (Home)");
+		FormData fd_label_7 = new FormData();
+		fd_label_7.top = new FormAttachment(label_5, 29);
+		fd_label_7.left = new FormAttachment(label, 0, SWT.LEFT);
+		label_7.setLayoutData(fd_label_7);
 		
-		text_7 = new Text(composite_1, SWT.BORDER);
-		FormData fd_text_7 = new FormData();
-		fd_text_7.top = new FormAttachment(text_6, 0, SWT.TOP);
-		fd_text_7.left = new FormAttachment(lblPhonework, 19);
-		text_7.setLayoutData(fd_text_7);
+		text_18 = new Text(composite_4, SWT.BORDER);
+		FormData fd_text_18 = new FormData();
+		fd_text_18.top = new FormAttachment(label_7, -3, SWT.TOP);
+		fd_text_18.right = new FormAttachment(text_12, 0, SWT.RIGHT);
+		fd_text_18.left = new FormAttachment(label_7, 25);
+		text_18.setLayoutData(fd_text_18);
 		
-		Label lblAreYouPresently = new Label(composite_1, SWT.NONE);
-		FormData fd_lblAreYouPresently = new FormData();
-		fd_lblAreYouPresently.top = new FormAttachment(lblPhone, 24);
-		fd_lblAreYouPresently.left = new FormAttachment(lblName, 0, SWT.LEFT);
-		lblAreYouPresently.setLayoutData(fd_lblAreYouPresently);
-		lblAreYouPresently.setText("Are you presently under care of another professional?");
+		Label label_8 = new Label(composite_4, SWT.NONE);
+		label_8.setText("Phone: (Work)");
+		FormData fd_label_8 = new FormData();
+		fd_label_8.top = new FormAttachment(label_7, 0, SWT.TOP);
+		fd_label_8.left = new FormAttachment(label_1, 0, SWT.LEFT);
+		label_8.setLayoutData(fd_label_8);
 		
-		Button btnCheckButton = new Button(composite_1, SWT.CHECK);
-		FormData fd_btnCheckButton = new FormData();
-		fd_btnCheckButton.top = new FormAttachment(lblAreYouPresently, 17);
-		fd_btnCheckButton.left = new FormAttachment(lblName, 0, SWT.LEFT);
-		btnCheckButton.setLayoutData(fd_btnCheckButton);
-		btnCheckButton.setText("Physician");
+		text_19 = new Text(composite_4, SWT.BORDER);
+		FormData fd_text_19 = new FormData();
+		fd_text_19.top = new FormAttachment(text_18, 0, SWT.TOP);
+		fd_text_19.left = new FormAttachment(label_8, 19);
+		text_19.setLayoutData(fd_text_19);
 		
-		Button btnPhysio = new Button(composite_1, SWT.CHECK);
-		btnPhysio.setText("Physiotherapist");
-		FormData fd_btnPhysio = new FormData();
-		fd_btnPhysio.bottom = new FormAttachment(btnCheckButton, 0, SWT.BOTTOM);
-		fd_btnPhysio.left = new FormAttachment(lblProv, 0, SWT.LEFT);
-		btnPhysio.setLayoutData(fd_btnPhysio);
+		Label label_9 = new Label(composite_4, SWT.NONE);
+		label_9.setText("Are you presently under care of another professional?");
+		FormData fd_label_9 = new FormData();
+		fd_label_9.top = new FormAttachment(label_7, 24);
+		fd_label_9.left = new FormAttachment(label, 0, SWT.LEFT);
+		label_9.setLayoutData(fd_label_9);
 		
-		Button btnChiroparactor = new Button(composite_1, SWT.CHECK);
-		btnChiroparactor.setText("Chiropractor");
-		FormData fd_btnChiroparactor = new FormData();
-		fd_btnChiroparactor.bottom = new FormAttachment(btnCheckButton, 0, SWT.BOTTOM);
-		fd_btnChiroparactor.left = new FormAttachment(lblPos, 0, SWT.LEFT);
-		btnChiroparactor.setLayoutData(fd_btnChiroparactor);
+		Button button = new Button(composite_4, SWT.CHECK);
+		button.setText("Physician");
+		FormData fd_button = new FormData();
+		fd_button.top = new FormAttachment(label_9, 17);
+		fd_button.left = new FormAttachment(label, 0, SWT.LEFT);
+		button.setLayoutData(fd_button);
 		
-		Button btnHaveYouEver = new Button(composite_1, SWT.CHECK);
-		btnHaveYouEver.setText("Have you ever had a therapeutic massage before?");
-		FormData fd_btnHaveYouEver = new FormData();
-		fd_btnHaveYouEver.top = new FormAttachment(btnCheckButton, 37);
-		fd_btnHaveYouEver.left = new FormAttachment(lblName, 0, SWT.LEFT);
-		btnHaveYouEver.setLayoutData(fd_btnHaveYouEver);
+		Button button_1 = new Button(composite_4, SWT.CHECK);
+		button_1.setText("Physiotherapist");
+		FormData fd_button_1 = new FormData();
+		fd_button_1.bottom = new FormAttachment(button, 0, SWT.BOTTOM);
+		fd_button_1.left = new FormAttachment(label_3, 0, SWT.LEFT);
+		button_1.setLayoutData(fd_button_1);
 		
-		txtPrimaryReasonFor = new Text(composite_1, SWT.NONE);
-		txtPrimaryReasonFor.setText("Primary reason for appointment:");
-		FormData fd_txtPrimaryReasonFor = new FormData();
-		fd_txtPrimaryReasonFor.top = new FormAttachment(btnHaveYouEver, 16);
-		fd_txtPrimaryReasonFor.left = new FormAttachment(lblName, 0, SWT.LEFT);
-		txtPrimaryReasonFor.setLayoutData(fd_txtPrimaryReasonFor);
+		Button button_2 = new Button(composite_4, SWT.CHECK);
+		button_2.setText("Chiropractor");
+		FormData fd_button_2 = new FormData();
+		fd_button_2.bottom = new FormAttachment(button, 0, SWT.BOTTOM);
+		fd_button_2.left = new FormAttachment(label_4, 0, SWT.LEFT);
+		button_2.setLayoutData(fd_button_2);
 		
-		text_8 = new Text(composite_1, SWT.BORDER);
-		FormData fd_text_8 = new FormData();
-		fd_text_8.right = new FormAttachment(text_4, 0, SWT.RIGHT);
-		fd_text_8.top = new FormAttachment(txtPrimaryReasonFor, 6);
-		fd_text_8.left = new FormAttachment(lblName, 0, SWT.LEFT);
-		text_8.setLayoutData(fd_text_8);
+		Button button_3 = new Button(composite_4, SWT.CHECK);
+		button_3.setText("Have you ever had a therapeutic massage before?");
+		FormData fd_button_3 = new FormData();
+		fd_button_3.top = new FormAttachment(button, 14);
+		fd_button_3.left = new FormAttachment(label, 0, SWT.LEFT);
+		button_3.setLayoutData(fd_button_3);
+		
+		text_20 = new Text(composite_4, SWT.NONE);
+		text_20.setText("Primary reason for appointment:");
+		FormData fd_text_20 = new FormData();
+		fd_text_20.top = new FormAttachment(button_3, 6);
+		fd_text_20.left = new FormAttachment(0, 10);
+		text_20.setLayoutData(fd_text_20);
+		
+		text_21 = new Text(composite_4, SWT.BORDER);
+		FormData fd_text_21 = new FormData();
+		fd_text_21.top = new FormAttachment(text_20, 6);
+		fd_text_21.right = new FormAttachment(text_16, 0, SWT.RIGHT);
+		fd_text_21.left = new FormAttachment(label, 0, SWT.LEFT);
+		text_21.setLayoutData(fd_text_21);
 		
 		TabItem tbtmNewItem_1 = new TabItem(tabFolder, SWT.NONE);
 		tbtmNewItem_1.setText("Client History");
+
+		// fist tab ends
+		
+		
 		
 		Composite composite_2 = new Composite(tabFolder, SWT.NONE);
 		tbtmNewItem_1.setControl(composite_2);
@@ -331,16 +362,27 @@ public class CreatClientWindow {
 		text_11.setBounds(336, 107, 177, 21);
 		
 		Button btnSave = new Button(composite, SWT.NONE);
+		btnSave.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(MouseEvent arg0) {
+				client = new Client(text_12.getText());
+				dataBase.insertClient(client);
+				System.out.println(dataBase.DumpDB());
+				display.dispose();
+			}
+		});
 		btnSave.setBounds(467, 368, 75, 25);
 		btnSave.setText("Save");
 		
 		Button btnCancel = new Button(composite, SWT.NONE);
+		btnCancel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(MouseEvent arg0) {
+				display.dispose();
+			}
+		});
 		btnCancel.setBounds(576, 368, 75, 25);
 		btnCancel.setText("Cancel");
-		
-		Button btnSoapBox = new Button(composite, SWT.NONE);
-		btnSoapBox.setBounds(22, 368, 75, 25);
-		btnSoapBox.setText("Soap Box");
 
 		shlCreatClient.open();
 		shlCreatClient.layout();

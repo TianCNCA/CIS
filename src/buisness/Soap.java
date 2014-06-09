@@ -24,11 +24,13 @@ public class Soap implements Comparable<Soap> {
 	  this.info = info;
   }
   
-  public String toString(){
+  @Override
+public String toString(){
 	  return info+" - "+date.toString();
   }
   
-  public int compareTo(Soap other){
+  @Override
+public int compareTo(Soap other){
 	  return this.date.compareTo(other.getDate());
   }
   
