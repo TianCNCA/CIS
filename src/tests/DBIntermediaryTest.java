@@ -10,6 +10,7 @@ public class DBIntermediaryTest extends TestCase
 	public void testDBIntermediary()
 	{
 		DBIntermediary db = new DBIntermediary();
+		System.out.println( db.getSize() );
 		assertEquals( 0, db.getSize() );
 	}
 
