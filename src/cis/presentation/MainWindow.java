@@ -48,6 +48,7 @@ public class MainWindow extends Shell {
 	public MainWindow(final Display display) {
 		super(display, SWT.SHELL_TRIM);
 		dataBase = new DBIntermediary();
+		dataBase.genClients();
 		
 		Button btnExit = new Button(this, SWT.NONE);
 		btnExit.addSelectionListener(new SelectionAdapter() {
