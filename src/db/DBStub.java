@@ -87,6 +87,22 @@ class DBStub
 		return clientDB.size();
 	}
 	
+	public Client search( String name )
+	{
+		Client  foundClient = null;
+		Boolean found = false;
+		
+		for ( int i = 0; i < clientDB.size(); i++ )
+        {
+	        if ( ( clientDB.get( i ).getName() ).equals( name ) )
+	        {
+	        	foundClient = clientDB.get( i );
+	        }
+        }
+		
+		return foundClient;
+	}
+	
 	public String dumpStub()
 	{
 		int i;

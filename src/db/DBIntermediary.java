@@ -1,5 +1,7 @@
 package db;
 
+import java.util.ArrayList;
+
 import buisness.Client;
 import db.DBStub;
 
@@ -28,6 +30,31 @@ public class DBIntermediary
 	/*------------------------------------------------------
 	 * PUBLIC METHODS
 	------------------------------------------------------*/
+	
+	
+	/*------------------------------------------------------
+	 * METHOD:			initialize
+	 *
+	 * PURPOSE:			this will initialize the database, set up the tables,
+	 * 					and get everything ready.
+	------------------------------------------------------*/
+	public void initialize( String dbName )
+	{
+		init(); // NOT THIS OH WOW DON'T DO THIS
+		// TODO: init database
+	}
+	
+	
+	/*------------------------------------------------------
+	 * METHOD:			close
+	 *
+	 * PURPOSE:			Close will write everything to the DB, 
+	 * 					then begin shutting it down
+	------------------------------------------------------*/
+	public void close()
+	{
+		// TODO: write this method
+	}
 
 	/*------------------------------------------------------
 	 * METHOD:			insertClient
@@ -125,6 +152,7 @@ public class DBIntermediary
 	 *
 	 * PURPOSE:			This method will find a client object already in the system,
 	 * 					(hopefully) and return it to us. Returns null if nothing found
+	 * 					This will change later on to include partial name searches
 	------------------------------------------------------*/
 	public Client readClient( String name )
 	{
@@ -133,6 +161,21 @@ public class DBIntermediary
 		newClient = stubDB.find( name );
 
 		return newClient;
+	}
+	
+	
+	/*------------------------------------------------------
+	 * METHOD:			getAllClients
+	 *
+	 * PURPOSE:			This method will return the entire list of
+	 * 					clients. To be used in displaying them 
+	 * 					and what not.
+	------------------------------------------------------*/
+	public ArrayList<Client> getAllClients()
+	{
+		ArrayList<Client> allClients = null;
+		
+		return allClients;
 	}
 
 	
