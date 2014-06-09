@@ -326,49 +326,4 @@ public class Client
 	{
 		return sports;
 	}
-	
-	public String get_sleep_pattern()
-	{
-		return sleep_pattern;
-	}
-  
-	public void setSmoking(int smoking)
-	{
-		this.smoking = smoking;
-	}
-	
-	public void setAlcohol(int alcohol)
-	{
-		this.alcohol = alcohol;
-	}
-	
-	public void setStress(int stress)
-	{
-		this.stress = stress;
-	}
-	
-	public void setAppetite(int appetite)
-	{
-		this.appetite = appetite;
-	}
-  
-	public int getSmoking()
-	{
-		return smoking;
-	}
-	
-	public int getAlcohol()
-	{
-		return alcohol;
-	}
-	
-	public int getStress()
-	{
-		return stress;
-	}
-	
-	public int getAppetite()
-	{
-		return appetite;
-	}	
 }
