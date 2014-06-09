@@ -2,7 +2,7 @@ package tests;
 
 import static org.junit.Assert.*;
 
-import org.junit.Test;
+import junit.framework.TestCase;
 
 import cis.buisness.Client;
 import cis.db.DBIntermediary;
@@ -10,7 +10,6 @@ import junit.*;
 
 public class DBIntermediaryTest
 {
-	@Test
 	public void testDBIntermediary()
 	{
 		DBIntermediary db = new DBIntermediary();
@@ -18,7 +17,6 @@ public class DBIntermediaryTest
 	}
 
 
-	@Test
 	public void testInsertClient()
 	{
 		System.out.println( "Test Insert" );
@@ -50,7 +48,6 @@ public class DBIntermediaryTest
 	}
 
 
-	@Test
 	public void testDeleteClient()
 	{
 		System.out.println( "Test Delete" );
@@ -99,7 +96,6 @@ public class DBIntermediaryTest
 	}
 
 
-	@Test
 	public void testrenameClient()
 	{
 		System.out.println( "Test Rename" );
@@ -126,7 +122,6 @@ public class DBIntermediaryTest
 	}
 
 
-	@Test
 	public void testUpdateClient()
 	{
 		System.out.println( "Test Update" );
@@ -171,7 +166,6 @@ public class DBIntermediaryTest
 	}
 
 
-	@Test
 	public void testReadClient()
 	{
 		System.out.println( "Test Read" );
@@ -197,7 +191,6 @@ public class DBIntermediaryTest
 	}
 
 
-	@Test
 	public void testDumpDB()
 	{
 		System.out.println( "Test Dump" );

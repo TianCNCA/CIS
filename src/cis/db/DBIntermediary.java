@@ -1,5 +1,7 @@
 package cis.db;
 
+import java.util.ArrayList;
+
 import cis.buisness.Client;
 import cis.db.DBStub;
 
@@ -28,6 +30,29 @@ public class DBIntermediary
 	/*------------------------------------------------------
 	 * PUBLIC METHODS
 	------------------------------------------------------*/
+	/*------------------------------------------------------
+	 * METHOD:			initialize
+	 *
+	 * PURPOSE:			this will initialize the database, set up the tables,
+	 * 					and get everything ready.
+	------------------------------------------------------*/
+	public void initialize( String dbName )
+	{
+		init(); // NOT THIS OH WOW DON'T DO THIS
+		// TODO: init database
+	}
+	
+	
+	/*------------------------------------------------------
+	 * METHOD:			close
+	 *
+	 * PURPOSE:			Close will write everything to the DB, 
+	 * 					then begin shutting it down
+	------------------------------------------------------*/
+	public void close()
+	{
+		// TODO: write this method
+	}
 
 	/*------------------------------------------------------
 	 * METHOD:			insertClient
@@ -150,6 +175,23 @@ public class DBIntermediary
 
 		return newClient;
 	}
+	
+	
+	/*------------------------------------------------------
+	 * METHOD:			getAllClients
+	 *
+	 * PURPOSE:			This method will return the entire list of
+	 * 					clients. To be used in displaying them 
+	 * 					and what not.
+	------------------------------------------------------*/
+	public ArrayList<Client> getAllClients()
+	{
+		ArrayList<Client> allClients = null;
+		
+		allClients = stubDB.getDB();
+
+		return allClients;
+	}
 
 	
 	/*------------------------------------------------------
@@ -201,6 +243,16 @@ public class DBIntermediary
 	{
 		// This will eventually be replaced with the DB
 		stubDB = new DBStub();
+		Client one = new Client( "Pat Ricky" );
+		Client two = new Client( "George Curious" );
+		Client three = new Client( "Fred Freddy" );
+		Client four = new Client( "Patty Rick" );
+		Client five = new Client( "Travis Almighty" );
+		stubDB.insert( one );
+		stubDB.insert( two );
+		stubDB.insert( three );
+		stubDB.insert( four );
+		stubDB.insert( five );
 		dbSize = 0;
 	}
 }

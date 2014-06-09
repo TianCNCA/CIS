@@ -31,6 +31,11 @@ class DBStub
 		return ( clientDB.remove( clientToRem ) );
 	}
 	
+	public ArrayList<Client> getDB()
+	{
+		return clientDB;
+	}
+	
 	
 	
 	public Client find( String name )
