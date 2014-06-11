@@ -1,18 +1,16 @@
 package tests;
 
-import static org.junit.Assert.*;
-
 import junit.framework.TestCase;
 
 import cis.buisness.Client;
 import cis.db.DBIntermediary;
-import junit.*;
 
-public class DBIntermediaryTest
+public class DBIntermediaryTest extends TestCase
 {
 	public void testDBIntermediary()
 	{
 		DBIntermediary db = new DBIntermediary();
+		System.out.println( db.getSize() );
 		assertEquals( 0, db.getSize() );
 	}
 
@@ -149,7 +147,7 @@ public class DBIntermediaryTest
 		didUpdate = db.updateClient( clientToUpdate );
 		String newOcc = db.readClient( "Pat" ).getOccupation();
 		System.out.println( newOcc );
-		assertNotEquals( oldOcc, newOcc );
+		assertNotSame( oldOcc, newOcc );
 		assertTrue( didUpdate );
 
 		clientToUpdate = db.readClient( "George" );
@@ -159,7 +157,7 @@ public class DBIntermediaryTest
 		didUpdate = db.updateClient( clientToUpdate );
 		newOcc = db.readClient( "George" ).getOccupation();
 		System.out.println( newOcc );
-		assertNotEquals( oldOcc, newOcc );
+		assertNotSame( oldOcc, newOcc );
 		assertTrue( didUpdate );
 		
 		System.out.println( "End Test Update\n" );

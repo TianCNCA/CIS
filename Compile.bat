@@ -19,7 +19,7 @@ cd ..
 call setClasspath
 
 javac -d bin\ -cp %classpath%  src\cis\buisness\*.java src\cis\db\*.java src\cis\presentation\*.java
-javac -d bin\ -cp %classpath% src\tests\C*.java
+javac -d bin\ -cp %classpath% src\tests\*.java
 
 pause
 

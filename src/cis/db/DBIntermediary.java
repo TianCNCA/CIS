@@ -227,6 +227,21 @@ public class DBIntermediary
 	{
 		return dbSize;
 	}
+	
+	
+	public void genClients()
+	{
+		Client one = new Client( "Pat Ricky" );
+		Client two = new Client( "George Curious" );
+		Client three = new Client( "Fred Freddy" );
+		Client four = new Client( "Patty Rick" );
+		Client five = new Client( "Travis Almighty" );
+		stubDB.insert( one );
+		stubDB.insert( two );
+		stubDB.insert( three );
+		stubDB.insert( four );
+		stubDB.insert( five );
+	}
 
 	
 	/*------------------------------------------------------
@@ -243,16 +258,6 @@ public class DBIntermediary
 	{
 		// This will eventually be replaced with the DB
 		stubDB = new DBStub();
-		Client one = new Client( "Pat Ricky" );
-		Client two = new Client( "George Curious" );
-		Client three = new Client( "Fred Freddy" );
-		Client four = new Client( "Patty Rick" );
-		Client five = new Client( "Travis Almighty" );
-		stubDB.insert( one );
-		stubDB.insert( two );
-		stubDB.insert( three );
-		stubDB.insert( four );
-		stubDB.insert( five );
 		dbSize = 0;
 	}
 }
