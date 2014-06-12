@@ -21,7 +21,7 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 
 import cis.buisness.Client;
-import cis.db.DBIntermediary;
+import cis.persistance.DBIntermediary;
 
 public class CreateClientWindow {
 	private Text text_9;

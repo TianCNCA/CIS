@@ -1,9 +1,9 @@
-package cis.db;
+package cis.persistance;
 
 import java.util.ArrayList;
 
 import cis.buisness.Client;
-import cis.db.DBStub;
+import cis.persistance.DBStub;
 
 /*------------------------------------------------------
  * CLASS:			DBIntermediary

@@ -17,7 +17,8 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 
 import cis.buisness.Client;
-import cis.db.DBIntermediary;
+import cis.persistance.DBIntermediary;
+
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
 

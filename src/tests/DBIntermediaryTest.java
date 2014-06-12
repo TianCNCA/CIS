@@ -1,9 +1,8 @@
 package tests;
 
 import junit.framework.TestCase;
-
 import cis.buisness.Client;
-import cis.db.DBIntermediary;
+import cis.persistance.DBIntermediary;
 
 public class DBIntermediaryTest extends TestCase
 {

@@ -1,4 +1,4 @@
-package cis.db;
+package cis.persistance;
 
 import java.util.ArrayList;
 
