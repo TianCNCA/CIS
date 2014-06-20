@@ -325,11 +325,6 @@ public class Client
 		this.sports = sports;
 	}	
 	
-	public void set_sleep_pattern(String sleep_pattern)
-	{
-		this.sleepPattern = sleep_pattern;
-	}
-	
 	public String getOccupation()
 	{
 		return occupation;

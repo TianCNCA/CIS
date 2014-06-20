@@ -206,7 +206,7 @@ public class CreateClientWindow {
 		fd_label_6.left = new FormAttachment(label_3, 0, SWT.LEFT);
 		label_6.setLayoutData(fd_label_6);
 		
-		DateTime dateTime_1 = new DateTime(composite_4, SWT.BORDER);
+		final DateTime dateTime_1 = new DateTime(composite_4, SWT.BORDER);
 		FormData fd_dateTime_1 = new FormData();
 		fd_dateTime_1.bottom = new FormAttachment(text_17, 0, SWT.BOTTOM);
 		fd_dateTime_1.right = new FormAttachment(label_1, 0, SWT.RIGHT);
@@ -246,21 +246,21 @@ public class CreateClientWindow {
 		fd_label_9.left = new FormAttachment(label, 0, SWT.LEFT);
 		label_9.setLayoutData(fd_label_9);
 		
-		Button button = new Button(composite_4, SWT.CHECK);
+		final Button button = new Button(composite_4, SWT.CHECK);
 		button.setText("Physician");
 		FormData fd_button = new FormData();
 		fd_button.top = new FormAttachment(label_9, 17);
 		fd_button.left = new FormAttachment(label, 0, SWT.LEFT);
 		button.setLayoutData(fd_button);
 		
-		Button button_1 = new Button(composite_4, SWT.CHECK);
+		final Button button_1 = new Button(composite_4, SWT.CHECK);
 		button_1.setText("Physiotherapist");
 		FormData fd_button_1 = new FormData();
 		fd_button_1.bottom = new FormAttachment(button, 0, SWT.BOTTOM);
 		fd_button_1.left = new FormAttachment(label_3, 0, SWT.LEFT);
 		button_1.setLayoutData(fd_button_1);
 		
-		Button button_2 = new Button(composite_4, SWT.CHECK);
+		final Button button_2 = new Button(composite_4, SWT.CHECK);
 		button_2.setText("Chiropractor");
 		FormData fd_button_2 = new FormData();
 		fd_button_2.bottom = new FormAttachment(button, 0, SWT.BOTTOM);
@@ -471,7 +471,23 @@ public class CreateClientWindow {
 			@Override
 			public void mouseUp(MouseEvent arg0) 
 			{
+				//TODO rest of client stuff
 				client = new Client(text_12.getText());
+				client.setAddress( text_13.getText() );
+				client.setCity( text_14.getText() );
+				client.setProvince( text_15.getText() );
+				client.setPostCode( text_16.getText() );
+				client.setDOB( dateTime_1.toString() );
+				client.setHomePhone( text_18.getText() );
+				client.setWorkPhone( text_18.getText() );
+				client.setPhysician( button.getSelection() );
+				client.setChiropractor( button_2.getSelection() );
+				client.setPhysioTherapist( button_1.getSelection() );
+				client.setReason( text_21.getText() );
+
+				client.setOccupation( text_9.getText() );
+				client.setSports( text_10.getText() );
+				client.setSleepPattern( text_11.getText() );
 				dataBase.insertClient(client);
 				shlCreatClient.dispose();
 			}
