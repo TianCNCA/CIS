@@ -35,7 +35,7 @@ public class Client
 	//Personal Habits and Lifestyle
 	private String occupation;
 	private String sports;
-	private String sleep_pattern;
+	private String sleepPattern;
 	
 	private int smoking;
 	private int alcohol;
@@ -155,16 +155,26 @@ public class Client
 		this.DOB = new Date(DOB);
 	}
 	
-	public void homePhone(String phone)
+	public void setHomePhone(String phone)
 	{
 		this.homePhone = phone;
 	}
 	
-	public void workPhone(String phone)
+	public void setWorkPhone(String phone)
 	{
 		this.workPhone = phone;
 	}
-	  
+	
+	public void setSleepPattern( String sleepPattern )
+	{
+		this.sleepPattern = sleepPattern;
+	}
+	
+	public String getSleepPattern()
+	{
+		return sleepPattern;
+	}
+	
 	public String getName()
 	{
 		return name;
@@ -195,12 +205,12 @@ public class Client
     return DOB;
 	}
 	
-	public String homePhone()
+	public String getHomePhone()
 	{
 		return homePhone;
 	}
 	
-	public String workPhone()
+	public String getWorkPhone()
 	{
 		return workPhone;
 	}
@@ -317,7 +327,7 @@ public class Client
 	
 	public void set_sleep_pattern(String sleep_pattern)
 	{
-		this.sleep_pattern = sleep_pattern;
+		this.sleepPattern = sleep_pattern;
 	}
 	
 	public String getOccupation()

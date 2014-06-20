@@ -23,6 +23,8 @@ import org.eclipse.swt.events.MouseEvent;
 import cis.buisness.Client;
 import cis.buisness.DataAccess;
 import cis.persistance.DBIntermediary;
+import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.custom.SashForm;
 
 public class CreateClientWindow {
 	private Text text_9;
@@ -42,6 +44,23 @@ public class CreateClientWindow {
 	
 	private DataAccess dataBase;
 	private Client client;
+	private Text text;
+	private Text text_1;
+	private Text text_2;
+	private Text text_3;
+	private Text text_4;
+	private Text text_5;
+	private Text text_6;
+	private Text text_7;
+	private Text text_8;
+	private Text text_22;
+	private Text text_23;
+	private Text text_24;
+	private Text text_25;
+	private Text text_26;
+	private Text text_27;
+	private Text text_28;
+	private Text text_29;
 
 	
 	/**
@@ -71,7 +90,7 @@ public class CreateClientWindow {
 	public void open() {
 		final Display display = Display.getDefault();
 		final Shell shlCreatClient = new Shell(display);
-		shlCreatClient.setSize(727, 441);
+		shlCreatClient.setSize(771, 442);
 		shlCreatClient.setText("Creat Client");
 		shlCreatClient.setLayout(new BorderLayout(0, 0));
 		
@@ -80,10 +99,10 @@ public class CreateClientWindow {
 		composite.setLayout(null);
 		
 		TabFolder tabFolder = new TabFolder(composite, SWT.NONE);
-		tabFolder.setBounds(0, 0, 711, 362);
+		tabFolder.setBounds(0, 0, 755, 362);
 		
 		TabItem tbtmNewItem = new TabItem(tabFolder, SWT.NONE);
-		tbtmNewItem.setText("Empty Tab");
+		tbtmNewItem.setText("");
 		
 		Composite composite_1 = new Composite(tabFolder, SWT.NONE);
 		tbtmNewItem.setControl(composite_1);
@@ -283,56 +302,141 @@ public class CreateClientWindow {
 		Label lblNewLabel = new Label(composite_2, SWT.NONE);
 		lblNewLabel.setText("Out of the following list, check all that apply to you");
 		
-		Button btnDf = new Button(composite_2, SWT.CHECK);
+		SashForm sashForm = new SashForm(composite_2, SWT.NONE);
+		
+		Button btnDf = new Button(sashForm, SWT.CHECK);
 		btnDf.setText("Heart problems, chest discomfort/pressure/pain or heart disease?");
 		
-		Button btnCheckButton_1 = new Button(composite_2, SWT.CHECK);
+		text_1 = new Text(sashForm, SWT.BORDER);
+		sashForm.setWeights(new int[] {1, 1});
+		
+		SashForm sashForm_2 = new SashForm(composite_2, SWT.NONE);
+		
+		Button btnCheckButton_1 = new Button(sashForm_2, SWT.CHECK);
 		btnCheckButton_1.setText("Sudden tingling, numbness in arms, hands, chest, face, feet or legs?");
 		
-		Button btnCheckButton_2 = new Button(composite_2, SWT.CHECK);
+		text_2 = new Text(sashForm_2, SWT.BORDER);
+		sashForm_2.setWeights(new int[] {1, 1});
+		
+		SashForm sashForm_3 = new SashForm(composite_2, SWT.NONE);
+		
+		Button btnCheckButton_2 = new Button(sashForm_3, SWT.CHECK);
 		btnCheckButton_2.setText("High or abnormal blood pressure?");
 		
-		Button btnCheckButton_3 = new Button(composite_2, SWT.CHECK);
+		text_3 = new Text(sashForm_3, SWT.BORDER);
+		sashForm_3.setWeights(new int[] {1, 1});
+		
+		SashForm sashForm_4 = new SashForm(composite_2, SWT.NONE);
+		
+		Button btnCheckButton_3 = new Button(sashForm_4, SWT.CHECK);
 		btnCheckButton_3.setText("Respiratory or breathing problems (asthma, allergies, bronchitis)?");
 		
-		Button btnCheckButton_4 = new Button(composite_2, SWT.CHECK);
+		text_4 = new Text(sashForm_4, SWT.BORDER);
+		sashForm_4.setWeights(new int[] {1, 1});
+		
+		SashForm sashForm_5 = new SashForm(composite_2, SWT.NONE);
+		
+		Button btnCheckButton_4 = new Button(sashForm_5, SWT.CHECK);
 		btnCheckButton_4.setText("Diabetes?");
 		
-		Button btnCheckButton_5 = new Button(composite_2, SWT.CHECK);
+		text_5 = new Text(sashForm_5, SWT.BORDER);
+		sashForm_5.setWeights(new int[] {1, 1});
+		
+		SashForm sashForm_6 = new SashForm(composite_2, SWT.NONE);
+		
+		Button btnCheckButton_5 = new Button(sashForm_6, SWT.CHECK);
 		btnCheckButton_5.setText("Faintness, dizziness, lightheadedness or blackouts?");
 		
-		Button btnCheckButton_6 = new Button(composite_2, SWT.CHECK);
+		text_6 = new Text(sashForm_6, SWT.BORDER);
+		sashForm_6.setWeights(new int[] {1, 1});
+		
+		SashForm sashForm_7 = new SashForm(composite_2, SWT.NONE);
+		
+		Button btnCheckButton_6 = new Button(sashForm_7, SWT.CHECK);
 		btnCheckButton_6.setText("Frequent headaches?");
 		
-		Button btnCheckButton_7 = new Button(composite_2, SWT.CHECK);
+		text_7 = new Text(sashForm_7, SWT.BORDER);
+		sashForm_7.setWeights(new int[] {1, 1});
+		
+		SashForm sashForm_8 = new SashForm(composite_2, SWT.NONE);
+		
+		Button btnCheckButton_7 = new Button(sashForm_8, SWT.CHECK);
 		btnCheckButton_7.setText("Contact lenses?");
 		
-		Button btnCheckButton_8 = new Button(composite_2, SWT.CHECK);
+		text_8 = new Text(sashForm_8, SWT.BORDER);
+		sashForm_8.setWeights(new int[] {1, 1});
+		
+		SashForm sashForm_9 = new SashForm(composite_2, SWT.NONE);
+		
+		Button btnCheckButton_8 = new Button(sashForm_9, SWT.CHECK);
 		btnCheckButton_8.setText("Special shoes or orthotic supports?");
 		
-		Button btnCheckButton_9 = new Button(composite_2, SWT.CHECK);
+		text_22 = new Text(sashForm_9, SWT.BORDER);
+		sashForm_9.setWeights(new int[] {1, 1});
+		
+		SashForm sashForm_10 = new SashForm(composite_2, SWT.NONE);
+		
+		Button btnCheckButton_9 = new Button(sashForm_10, SWT.CHECK);
 		btnCheckButton_9.setText("Varicose veins?");
 		
-		Button btnCheckButton_10 = new Button(composite_2, SWT.CHECK);
+		text_23 = new Text(sashForm_10, SWT.BORDER);
+		sashForm_10.setWeights(new int[] {1, 1});
+		
+		SashForm sashForm_11 = new SashForm(composite_2, SWT.NONE);
+		
+		Button btnCheckButton_10 = new Button(sashForm_11, SWT.CHECK);
 		btnCheckButton_10.setText("Arthritis or osteoporosis? Joints affected.");
 		
-		Button btnCheckButton_11 = new Button(composite_2, SWT.CHECK);
+		text_24 = new Text(sashForm_11, SWT.BORDER);
+		sashForm_11.setWeights(new int[] {1, 1});
+		
+		SashForm sashForm_12 = new SashForm(composite_2, SWT.NONE);
+		
+		Button btnCheckButton_11 = new Button(sashForm_12, SWT.CHECK);
 		btnCheckButton_11.setText("Any type of cancer?");
 		
-		Button btnCheckButton_12 = new Button(composite_2, SWT.CHECK);
+		text_25 = new Text(sashForm_12, SWT.BORDER);
+		sashForm_12.setWeights(new int[] {1, 1});
+		
+		SashForm sashForm_13 = new SashForm(composite_2, SWT.NONE);
+		
+		Button btnCheckButton_12 = new Button(sashForm_13, SWT.CHECK);
 		btnCheckButton_12.setText("Chronic diarrhea or constipation?");
 		
-		Button btnCheckButton_13 = new Button(composite_2, SWT.CHECK);
+		text_26 = new Text(sashForm_13, SWT.BORDER);
+		sashForm_13.setWeights(new int[] {1, 1});
+		
+		SashForm sashForm_1 = new SashForm(composite_2, SWT.NONE);
+		
+		Button btnCheckButton_13 = new Button(sashForm_1, SWT.CHECK);
 		btnCheckButton_13.setText("Currently on medication?");
 		
-		Button btnCheckButton_14 = new Button(composite_2, SWT.CHECK);
+		text = new Text(sashForm_1, SWT.BORDER);
+		sashForm_1.setWeights(new int[] {1, 1});
+		
+		SashForm sashForm_14 = new SashForm(composite_2, SWT.NONE);
+		
+		Button btnCheckButton_14 = new Button(sashForm_14, SWT.CHECK);
 		btnCheckButton_14.setText("Receieved Cortisone injections?");
 		
-		Button btnCheckButton_15 = new Button(composite_2, SWT.CHECK);
+		text_27 = new Text(sashForm_14, SWT.BORDER);
+		sashForm_14.setWeights(new int[] {1, 1});
+		
+		SashForm sashForm_15 = new SashForm(composite_2, SWT.NONE);
+		
+		Button btnCheckButton_15 = new Button(sashForm_15, SWT.CHECK);
 		btnCheckButton_15.setText("Any skin conditions or reactions to lotions or creams?");
 		
-		Button btnCheckButton_16 = new Button(composite_2, SWT.CHECK);
+		text_28 = new Text(sashForm_15, SWT.BORDER);
+		sashForm_15.setWeights(new int[] {1, 1});
+		
+		SashForm sashForm_16 = new SashForm(composite_2, SWT.NONE);
+		
+		Button btnCheckButton_16 = new Button(sashForm_16, SWT.CHECK);
 		btnCheckButton_16.setText("Any other diagnosis or medical condition?");
+		
+		text_29 = new Text(sashForm_16, SWT.BORDER);
+		sashForm_16.setWeights(new int[] {1, 1});
 		
 		TabItem tbtmNewItem_2 = new TabItem(tabFolder, SWT.NONE);
 		tbtmNewItem_2.setText("Personal Habits and Lifestyle");
@@ -365,14 +469,14 @@ public class CreateClientWindow {
 		Button btnSave = new Button(composite, SWT.NONE);
 		btnSave.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseUp(MouseEvent arg0) {
+			public void mouseUp(MouseEvent arg0) 
+			{
 				client = new Client(text_12.getText());
 				dataBase.insertClient(client);
-				//System.out.println(dataBase.DumpDB());
 				shlCreatClient.dispose();
 			}
 		});
-		btnSave.setBounds(467, 368, 75, 25);
+		btnSave.setBounds(589, 368, 75, 25);
 		btnSave.setText("Save");
 		
 		Button btnCancel = new Button(composite, SWT.NONE);
@@ -382,7 +486,7 @@ public class CreateClientWindow {
 				shlCreatClient.dispose();
 			}
 		});
-		btnCancel.setBounds(576, 368, 75, 25);
+		btnCancel.setBounds(670, 368, 75, 25);
 		btnCancel.setText("Cancel");
 
 		shlCreatClient.open();

@@ -126,6 +126,9 @@ public class DataBaseAccess
 		{
 			insertString = 
 					  "'" + client.getName() + "'" + ", " 
+				    + "'" + client.getDOB()  + "'" + ", "
+					+ "'" + client.getHomePhone() + "'" + ", "
+				    + "'" + client.getWorkPhone() + "'" + ", "
 					+ "'" + client.getAddress() + "'"  + ", " 
 					+ "'" + client.getCity() + "'"  + ", " 
 					+ "'" + client.getProvince() + "'"  + ", " 
@@ -141,7 +144,7 @@ public class DataBaseAccess
 						  + client.getUncontrolled() + ", " 
 					+ "'" + client.getOccupation() + "'"  + ", " 
 					+ "'" + client.getSports() + "'"  + ", " 
-					+ "'" + "NULLSLEEP"  + "'" + ", " 
+					+ "'" + client.getSleepPattern()  + "'" + ", " 
 					+ "0" + ", " 
 					+ "0" +	", " 
 					+ "0"  + ", " 
@@ -194,27 +197,30 @@ public class DataBaseAccess
 		try
         {
 			updateString = 
-					  "'" + updatedClient.getName() + "'" + ", " 
-					+ "'" + updatedClient.getAddress() + "'"  + ", " 
-					+ "'" + updatedClient.getCity() + "'"  + ", " 
-					+ "'" + updatedClient.getProvince() + "'"  + ", " 
-					+ "'" + updatedClient.getPostCode() + "'"  +	", " 
-						  + updatedClient.getPhysician() + ", " 
-						  + updatedClient.getPhysioTherapist() + ", " 
-						  + updatedClient.getChiropractor() + ", " 
-						  + updatedClient.getExperience() + ", " 
-					+ "'" + updatedClient.getReason() + "'"  + ", " 
-						  + updatedClient.getDiet() + ", " 
-						  + updatedClient.getMedication() + ", " 
-						  + updatedClient.getInsulin() + ", " 
-						  + updatedClient.getUncontrolled() + ", " 
-					+ "'" + updatedClient.getOccupation() + "'"  + ", " 
-					+ "'" + updatedClient.getSports() + "'"  + ", " 
-					+ "'" + "NULLSLEEP"  + "'" + ", " 
-					+ "0" + ", " 
-					+ "0" +	", " 
-					+ "0"  + ", " 
-					+ "0";
+					  	  "'" + updatedClient.getName() + "'" + ", " 
+					    + "'" + updatedClient.getDOB()  + "'" + ", "
+						+ "'" + updatedClient.getHomePhone() + "'" + ", "
+					    + "'" + updatedClient.getWorkPhone() + "'" + ", "
+						+ "'" + updatedClient.getAddress() + "'"  + ", " 
+						+ "'" + updatedClient.getCity() + "'"  + ", " 
+						+ "'" + updatedClient.getProvince() + "'"  + ", " 
+						+ "'" + updatedClient.getPostCode() + "'"  +	", " 
+							  + updatedClient.getPhysician() + ", " 
+							  + updatedClient.getPhysioTherapist() + ", " 
+							  + updatedClient.getChiropractor() + ", " 
+							  + updatedClient.getExperience() + ", " 
+						+ "'" + updatedClient.getReason() + "'"  + ", " 
+							  + updatedClient.getDiet() + ", " 
+							  + updatedClient.getMedication() + ", " 
+							  + updatedClient.getInsulin() + ", " 
+							  + updatedClient.getUncontrolled() + ", " 
+						+ "'" + updatedClient.getOccupation() + "'"  + ", " 
+						+ "'" + updatedClient.getSports() + "'"  + ", " 
+						+ "'" + updatedClient.getSleepPattern()  + "'" + ", " 
+						+ "0" + ", " 
+						+ "0" +	", " 
+						+ "0"  + ", " 
+						+ "0";
 			
 			where = "WHERE Name = " + updatedClient.getName();
 			sqlCommand = "UPDATE CLIENTS SET " + updateString + " " + where;
@@ -259,7 +265,9 @@ public class DataBaseAccess
 	public Client readClient( String name )
 	{
 		Client newClient = null;
-		String address, city, province, postalCode, reason, occupation, sports, sleep;
+		String address, city, province, postalCode, 
+			   reason, occupation, sports, sleep,
+			   DOB, homePhone, workPhone;
 		
 		try
         {
@@ -284,15 +292,22 @@ public class DataBaseAccess
 	        	occupation 	= dbResult.getString( "Occupation" );
 	        	sports 		= dbResult.getString( "Sports" );
 	        	sleep 		= dbResult.getString( "Sleep" );
+	        	DOB 		= dbResult.getString( "DOB" );
+	        	homePhone 	= dbResult.getString( "Homephone" );
+	        	workPhone 	= dbResult.getString( "Workphone" );
+	        	sleep 		= dbResult.getString( "Sleep" );
+	        	
 	        	newClient 	= new Client( name );
+	        	
 	        	newClient.setAddress( address );
+	        	newClient.setDOB( DOB );
 	        	newClient.setCity( city );
 	        	newClient.setProvince( province );
 	        	newClient.setPostCode( postalCode );
 	        	newClient.setReason( reason );
 	        	newClient.setOccupation( occupation );
 	        	newClient.setSports( sports );
-	        	//newClient.setSleep( sleep );
+	        	newClient.setSleepPattern( sleep );
 	        }
         }
         catch ( SQLException e )
