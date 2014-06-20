@@ -125,22 +125,22 @@ public class DataBaseAccess
 		try
 		{
 			insertString = 
-					"'" + client.getName() + "'" + ", " 
+					  "'" + client.getName() + "'" + ", " 
 					+ "'" + client.getAddress() + "'"  + ", " 
 					+ "'" + client.getCity() + "'"  + ", " 
-					+ "'" +  client.getProvince() + "'"  + ", " 
-					+ "'" +  client.getPostCode() + "'"  +	", " 
-					+ client.getPhysician() + ", " 
-					+ client.getPhysioTherapist() + ", " 
-					+ client.getChiropractor() + ", " 
-					+ client.getExperience() + ", " 
-					+ client.getReason() + ", " 
-					+ client.getDiet() + ", " 
-					+ client.getMedication() + ", " 
-					+ client.getInsulin() + ", " 
-					+ client.getUncontrolled() + ", " 
-					+ client.getOccupation() + ", " 
-					+ client.getSports() + ", " 
+					+ "'" + client.getProvince() + "'"  + ", " 
+					+ "'" + client.getPostCode() + "'"  +	", " 
+						  + client.getPhysician() + ", " 
+						  + client.getPhysioTherapist() + ", " 
+						  + client.getChiropractor() + ", " 
+						  + client.getExperience() + ", " 
+					+ "'" + client.getReason() + "'"  + ", " 
+						  + client.getDiet() + ", " 
+						  + client.getMedication() + ", " 
+						  + client.getInsulin() + ", " 
+						  + client.getUncontrolled() + ", " 
+					+ "'" + client.getOccupation() + "'"  + ", " 
+					+ "'" + client.getSports() + "'"  + ", " 
 					+ "'" + "NULLSLEEP"  + "'" + ", " 
 					+ "0" + ", " 
 					+ "0" +	", " 
@@ -148,10 +148,10 @@ public class DataBaseAccess
 					+ "0";
 			
 			sqlCommand = "Insert into Clients " + "Values(" + insertString + ")";
-			System.out.println(sqlCommand);
+			System.out.println( sqlCommand );
 			didInsert = sqlStatement.execute( sqlCommand );
-			System.out.println(didInsert);
-			System.out.println("HERE");
+			System.out.println( didInsert );
+			System.out.println( "HERE" );
 		}
 		catch ( SQLException ex )
 		{
@@ -188,7 +188,49 @@ public class DataBaseAccess
 	public Boolean updateClient( Client updatedClient )
 	{
 		Boolean didUpdate = false;
-
+		int 	result;
+		String  updateString, where;
+		
+		try
+        {
+			updateString = 
+					  "'" + updatedClient.getName() + "'" + ", " 
+					+ "'" + updatedClient.getAddress() + "'"  + ", " 
+					+ "'" + updatedClient.getCity() + "'"  + ", " 
+					+ "'" + updatedClient.getProvince() + "'"  + ", " 
+					+ "'" + updatedClient.getPostCode() + "'"  +	", " 
+						  + updatedClient.getPhysician() + ", " 
+						  + updatedClient.getPhysioTherapist() + ", " 
+						  + updatedClient.getChiropractor() + ", " 
+						  + updatedClient.getExperience() + ", " 
+					+ "'" + updatedClient.getReason() + "'"  + ", " 
+						  + updatedClient.getDiet() + ", " 
+						  + updatedClient.getMedication() + ", " 
+						  + updatedClient.getInsulin() + ", " 
+						  + updatedClient.getUncontrolled() + ", " 
+					+ "'" + updatedClient.getOccupation() + "'"  + ", " 
+					+ "'" + updatedClient.getSports() + "'"  + ", " 
+					+ "'" + "NULLSLEEP"  + "'" + ", " 
+					+ "0" + ", " 
+					+ "0" +	", " 
+					+ "0"  + ", " 
+					+ "0";
+			
+			where = "WHERE Name = " + updatedClient.getName();
+			sqlCommand = "UPDATE CLIENTS SET " + updateString + " " + where;
+			result = sqlStatement.executeUpdate( sqlCommand );
+			
+			if ( result == 1 )
+			{
+				didUpdate = true;
+			}
+			
+        }
+        catch ( SQLException e )
+        {
+	        System.out.println( e );
+        }
+		
 		return didUpdate;
 	}
 
@@ -217,6 +259,46 @@ public class DataBaseAccess
 	public Client readClient( String name )
 	{
 		Client newClient = null;
+		String address, city, province, postalCode, reason, occupation, sports, sleep;
+		
+		try
+        {
+			sqlCommand = "SELECT * FROM CLIENTS WHERE Name = '" + name + "'";
+	        dbResult = sqlStatement.executeQuery( sqlCommand );
+        }
+        catch ( SQLException e )
+        {
+	        System.out.println( e );
+        }
+		
+		try
+        {
+	        while( dbResult.next() )
+	        {
+	        	name 		= dbResult.getString( "Name" );
+	        	address 	= dbResult.getString( "Address" );
+	        	city 		= dbResult.getString( "City" );
+	        	province 	= dbResult.getString( "Province" );
+	        	postalCode	= dbResult.getString( "PostalCode" );
+	        	reason 		= dbResult.getString( "Reason" );
+	        	occupation 	= dbResult.getString( "Occupation" );
+	        	sports 		= dbResult.getString( "Sports" );
+	        	sleep 		= dbResult.getString( "Sleep" );
+	        	newClient 	= new Client( name );
+	        	newClient.setAddress( address );
+	        	newClient.setCity( city );
+	        	newClient.setProvince( province );
+	        	newClient.setPostCode( postalCode );
+	        	newClient.setReason( reason );
+	        	newClient.setOccupation( occupation );
+	        	newClient.setSports( sports );
+	        	//newClient.setSleep( sleep );
+	        }
+        }
+        catch ( SQLException e )
+        {
+        	System.out.println( e );
+        }
 
 		return newClient;
 	}
@@ -239,15 +321,14 @@ public class DataBaseAccess
 	/*------------------------------------------------------
 	 * METHOD:			getAllClients
 	 *
-	 * PURPOSE:			This method will return the entire list of
-	 * 					clients. To be used in displaying them 
-	 * 					and what not.
+	 * PURPOSE:			This method will simply return a list of clients. There is not much more info
+	 * 					returned at the moment
 	------------------------------------------------------*/
 	public ArrayList<Client> getAllClients()
 	{
 		// Reset all Clients
 		Client client;
-		String name;
+		String name, address, city;
 		ArrayList<Client> allClients = new ArrayList<Client>();
 		
 		try
@@ -264,8 +345,12 @@ public class DataBaseAccess
         {
 	        while( dbResult.next() )
 	        {
-	        	name = dbResult.getString( "Name" );
-	        	client = new Client( name );
+	        	name 	= dbResult.getString( "Name" );
+	        	address = dbResult.getString( "Address" );
+	        	city 	= dbResult.getString( "City" );
+	        	client 	= new Client( name );
+	        	client.setAddress( address );
+	        	client.setCity( city );
 	        	allClients.add( client );
 	        }
         }
@@ -387,6 +472,15 @@ public class DataBaseAccess
 
 	public void genClients()
 	{
-		assert ( false );
+		Client one = new Client( "Pat Ricky" );
+		Client two = new Client( "George Curious" );
+		Client three = new Client( "Fred Freddy" );
+		Client four = new Client( "Patty Rick" );
+		Client five = new Client( "Travis Almighty" );
+		insertClient( one );
+		insertClient( two );
+		insertClient( three );
+		insertClient( four );
+		insertClient( five );
 	}
 }

@@ -14,8 +14,8 @@ public class Client
 	private String province;
 	private String postCode;
 	private Date DOB;
-	private int homePhone;
-	private int workPhone;
+	private String homePhone;
+	private String workPhone;
 	
 	private boolean physician;
 	private boolean physioTherapist;
@@ -25,6 +25,7 @@ public class Client
 	private String reason;
 	
 	private Map<String, String> reports = new HashMap<String, String>();
+	private String[] historyReports;
 	
 	private boolean diet;
 	private boolean oral_medication;
@@ -55,6 +56,8 @@ public class Client
 		oral_medication = false;
     	insulin = false;
     	uncontrolled = false;
+    	
+    	historyReports = new String[17];
 	}
 	
 	public Client( String name )
@@ -152,12 +155,12 @@ public class Client
 		this.DOB = new Date(DOB);
 	}
 	
-	public void homePhone(int phone)
+	public void homePhone(String phone)
 	{
 		this.homePhone = phone;
 	}
 	
-	public void workPhone(int phone)
+	public void workPhone(String phone)
 	{
 		this.workPhone = phone;
 	}
@@ -192,12 +195,12 @@ public class Client
     return DOB;
 	}
 	
-	public int homePhone()
+	public String homePhone()
 	{
 		return homePhone;
 	}
 	
-	public int workPhone()
+	public String workPhone()
 	{
 		return workPhone;
 	}
