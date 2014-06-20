@@ -16,47 +16,65 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 
+import app.Service;
 import cis.buisness.Client;
+import cis.buisness.DataAccess;
 import cis.persistance.DBIntermediary;
 
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
 
-public class MainWindow extends Shell {
-	private Text clientTextBox;
-	private Table table;
-	private DBIntermediary dataBase;
+public class MainWindow extends Shell 
+{
+	private Text 				clientTextBox;
+	private Table 				table;
+	private DataAccess 			clientDataBase;
+	private static Service  	service;
 	
 	/**
 	 * Launch the application.
 	 * @param args
 	 */
 	public static void main(String args[]) {
-		try {
+		try 
+		{
+			service = new Service();
 			Display display = Display.getDefault();
 			MainWindow shell = new MainWindow(display);
+			
 			shell.open();
 			shell.layout();
-			while (!shell.isDisposed()) {
-				if (!display.readAndDispatch()) {
+			
+			while (!shell.isDisposed()) 
+			{
+				if (!display.readAndDispatch()) 
+				{
 					display.sleep();
 				}
 			}
-		} catch (Exception e) {
+		} 
+		catch (Exception e) 
+		{
 			e.printStackTrace();
 		}
+		
+		service.shutDownDB();
 	}
 
 	/**
 	 * Create the shell.
 	 * @param display
 	 */
-	public MainWindow(final Display display) {
+	public MainWindow(final Display display) 
+	{
 		super(display, SWT.SHELL_TRIM);
-		addFocusListener(new FocusAdapter() {
+		clientDataBase = new DataAccess();
+		
+		addFocusListener(new FocusAdapter() 
+		{
 			@Override
 			public void focusGained(FocusEvent arg0) {
-				ArrayList<Client> clients = dataBase.getAllClients();
+				ArrayList<Client> clients = clientDataBase.getAllClients();
 				final TableColumn [] columns = table.getColumns ();
 				for (int i=0; i<clients.size(); i++) //iterate through the whole list here and fill the table with data
 				{
@@ -74,8 +92,6 @@ public class MainWindow extends Shell {
 				 for (int i=0; i<columns.length; i++) columns [i].pack ();
 			}
 		});
-		dataBase = new DBIntermediary();
-		dataBase.genClients();
 		
 		Button btnExit = new Button(this, SWT.NONE);
 		btnExit.addSelectionListener(new SelectionAdapter() {
@@ -107,7 +123,7 @@ public class MainWindow extends Shell {
 			@Override
 			public void mouseUp(MouseEvent arg0) {
 				try {
-					CreateClientWindow window = new CreateClientWindow(dataBase);
+					CreateClientWindow window = new CreateClientWindow(clientDataBase);
 					window.open();
 				} catch (Exception e) {
 					e.printStackTrace();

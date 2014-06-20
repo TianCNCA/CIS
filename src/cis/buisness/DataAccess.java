@@ -2,16 +2,16 @@ package cis.buisness;
 
 import java.util.ArrayList;
 
-import app.Main;
+import app.Service;
 import cis.persistance.DataBaseAccess;
 
-public class ClientAccess
+public class DataAccess
 {
 	private DataBaseAccess database;
 	
-	public ClientAccess()
+	public DataAccess()
 	{
-		database = Main.getDB();
+		database = Service.getDB();
 	}
 	
 	public ArrayList<Client> getAllClients()

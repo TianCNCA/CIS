@@ -1,22 +1,20 @@
 package app;
 
-import org.eclipse.swt.widgets.Display;
-
 import cis.persistance.DataBaseAccess;
-import cis.presentation.MainWindow;
 
-public class Main
+public class Service
 {
 	private static DataBaseAccess database;
 	
-	public static void main( String[] args )
+	public Service()
 	{
 		database = new DataBaseAccess();
 		database.init();
 		database.genClients();
-		
-		new MainWindow();
-		
+	}
+	
+	public void shutDownDB()
+	{
 		database.shutdownDB();
 	}
 	

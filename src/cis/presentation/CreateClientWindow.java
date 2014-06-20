@@ -21,6 +21,7 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 
 import cis.buisness.Client;
+import cis.buisness.DataAccess;
 import cis.persistance.DBIntermediary;
 
 public class CreateClientWindow {
@@ -39,7 +40,7 @@ public class CreateClientWindow {
 	private Text text_21;
 	
 	
-	private DBIntermediary dataBase;
+	private DataAccess dataBase;
 	private Client client;
 
 	
@@ -60,7 +61,7 @@ public class CreateClientWindow {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public CreateClientWindow(DBIntermediary dataBase) {
+	public CreateClientWindow(DataAccess dataBase) {
 		this.dataBase = dataBase;
 	}
 	
@@ -367,7 +368,7 @@ public class CreateClientWindow {
 			public void mouseUp(MouseEvent arg0) {
 				client = new Client(text_12.getText());
 				dataBase.insertClient(client);
-				System.out.println(dataBase.DumpDB());
+				//System.out.println(dataBase.DumpDB());
 				shlCreatClient.dispose();
 			}
 		});
