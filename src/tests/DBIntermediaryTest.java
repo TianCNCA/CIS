@@ -1,11 +1,15 @@
 package tests;
 
+import java.util.ArrayList;
+
 import junit.framework.TestCase;
 import cis.buisness.Client;
 import cis.persistance.DBIntermediary;
 
 public class DBIntermediaryTest extends TestCase
 {
+	private DBIntermediary db;
+	
 	public void testDBIntermediary()
 	{
 		DBIntermediary db = new DBIntermediary();
@@ -18,7 +22,7 @@ public class DBIntermediaryTest extends TestCase
 	{
 		System.out.println( "Test Insert" );
 		
-		DBIntermediary db = new DBIntermediary();
+		//DBIntermediary db = new DBIntermediary();
 		Client testClient = new Client( "Pat" );
 		Boolean didInsert;
 		db.insertClient( testClient );
@@ -40,7 +44,7 @@ public class DBIntermediaryTest extends TestCase
 		// us that
 		// it is in there
 		assertEquals( testClient.getName(), db.readClient( "Pat" ).getName() );
-		
+
 		System.out.println( "End Test Insert\n" );
 	}
 

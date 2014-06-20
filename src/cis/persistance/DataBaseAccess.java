@@ -2,6 +2,7 @@ package cis.persistance;
 
 import java.util.ArrayList;
 import java.sql.SQLException;
+import java.sql.SQLRecoverableException;
 import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -26,7 +27,7 @@ public class DataBaseAccess
 	private String 				dbName;
 	private String 				dbDriver;
 	private Integer 			dbSize;
-	private ArrayList<Client> 	allClients;
+	//private ArrayList<Client> 	allClients;
 	private ArrayList<Soap> 	allSoaps;
 	
 	// DB Specifics
@@ -123,18 +124,34 @@ public class DataBaseAccess
 		
 		try
 		{
-			insertString = client.getName() + ", " + client.getAddress() + ", " +
-				client.getCity() + ", " + client.getProvince() + ", " + client.getPostCode() +
-				", " + client.getPhysician() + ", " + client.getPhysioTherapist() + ", " +
-				client.getChiropractor() + ", " + client.getExperience() + ", " + client.getReason() +
-				", " + client.getDiet() + ", " + client.getMedication() + ", " + client.getInsulin()
-				+ ", " + client.getUncontrolled() + ", " + client.getOccupation() + ", " + 
-				client.getSports() + ", " + "NULLSLEEP"  + ", " + "0" + ", " + "0" +
-				", " + "0"  + ", " + "0";
+			insertString = 
+					"'" + client.getName() + "'" + ", " 
+					+ "'" + client.getAddress() + "'"  + ", " 
+					+ "'" + client.getCity() + "'"  + ", " 
+					+ "'" +  client.getProvince() + "'"  + ", " 
+					+ "'" +  client.getPostCode() + "'"  +	", " 
+					+ client.getPhysician() + ", " 
+					+ client.getPhysioTherapist() + ", " 
+					+ client.getChiropractor() + ", " 
+					+ client.getExperience() + ", " 
+					+ client.getReason() + ", " 
+					+ client.getDiet() + ", " 
+					+ client.getMedication() + ", " 
+					+ client.getInsulin() + ", " 
+					+ client.getUncontrolled() + ", " 
+					+ client.getOccupation() + ", " 
+					+ client.getSports() + ", " 
+					+ "'" + "NULLSLEEP"  + "'" + ", " 
+					+ "0" + ", " 
+					+ "0" +	", " 
+					+ "0"  + ", " 
+					+ "0";
 			
-			sqlCommand = "Insert into Clients " + " Values(" + insertString + ")";
+			sqlCommand = "Insert into Clients " + "Values(" + insertString + ")";
 			System.out.println(sqlCommand);
 			didInsert = sqlStatement.execute( sqlCommand );
+			System.out.println(didInsert);
+			System.out.println("HERE");
 		}
 		catch ( SQLException ex )
 		{
@@ -229,7 +246,33 @@ public class DataBaseAccess
 	public ArrayList<Client> getAllClients()
 	{
 		// Reset all Clients
-		allClients = null;
+		Client client;
+		String name;
+		ArrayList<Client> allClients = new ArrayList<Client>();
+		
+		try
+        {
+			sqlCommand = "SELECT * FROM CLIENTS";
+	        dbResult = sqlStatement.executeQuery( sqlCommand );
+        }
+        catch ( SQLException e )
+        {
+	        System.out.println( e );
+        }
+		
+		try
+        {
+	        while( dbResult.next() )
+	        {
+	        	name = dbResult.getString( "Name" );
+	        	client = new Client( name );
+	        	allClients.add( client );
+	        }
+        }
+        catch ( SQLException e )
+        {
+        	System.out.println( e );
+        }
 
 		return allClients;
 	}

@@ -326,4 +326,9 @@ public class Client
 	{
 		return sports;
 	}
+	
+	public String toString()
+	{
+		return name;
+	}
 }
