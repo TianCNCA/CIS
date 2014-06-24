@@ -4,9 +4,8 @@ import java.util.*;
 
 public class Soap implements Comparable<Soap>
 {
-	private Date date;
+	private MyDate date;
 	private String info;
-	private String clientName;
 
 
 	public Soap()
@@ -14,22 +13,7 @@ public class Soap implements Comparable<Soap>
 		assert( false );
 	}
 
-
-	public Soap( Date date )
-	{
-		this.date = date;
-	}
-
-
-	public Soap( String info, String clientName )
-	{
-		this.date = new Date();
-		this.info = info;
-		this.clientName = clientName;
-	}
-
-
-	public Soap( Date date, String info )
+	public Soap( MyDate date, String info )
 	{
 		this.date = date;
 		this.info = info;
@@ -46,13 +30,14 @@ public class Soap implements Comparable<Soap>
 	@Override
 	public int compareTo( Soap other )
 	{
-		return this.date.compareTo( other.getDate() );
+		//return this.date.compareTo( other.getDate() );
+		return 1;
 	}
 
 
-	public void setDate( String date )
+	public void setDate( MyDate date )
 	{
-		this.date = new Date( date );
+		this.date = date;
 	}
 
 
@@ -62,19 +47,14 @@ public class Soap implements Comparable<Soap>
 	}
 
 
-	public Date getDate()
+	public String getDate()
 	{
-		return date;
+		return date.toString();
 	}
 
 
 	public String getInfo()
 	{
 		return info;
-	}
-	
-	public String getClientName()
-	{
-		return clientName;
 	}
 }

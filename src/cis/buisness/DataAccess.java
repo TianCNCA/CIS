@@ -49,17 +49,17 @@ public class DataAccess
 		return database.renameClient( oldName, newName );
 	}
 
-	public ArrayList<Soap> getAllSoaps()
+	public SoapBox getAllSoaps()
 	{
 		return database.getAllSoaps();
 	}
 	
-	public Soap readSoap( String clientName )
+	public SoapBox readSoap( String clientName )
 	{
 		return database.readSoap( clientName );
 	}
 	
-	public Boolean insertSoap( Soap soap )
+	public Boolean insertSoap( SoapBox soap )
 	{
 		return database.insertSoap( soap );
 	}

@@ -2,27 +2,50 @@ package cis.buisness;
 
 import java.util.*;
 
-public class SoapBox {
-  protected ArrayList <Soap> visits;
+public class SoapBox 
+{
+  private ArrayList<Soap>   visits;
+  private String 			clientName;
   
-  public SoapBox(){
+  public SoapBox( String clientName )
+  {
     visits = new ArrayList<Soap>();
+    this.clientName = clientName;
   }
   
-  public void add(Date date, String info){
+  public void add(MyDate date, String info)
+  {
     Soap newSoap = new Soap(date, info);
     visits.add(newSoap);
   }
   
-  public Soap last(){
-    return visits.get(visits.size());
+  public String getClientName()
+  {
+	  return clientName;
   }
   
-  public Soap[] getSoaps(){
-	  Soap soaps[] = new Soap[visits.size()];
-	  for(int i=0; i<visits.size(); i++){
-		  soaps[i] = visits.get(i);
-	  }
-	  return soaps;
+  public void setClientName( String clientName )
+  {
+	  this.clientName = clientName;
+  }
+  
+  public Soap last()
+  {
+    return visits.get(visits.size() - 1);
+  }
+  
+  public Soap getSoapByIndex( int i )
+  {
+	  return visits.get( i );
+  }
+  
+  public ArrayList<Soap> getSoaps()
+  {
+	  return visits;
+  }
+  
+  public int numSoaps()
+  {
+	  return visits.size();
   }
 }

@@ -477,7 +477,8 @@ public class CreateClientWindow {
 				client.setCity( text_14.getText() );
 				client.setProvince( text_15.getText() );
 				client.setPostCode( text_16.getText() );
-				client.setDOB( dateTime_1.toString() );
+				//client.setDOB( dateTime_1.toString() );
+				System.out.println( dateTime_1.toString() );
 				client.setHomePhone( text_18.getText() );
 				client.setWorkPhone( text_18.getText() );
 				client.setPhysician( button.getSelection() );

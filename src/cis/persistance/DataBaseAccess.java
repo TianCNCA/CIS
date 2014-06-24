@@ -11,6 +11,7 @@ import java.sql.SQLWarning;
 
 import cis.buisness.Client;
 import cis.buisness.Soap;
+import cis.buisness.SoapBox;
 
 /*------------------------------------------------------
  * CLASS:			DataBaseAccess
@@ -153,8 +154,6 @@ public class DataBaseAccess
 			sqlCommand = "Insert into Clients " + "Values(" + insertString + ")";
 			System.out.println( sqlCommand );
 			didInsert = sqlStatement.execute( sqlCommand );
-			System.out.println( didInsert );
-			System.out.println( "HERE" );
 		}
 		catch ( SQLException ex )
 		{
@@ -295,12 +294,10 @@ public class DataBaseAccess
 	        	DOB 		= dbResult.getString( "DOB" );
 	        	homePhone 	= dbResult.getString( "Homephone" );
 	        	workPhone 	= dbResult.getString( "Workphone" );
-	        	sleep 		= dbResult.getString( "Sleep" );
 	        	
 	        	newClient 	= new Client( name );
 	        	
 	        	newClient.setAddress( address );
-	        	newClient.setDOB( DOB );
 	        	newClient.setCity( city );
 	        	newClient.setProvince( province );
 	        	newClient.setPostCode( postalCode );
@@ -308,6 +305,9 @@ public class DataBaseAccess
 	        	newClient.setOccupation( occupation );
 	        	newClient.setSports( sports );
 	        	newClient.setSleepPattern( sleep );
+	        	newClient.setDOB( DOB );
+	        	newClient.setHomePhone( homePhone );
+	        	newClient.setWorkPhone( workPhone );
 	        }
         }
         catch ( SQLException e )
@@ -327,9 +327,7 @@ public class DataBaseAccess
 	------------------------------------------------------*/
 	public Client readClient( Client client )
 	{
-		Client newClient = null;
-
-		return newClient;
+		return readClient( client.getName() );
 	}
 
 
@@ -385,10 +383,10 @@ public class DataBaseAccess
 	 * 					soaps. To be used in displaying them 
 	 * 					and what not.
 	------------------------------------------------------*/
-	public ArrayList<Soap> getAllSoaps()
+	public SoapBox getAllSoaps()
 	{
 		// Reset all Clients
-		allSoaps = null;
+		SoapBox allSoaps = null;
 
 		return allSoaps;
 	}
@@ -400,9 +398,9 @@ public class DataBaseAccess
 	 * PURPOSE:			This method will take a client name String, and search
 	 * 					for the appropriate soap.
 	------------------------------------------------------*/
-	public Soap readSoap( String clientName )
+	public SoapBox readSoap( String clientName )
 	{
-		Soap soap = null;
+		SoapBox soap = null;
 
 		return soap;
 	}
@@ -413,9 +411,33 @@ public class DataBaseAccess
 	 *
 	 * PURPOSE:				
 	------------------------------------------------------*/
-	public Boolean insertSoap( Soap client )
+	public Boolean insertSoap( SoapBox soapBox )
 	{
 		Boolean didInsert = false;
+		String  insertString;
+		
+		for ( int i = 0; i < soapBox.numSoaps(); i++ )
+		{
+			Soap soap = soapBox.getSoapByIndex( i );
+			insertString = 
+						soapBox.getClientName() + ", "
+					  + soap.getDate() + ", "
+					  + soap.getInfo();
+					 
+			
+			sqlCommand = "Insert into Clients " + "Values(" + insertString + ")";
+			System.out.println( sqlCommand );
+			
+			try
+            {
+	            didInsert = sqlStatement.execute( sqlCommand );
+            }
+            catch ( SQLException e )
+            {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+            }
+		}
 
 		return didInsert;
 	}
@@ -426,7 +448,7 @@ public class DataBaseAccess
 	 *
 	 * PURPOSE:			This class will attempt to delete the soap
 	------------------------------------------------------*/
-	public Boolean deleteSoap( Soap client )
+	public Boolean deleteSoap( Soap soap )
 	{
 		Boolean didDelete = false;
 
@@ -468,6 +490,7 @@ public class DataBaseAccess
 	------------------------------------------------------*/
 	public int getSize()
 	{
+		assert( false );
 		return dbSize;
 	}
 
@@ -480,6 +503,7 @@ public class DataBaseAccess
 	------------------------------------------------------*/
 	public int getInterSize()
 	{
+		// Yeah don't use this anymore
 		assert ( false );
 		return dbSize;
 	}

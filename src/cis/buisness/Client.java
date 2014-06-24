@@ -13,7 +13,7 @@ public class Client
 	private String city;
 	private String province;
 	private String postCode;
-	private Date DOB;
+	private MyDate DOB;
 	private String homePhone;
 	private String workPhone;
 	
@@ -31,7 +31,7 @@ public class Client
 	private boolean oral_medication;
 	private boolean insulin;
 	private boolean uncontrolled;
-
+	
 	//Personal Habits and Lifestyle
 	private String occupation;
 	private String sports;
@@ -45,7 +45,7 @@ public class Client
 	public Client()
 	{
 		setActive(true);
-		this.visits = new SoapBox();
+		this.visits = new SoapBox( "NULL" );
     
 		physician = false;
 		physioTherapist = false;
@@ -64,7 +64,7 @@ public class Client
 	{
 		this.name = name;
 		setActive(true);
-		this.visits = new SoapBox();
+		this.visits = new SoapBox( this.name );
     
 		physician = false;
 		physioTherapist = false;
@@ -79,7 +79,7 @@ public class Client
 
 	public int getAge()
 	{
-		Date current = new Date();
+		MyDate current = new MyDate();
 		int current_year = current.getYear();
 		int year = this.DOB.getYear();
 		int age = current_year - year;
@@ -92,25 +92,25 @@ public class Client
 
 	public boolean isActive()
 	{
-		if(active == true)
+		if (active == true)
 		{
-			Date date = visits.last().getDate();
-			Date today = new Date();
-			int year = date.getYear();
-			int this_year = today.getYear();
-			if(this_year>year)
-				setActive(false);
+//			Date date = visits.last().getDate();
+//			Date today = new Date();
+//			int year = date.getYear();
+//			int this_year = today.getYear();
+//			if(this_year>year)
+//				setActive(false);
 		}
 		return active;
 	}
 	
 	public void addSoap(String info)
 	{
-		Date today = new Date();
+		MyDate today = new MyDate();
 		visits.add(today, info);
 	}
 	
-	public void addSoap(Date date, String info)
+	public void addSoap(MyDate date, String info)
 	{
 		visits.add(date, info);
 	}
@@ -120,7 +120,7 @@ public class Client
 		return visits.last();
 	}
 	
-	public Soap[] getSoaps()
+	public ArrayList<Soap> getSoaps()
 	{
 		return visits.getSoaps();
 	}
@@ -152,7 +152,7 @@ public class Client
 	
 	public void setDOB(String DOB)
 	{
-		this.DOB = new Date(DOB);
+		//this.DOB = new Date(DOB);
 	}
 	
 	public void setHomePhone(String phone)
@@ -200,7 +200,7 @@ public class Client
 		return postCode;
 	}
 	
-	public Date getDOB()
+	public MyDate getDOB()
 	{
     return DOB;
 	}

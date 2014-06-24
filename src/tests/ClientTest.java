@@ -1,6 +1,7 @@
 package tests;
 
 import cis.buisness.Client;
+import cis.buisness.MyDate;
 import junit.framework.TestCase;
 
 //import org.junit.Test;
@@ -24,10 +25,10 @@ public class ClientTest extends TestCase
 		assertEquals(user.lastSoap(), null);
 	}
 
-	public void testSetUp()
-	{
-		
-	}
+//	public void testSetUp()
+//	{
+//		
+//	}
 	
 	@Override
 	protected void tearDown() throws Exception 
