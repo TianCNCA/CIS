@@ -13,7 +13,7 @@ public class Client
 	private String city;
 	private String province;
 	private String postCode;
-	private MyDate DOB;
+	private Date   DOB;
 	private String homePhone;
 	private String workPhone;
 	
@@ -106,11 +106,11 @@ public class Client
 	
 	public void addSoap(String info)
 	{
-		MyDate today = new MyDate();
+		Date today = new Date();
 		visits.add(today, info);
 	}
 	
-	public void addSoap(MyDate date, String info)
+	public void addSoap(Date date, String info)
 	{
 		visits.add(date, info);
 	}
@@ -200,7 +200,7 @@ public class Client
 		return postCode;
 	}
 	
-	public MyDate getDOB()
+	public Date getDOB()
 	{
     return DOB;
 	}

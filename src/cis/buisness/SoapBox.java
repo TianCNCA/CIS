@@ -13,7 +13,7 @@ public class SoapBox
     this.clientName = clientName;
   }
   
-  public void add(MyDate date, String info)
+  public void add(Date date, String info)
   {
     Soap newSoap = new Soap(date, info);
     visits.add(newSoap);

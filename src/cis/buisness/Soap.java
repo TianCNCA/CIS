@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Soap implements Comparable<Soap>
 {
-	private MyDate date;
+	private Date date;
 	private String info;
 
 
@@ -13,7 +13,7 @@ public class Soap implements Comparable<Soap>
 		assert( false );
 	}
 
-	public Soap( MyDate date, String info )
+	public Soap( Date date, String info )
 	{
 		this.date = date;
 		this.info = info;
@@ -35,7 +35,7 @@ public class Soap implements Comparable<Soap>
 	}
 
 
-	public void setDate( MyDate date )
+	public void setDate( Date date )
 	{
 		this.date = date;
 	}
