@@ -17,21 +17,24 @@ public class DBService
 
 	public DBService()
 	{
-		valid = false;
+		System.out.println("Creating DB Service");
+		valid	 = false;
 		database = null;
 	}
 
 
 	public void initializeDB()
 	{
+		System.out.println("Initializing DB Service");
 		database = new DataBaseAccess();
-		valid = database.init();
+		valid 	 = database.init();
 	}
 
 
 	// THIS SHOULD ALWAYS BE CALLED!
 	public void shutDownDB()
 	{
+		System.out.println("Shutting down DB Service");
 		database.shutdownDB();
 	}
 

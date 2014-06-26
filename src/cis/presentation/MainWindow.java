@@ -25,10 +25,10 @@ import org.eclipse.swt.events.FocusEvent;
 
 public class MainWindow extends Shell 
 {
-	private Text 				clientTextBox;
-	private Table 				table;
-	private DataAccess 			clientDataBase;
-	private static DBService  	service;
+	private 		Text 				clientTextBox;
+	private 		Table 				table;
+	private 		DataAccess 			clientDataBase;
+	private static 	DBService  			service;
 	
 	/**
 	 * Launch the application.
@@ -46,6 +46,8 @@ public class MainWindow extends Shell
 				service.shutDownDB();
 				System.exit( 0 );
 			}
+			
+			service.genClients();
 			
 			Display display = Display.getDefault();
 			MainWindow shell = new MainWindow(display);

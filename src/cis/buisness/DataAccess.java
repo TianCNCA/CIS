@@ -64,15 +64,21 @@ public class DataAccess
 	}
 
 
-	public SoapBox readSoap( String clientName )
+	public SoapBox readSoaps( String clientName )
 	{
-		return database.readSoap( clientName );
+		return database.readSoaps( clientName );
 	}
 
 
-	public Boolean insertSoap( SoapBox soap )
+	public Boolean insertSoapBox( SoapBox soap )
 	{
-		return database.insertSoap( soap );
+		return database.insertSoapBox( soap );
+	}
+	
+	
+	public Boolean insertSoap( Soap soap, String clientName )
+	{
+		return database.insertSoap( soap, clientName );
 	}
 
 
@@ -82,8 +88,14 @@ public class DataAccess
 	}
 
 
-	public Boolean updateSoap( SoapBox soap )
+	public Boolean updateSoap( SoapBox soap, String oldMessage )
 	{
-		return database.updateSoap( soap );
+		return database.updateSoap( soap, oldMessage );
+	}
+	
+	
+	public int getSize()
+	{
+		return database.getSize();
 	}
 }

@@ -186,6 +186,7 @@ public class DataBaseAccess
 			System.out.println( sqlCommand );
 			didInsert = sqlStatement.execute( sqlCommand );
 			
+			key++;			
 			dbSize++;
 		}
 		catch ( SQLException ex )
@@ -196,9 +197,8 @@ public class DataBaseAccess
 			// in that case, we attemp to just insert the soaps, maybe we are just updating?
 			if ( ex.getSQLState().equals( "23505" ) )
 			{
-				System.out.println( "actually doing this" );
 				// Now insert the soaps from the client, regardless weather the client inserted or not.
-				insertSoap( client.getSoaps() );
+				insertSoapBox( client.getSoaps() );
 			}
 			
 		}
@@ -288,7 +288,7 @@ public class DataBaseAccess
 	------------------------------------------------------*/
 	public Client readClient( String clientName )
 	{
-		Client newClient = null;
+		Client 	newClient = null;
 		String 	name, address, city, province, postalCode, 
 			   	reason, occupation, sports, sleep, DOB,
 			   	homePhone, workPhone;
@@ -460,9 +460,9 @@ public class DataBaseAccess
 	 * METHOD:			readSoap
 	 *
 	 * PURPOSE:			This method will take a client name String, and search
-	 * 					for the appropriate soap.
+	 * 					for the appropriate soap
 	------------------------------------------------------*/
-	public SoapBox readSoap( String clientName )
+	public SoapBox readSoaps( String clientName )
 	{
 		SoapBox soap = null;
 
@@ -470,12 +470,38 @@ public class DataBaseAccess
 	}
 	
 	
+	public Boolean insertSoap( Soap soap, String clientName )
+    {
+		Boolean didInsert = false;
+		String  insertString;
+		
+		insertString 	= "Insert into Soaps Values (" + key + " ,'" + clientName + "', " 
+							+ "'" + soap.getDate().toString() + "' , "
+							+ "'" + soap.getInfo() + "'";				 
+		sqlCommand 		= "Insert into Soaps " + "Values(" + insertString + ")";
+		System.out.println( sqlCommand );
+		
+		try
+        {
+            didInsert = sqlStatement.execute( sqlCommand );
+            key++;
+        }
+        catch ( SQLException e )
+        {
+            System.out.println( e );
+            e.printStackTrace();
+        }
+
+		return didInsert;
+    }
+	
+	
 	/*------------------------------------------------------
 	 * METHOD:			insertSoap
 	 *
-	 * PURPOSE:			Soap
+	 * PURPOSE:			This inserts a whole bunch of messages, all from a client
 	------------------------------------------------------*/
-	public Boolean insertSoap( SoapBox soapBox )
+	public Boolean insertSoapBox( SoapBox soapBox )
 	{
 		Boolean didInsert = false;
 		String  insertString;
@@ -492,6 +518,7 @@ public class DataBaseAccess
 			try
             {
 	            didInsert = sqlStatement.execute( sqlCommand );
+	            key++;
             }
             catch ( SQLException e )
             {
@@ -527,7 +554,7 @@ public class DataBaseAccess
 	 * PURPOSE:			This method will find a soap object already in the system,
 	 * 					and replace/update it with the new information
 	------------------------------------------------------*/
-	public Boolean updateSoap( SoapBox updatedClient )
+	public Boolean updateSoap( SoapBox updatedClient, String oldMessage )
 	{
 		Boolean didUpdate = false;
 
@@ -618,8 +645,6 @@ public class DataBaseAccess
 						+ client.getStress()  			+ ", " 
 						+ client.getAppetite();
 		
-		key++;
-		
 		return insertString;
 	}
 	
@@ -651,9 +676,7 @@ public class DataBaseAccess
 			+ "Set Stress = " 		+ updatedClient.getStress()				+ ", " 
 			+ "Set Appetite = " 	+ updatedClient.getAppetite();
 	
-	key++;
-	
-	return insertString;
+		return insertString;
     }
 	
 	private String buildSoapString( String clientName, Soap soap )
@@ -663,7 +686,6 @@ public class DataBaseAccess
 				 	+ "'" + clientName 		+ "'" + ", "
 					+ "'" + soap.getDate() 	+ "'" + ", "
 					+ "'" + soap.getInfo() 	+ "'";
-		key++;
 
 		return insertString;
 	}

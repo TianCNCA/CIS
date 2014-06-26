@@ -3,7 +3,9 @@ package tests;
 import java.util.ArrayList;
 import java.util.Date;
 
+import app.DBService;
 import cis.buisness.Client;
+import cis.buisness.DataAccess;
 import cis.buisness.SoapBox;
 import cis.persistance.DataBaseAccess;
 import junit.framework.TestCase;
@@ -11,14 +13,17 @@ import junit.framework.TestCase;
 @SuppressWarnings( "unused" )
 public final class DataBaseAccessTest extends TestCase
 {	
-	private DataBaseAccess database;
+	private DataAccess database;
+	private DBService  service;
 	
 	@Override
 	protected void setUp() throws Exception 
 	{
 		super.setUp();
-		database = new DataBaseAccess();
-		database.init();
+		
+		service = new DBService();
+		service.initializeDB();
+		database = new DataAccess();
 		
 		assertEquals( 0, database.getSize() );
 	}
@@ -70,7 +75,7 @@ public final class DataBaseAccessTest extends TestCase
 	@Override
 	protected void tearDown() throws Exception 
 	{
+		service.shutDownDB();
 		super.tearDown();
-		database.shutdownDB();
 	}
 }
