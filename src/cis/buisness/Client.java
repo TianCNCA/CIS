@@ -79,7 +79,7 @@ public class Client
 
 	public int getAge()
 	{
-		MyDate current = new MyDate();
+		Date current = new Date();
 		int current_year = current.getYear();
 		int year = this.DOB.getYear();
 		int age = current_year - year;
