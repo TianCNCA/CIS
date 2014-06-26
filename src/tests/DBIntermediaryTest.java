@@ -1,15 +1,11 @@
 package tests;
 
-import java.util.ArrayList;
-
 import junit.framework.TestCase;
 import cis.buisness.Client;
 import cis.persistance.DBIntermediary;
 
 public class DBIntermediaryTest extends TestCase
-{
-	private DBIntermediary db;
-	
+{	
 	public void testDBIntermediary()
 	{
 		DBIntermediary db = new DBIntermediary();

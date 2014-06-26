@@ -8,6 +8,7 @@ import cis.buisness.SoapBox;
 import cis.persistance.DataBaseAccess;
 import junit.framework.TestCase;
 
+@SuppressWarnings( "unused" )
 public final class DataBaseAccessTest extends TestCase
 {	
 	private DataBaseAccess database;
@@ -46,7 +47,6 @@ public final class DataBaseAccessTest extends TestCase
 		test.addSoap( new Date(), "All aboard the boyer express!" );
 		
 		Boolean insert = database.insertClient( test );
-		//Boolean insert = database.insertSoap( testBox );
 		System.out.println(insert);
 		//assertTrue( insert );
 		System.out.println( "END INSERT SOAP TEST\n" );

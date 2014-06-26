@@ -269,16 +269,16 @@ public class DataBaseAccess
 	 * PURPOSE:			This method will find a client object already in the system,
 	 * 					(hopefully) and return it to us. Returns null if nothing found
 	------------------------------------------------------*/
-	public Client readClient( String name )
+	public Client readClient( String clientName )
 	{
 		Client newClient = null;
-		String address, city, province, postalCode, 
-			   reason, occupation, sports, sleep,
-			   DOB, homePhone, workPhone;
+		String name, address, city, province, postalCode, 
+			   reason, occupation, sports, sleep, DOB,
+			   homePhone, workPhone;
 		
 		try
         {
-			sqlCommand 	= "SELECT * FROM CLIENTS WHERE Name = '" + name + "'";
+			sqlCommand 	= "SELECT * FROM CLIENTS WHERE Name = '" + clientName + "'";
 	        dbResult 	= sqlStatement.executeQuery( sqlCommand );
         }
         catch ( SQLException e )

@@ -22,10 +22,11 @@ import org.eclipse.swt.events.MouseEvent;
 
 import cis.buisness.Client;
 import cis.buisness.DataAccess;
-import cis.persistance.DBIntermediary;
+
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.custom.SashForm;
 
+@SuppressWarnings( "unused" )
 public class CreateClientWindow {
 	private Text text_9;
 	private Text text_10;
@@ -46,7 +47,7 @@ public class CreateClientWindow {
 	private Client client;
 	private Text text;
 	private Text text_1;
-	private Text text_2;
+    private Text text_2;
 	private Text text_3;
 	private Text text_4;
 	private Text text_5;
