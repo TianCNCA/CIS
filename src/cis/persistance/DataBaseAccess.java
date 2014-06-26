@@ -1,6 +1,7 @@
 package cis.persistance;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.sql.SQLException;
 import java.sql.SQLRecoverableException;
 import java.sql.Statement;
@@ -158,7 +159,7 @@ public class DataBaseAccess
 	------------------------------------------------------*/
 	public Boolean insertClient( Client client )
 	{
-		Boolean didInsert = false;
+		Boolean didInsert 		= false;
 		String  insertString;
 		
 		try
@@ -168,15 +169,24 @@ public class DataBaseAccess
 			System.out.println( sqlCommand );
 			didInsert = sqlStatement.execute( sqlCommand );
 			
-			// Now insert the soaps from the client
-			insertSoap( client.getSoaps() );
-			
 			dbSize++;
 		}
 		catch ( SQLException ex )
 		{
 			System.out.println( ex );
+			
+			// 23505 is the SQLIntegrityConstraintViolationException. I.e. the client already exists.
+			// in that case, we attemp to just insert the soaps, maybe we are just updating?
+			if ( ex.getSQLState().equals( "23505" ) )
+			{
+				System.out.println( "actually doing this" );
+				// Now insert the soaps from the client, regardless weather the client inserted or not.
+				insertSoap( client.getSoaps() );
+			}
+			
 		}
+		
+		
 
 		return didInsert;
 	}
@@ -337,7 +347,6 @@ public class DataBaseAccess
 	------------------------------------------------------*/
 	public ArrayList<Client> getAllClients()
 	{
-		// Reset all Clients
 		Client 				client;
 		String 				name, address, city;
 		ArrayList<Client> 	allClients = new ArrayList<Client>();
@@ -381,13 +390,41 @@ public class DataBaseAccess
 	 * 					soaps. To be used in displaying them 
 	 * 					and what not.
 	------------------------------------------------------*/
-	public SoapBox getAllSoaps()
+	@SuppressWarnings( "deprecation" )
+    public SoapBox getAllSoaps( String clientName )
 	{
-		// Reset all Clients
-		SoapBox allSoaps = null;
+		SoapBox allSoaps = new SoapBox( clientName );
 		
-		// This should never be used!
-		assert( false );
+		Client newClient = null;
+		String date, disc;
+		
+		try
+        {
+			sqlCommand 	= "SELECT * FROM SOAPS WHERE Name = '" + clientName + "'";
+	        dbResult 	= sqlStatement.executeQuery( sqlCommand );
+        }
+        catch ( SQLException e )
+        {
+	        System.out.println( e );
+        }
+		
+		try
+        {
+	        while( dbResult.next() )
+	        {
+	        	Soap tempSoap = new Soap();
+	        	date = dbResult.getString( "Date" );
+	        	disc = dbResult.getString( "Disc" );
+	        	tempSoap.setDate( new Date( date ) );
+	        	tempSoap.setInfo( disc );
+	        	
+	        	allSoaps.add( tempSoap );
+	        }
+        }
+        catch ( SQLException e )
+        {
+        	System.out.println( e );
+        }
 
 		return allSoaps;
 	}

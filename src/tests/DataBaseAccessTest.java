@@ -38,14 +38,15 @@ public final class DataBaseAccessTest extends TestCase
 		System.out.println( "INSERT SOAP TEST" );
 		
 		Client test    = new Client( "Georgy Georgerson" );
-		database.insertClient( test );
 		
-		SoapBox testBox = new SoapBox( test.getName() );
-		testBox.add( new Date(), "This was splended! Jolly good show mate!" );
-		testBox.add( new Date(), "Woohoo!" );
-		testBox.add( new Date(), "Things are looking ship shape captian!" );
-		testBox.add( new Date(), "All aboard the boyer express!" );
-		Boolean insert = database.insertSoap( testBox );
+		//SoapBox testBox = new SoapBox( test.getName() );
+		test.addSoap( new Date(), "This was splended! Jolly good show mate!" );
+		test.addSoap( new Date(), "Woohoo!" );
+		test.addSoap( new Date(), "Things are looking ship shape captian!" );
+		test.addSoap( new Date(), "All aboard the boyer express!" );
+		
+		Boolean insert = database.insertClient( test );
+		//Boolean insert = database.insertSoap( testBox );
 		System.out.println(insert);
 		//assertTrue( insert );
 		System.out.println( "END INSERT SOAP TEST\n" );
