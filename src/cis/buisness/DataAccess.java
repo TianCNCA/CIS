@@ -2,7 +2,7 @@ package cis.buisness;
 
 import java.util.ArrayList;
 
-import app.Service;
+import app.DBService;
 import cis.persistance.DataBaseAccess;
 
 public class DataAccess
@@ -12,7 +12,7 @@ public class DataAccess
 
 	public DataAccess()
 	{
-		database = Service.getDB();
+		database = DBService.getDB();
 	}
 
 
@@ -58,9 +58,9 @@ public class DataAccess
 	}
 
 
-	public SoapBox getAllSoaps( String clienetName )
+	public SoapBox getAllSoaps( String clientName )
 	{
-		return database.getAllSoaps( clienetName );
+		return database.getAllSoaps( clientName );
 	}
 
 

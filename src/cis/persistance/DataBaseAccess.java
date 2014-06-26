@@ -47,6 +47,7 @@ public class DataBaseAccess
 		dbName 	 = "ClientSystem";
 		dbDriver = "org.hsqldb.jdbcDriver";
 		dbSize 	 = 0;
+		key 	 = -1;
 	}
 
 	
@@ -56,8 +57,9 @@ public class DataBaseAccess
 	 * PURPOSE:			this will initialize the database, set up the tables,
 	 * 					and get everything ready.
 	------------------------------------------------------*/
-	private void initializeDB()
+	private Boolean initializeDB()
 	{
+		Boolean initiated = false;
 		// The location for the DB
 		String dbLocation = "jdbc:hsqldb:database/" + dbName;
 		
@@ -76,6 +78,7 @@ public class DataBaseAccess
 	        }
 	        catch ( SQLException e )
 	        {
+	        	initiated = false;
 		        System.out.println( e );
 	        }
 			
@@ -84,17 +87,28 @@ public class DataBaseAccess
 		        while( dbResult.next() )
 		        {
 		        	key	= dbResult.getInt( "ID" );
+		        	
+		        	// we made it this far! We need ID to be set.
+		        	
+		        	if ( key > -1 )
+		        	{
+		        		initiated = true;
+		        	}
 		        }
 	        }
 	        catch ( SQLException e )
 	        {
+	        	initiated = false;
 	        	System.out.println( e );
 	        }
 		}
 		catch ( Exception ex )
 		{
+			initiated = false;
 			System.out.println( ex );
 		}
+		
+		return initiated;
 	}
 
 
@@ -104,12 +118,15 @@ public class DataBaseAccess
 	 * PURPOSE:			Setup the DB, load any data that we already have in the DB
 	 * 					up, and general DB setup.
 	------------------------------------------------------*/
-	public void init()
+	public Boolean init()
 	{
-		dbSize = 0;
+		Boolean initiated = false;
 		
 		// Build or load the DB
-		initializeDB();
+		dbSize = 0;
+		initiated = initializeDB();
+		
+		return initiated;
 	}
 
 
@@ -605,7 +622,7 @@ public class DataBaseAccess
 					+ "'" + soap.getDate() 	+ "'" + ", "
 					+ "'" + soap.getInfo() 	+ "'";
 		key++;
-		
+
 		return insertString;
 	}
 }

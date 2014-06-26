@@ -46,7 +46,7 @@ GRANT DBA TO SA
 SET SCHEMA SYSTEM_LOBS
 INSERT INTO BLOCKS VALUES(0,2147483647,0)
 SET SCHEMA PUBLIC
-INSERT INTO ID VALUES(0,47)
+INSERT INTO ID VALUES(0,52)
 INSERT INTO CLIENTS VALUES(5,'Pat Ricky','null','null','null','null','null','null','null',FALSE,FALSE,FALSE,FALSE,'null',FALSE,FALSE,FALSE,FALSE,'null','null','null',0,0,0,0)
 INSERT INTO CLIENTS VALUES(6,'George Curious','null','null','null','null','null','null','null',FALSE,FALSE,FALSE,FALSE,'null',FALSE,FALSE,FALSE,FALSE,'null','null','null',0,0,0,0)
 INSERT INTO CLIENTS VALUES(7,'Fred Freddy','null','null','null','null','null','null','null',FALSE,FALSE,FALSE,FALSE,'null',FALSE,FALSE,FALSE,FALSE,'null','null','null',0,0,0,0)
