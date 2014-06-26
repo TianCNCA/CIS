@@ -244,7 +244,7 @@ public class DataBaseAccess
 		
 		try
         {
-			updateString = buildClientString( updatedClient );
+			updateString = buildClientUpdateString( updatedClient );
 			
 			where 		= "WHERE Name = " + updatedClient.getName();
 			sqlCommand 	= "UPDATE CLIENTS SET " + updateString + " " + where;
@@ -289,9 +289,10 @@ public class DataBaseAccess
 	public Client readClient( String clientName )
 	{
 		Client newClient = null;
-		String name, address, city, province, postalCode, 
-			   reason, occupation, sports, sleep, DOB,
-			   homePhone, workPhone;
+		String 	name, address, city, province, postalCode, 
+			   	reason, occupation, sports, sleep, DOB,
+			   	homePhone, workPhone;
+		int 	smoking, alcohol, stress, appetite;
 		
 		try
         {
@@ -319,6 +320,10 @@ public class DataBaseAccess
 	        	DOB 		= dbResult.getString( "DOB" );
 	        	homePhone 	= dbResult.getString( "Homephone" );
 	        	workPhone 	= dbResult.getString( "Workphone" );
+	        	smoking 	= dbResult.getInt( "Smoking" );
+	        	alcohol 	= dbResult.getInt( "Alcohol" );
+	        	stress 		= dbResult.getInt( "Stress" );
+	        	appetite 	= dbResult.getInt( "Appetite" );
 	        	
 	        	newClient 	= new Client( name );
 	        	
@@ -333,6 +338,10 @@ public class DataBaseAccess
 	        	newClient.setDOB( DOB );
 	        	newClient.setHomePhone( homePhone );
 	        	newClient.setWorkPhone( workPhone );
+	        	newClient.setSmoking( smoking );
+	        	newClient.setAlcohol( alcohol );
+	        	newClient.setStress( stress );
+	        	newClient.setAppetite( appetite );
 	        }
         }
         catch ( SQLException e )
@@ -583,36 +592,69 @@ public class DataBaseAccess
 	private String buildClientString( Client client )
 	{
 		String insertString = 
-				 	  + key 						+ "," +
-				  "'" + client.getName() 			+ "'" + ", " 
-			    + "'" + client.getDOB()  			+ "'" + ", "
-				+ "'" + client.getHomePhone() 		+ "'" + ", "
-			    + "'" + client.getWorkPhone() 		+ "'" + ", "
-				+ "'" + client.getAddress() 		+ "'" + ", " 
-				+ "'" + client.getCity() 			+ "'" + ", " 
-				+ "'" + client.getProvince() 		+ "'" + ", " 
-				+ "'" + client.getPostCode() 		+ "'" +	", " 
-					  + client.getPhysician() 		+ ", " 
-					  + client.getPhysioTherapist() + ", " 
-					  + client.getChiropractor() 	+ ", " 
-					  + client.getExperience() 		+ ", " 
-				+ "'" + client.getReason() 			+ "'" + ", " 
-					  + client.getDiet() 			+ ", " 
-					  + client.getMedication() 		+ ", " 
-					  + client.getInsulin() 		+ ", " 
-					  + client.getUncontrolled() 	+ ", " 
-				+ "'" + client.getOccupation() 		+ "'" + ", " 
-				+ "'" + client.getSports() 			+ "'" + ", " 
-				+ "'" + client.getSleepPattern()  	+ "'" + ", " 
-				+ "0" + ", " 
-				+ "0" +	", " 
-				+ "0"  + ", " 
-				+ "0";
+				 	  	+ key 							+ "," +
+				  "'" 	+ client.getName() 				+ "'" + ", " 
+			    + "'" 	+ client.getDOB()  				+ "'" + ", "
+				+ "'" 	+ client.getHomePhone() 		+ "'" + ", "
+			    + "'" 	+ client.getWorkPhone() 		+ "'" + ", "
+				+ "'" 	+ client.getAddress() 			+ "'" + ", " 
+				+ "'" 	+ client.getCity() 				+ "'" + ", " 
+				+ "'" 	+ client.getProvince() 			+ "'" + ", " 
+				+ "'" 	+ client.getPostCode() 			+ "'" +	", " 
+					  	+ client.getPhysician() 		+ ", " 
+					  	+ client.getPhysioTherapist() 	+ ", " 
+					  	+ client.getChiropractor() 		+ ", " 
+					  	+ client.getExperience() 		+ ", " 
+				+ "'"	+ client.getReason() 			+ "'" + ", " 
+					  	+ client.getDiet() 				+ ", " 
+					  	+ client.getMedication() 		+ ", " 
+					  	+ client.getInsulin() 			+ ", " 
+					  	+ client.getUncontrolled() 		+ ", " 
+				+ "'" 	+ client.getOccupation() 		+ "'" + ", " 
+				+ "'" 	+ client.getSports() 			+ "'" + ", " 
+				+ "'" 	+ client.getSleepPattern()  	+ "'" + ", " 
+						+ client.getSmoking() 			+ ", " 
+						+ client.getAlcohol() 			+	", " 
+						+ client.getStress()  			+ ", " 
+						+ client.getAppetite();
 		
 		key++;
 		
 		return insertString;
 	}
+	
+	
+	private String buildClientUpdateString( Client updatedClient )
+    {
+		String insertString = 
+		      "Set DOB = '" + updatedClient.getDOB()  						+ "'" + ", "
+			+ "Set HomePhone = '" 	+ updatedClient.getHomePhone() 			+ "'" + ", "
+		    + "Set WorkPhone = '" 	+ updatedClient.getWorkPhone() 			+ "'" + ", "
+			+ "Set Address = '" 	+ updatedClient.getAddress() 			+ "'" + ", " 
+			+ "Set City = '" 		+ updatedClient.getCity() 				+ "'" + ", " 
+			+ "Set PRovince = '" 	+ updatedClient.getProvince() 			+ "'" + ", " 
+			+ "Set PostalCode = '" 	+ updatedClient.getPostCode() 			+ "'" +	", " 
+			+ "Set Physician = "	+ updatedClient.getPhysician() 			+ ", " 
+			+ "Set Physther = "	  	+ updatedClient.getPhysioTherapist() 	+ ", " 
+			+ "Set Chiro = " 	  	+ updatedClient.getChiropractor() 		+ ", " 
+			+ "Set PrevExp = "	  	+ updatedClient.getExperience() 		+ ", " 
+			+ "Set Reason = '" 		+ updatedClient.getReason() 			+ "'" + ", " 
+			+ "Set Diet = "	  		+ updatedClient.getDiet() 				+ ", " 
+			+ "Set Med = "	  		+ updatedClient.getMedication() 		+ ", " 
+			+ "Set Insulin = "	  	+ updatedClient.getInsulin() 			+ ", " 
+			+ "Set Unctrl = "	  	+ updatedClient.getUncontrolled() 		+ ", " 
+			+ "Set Occupation = '" 	+ updatedClient.getOccupation() 		+ "'" + ", " 
+			+ "Set Sports = '" 		+ updatedClient.getSports() 			+ "'" + ", " 
+			+ "Set Sleep = '" 		+ updatedClient.getSleepPattern()  		+ "'" + ", " 
+			+ "Set Smoking = " 		+ updatedClient.getSmoking()			+ ", " 
+			+ "Set Alchohol = " 	+ updatedClient.getAlcohol()			+	", " 
+			+ "Set Stress = " 		+ updatedClient.getStress()				+ ", " 
+			+ "Set Appetite = " 	+ updatedClient.getAppetite();
+	
+	key++;
+	
+	return insertString;
+    }
 	
 	private String buildSoapString( String clientName, Soap soap )
 	{

@@ -16,7 +16,7 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 
-import app.Service;
+import app.DBService;
 import cis.buisness.Client;
 import cis.buisness.DataAccess;
 
@@ -28,7 +28,7 @@ public class MainWindow extends Shell
 	private Text 				clientTextBox;
 	private Table 				table;
 	private DataAccess 			clientDataBase;
-	private static Service  	service;
+	private static DBService  	service;
 	
 	/**
 	 * Launch the application.
@@ -37,7 +37,16 @@ public class MainWindow extends Shell
 	public static void main(String args[]) {
 		try 
 		{
-			service = new Service();
+			service = new DBService();
+			service.initializeDB();
+			
+			if ( !service.getValid() )
+			{
+				System.out.println( "Error in building DB, exiting now" );
+				service.shutDownDB();
+				System.exit( 0 );
+			}
+			
 			Display display = Display.getDefault();
 			MainWindow shell = new MainWindow(display);
 			

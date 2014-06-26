@@ -226,6 +226,31 @@ public class Client
 			this.appetite = appetite;
 		}
 	}
+	
+	
+	public int getSmoking()
+	{
+		return smoking;
+	}
+	
+	
+	// Don't mind if I do :)
+	public int getAlcohol()
+	{
+		return alcohol;
+	}
+	
+	
+	public int getStress()
+	{
+		return stress;
+	}
+	
+	
+	public int getAppetite()
+	{
+		return appetite;
+	}
 
 
 	public String getSleepPattern()
