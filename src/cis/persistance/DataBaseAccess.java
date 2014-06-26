@@ -173,6 +173,10 @@ public class DataBaseAccess
 	public Boolean deleteClient( Client client )
 	{
 		Boolean didDelete = false;
+		
+		// Cannot actually delete, this would violate Canadian Law!!!
+		// DUN DUN DUN...
+		assert( false );
 
 		return didDelete;
 	}
@@ -451,6 +455,10 @@ public class DataBaseAccess
 	public Boolean deleteSoap( Soap soap )
 	{
 		Boolean didDelete = false;
+		
+		// Cannot actually delete, this would violate Canadian Law!!!
+		// DUN DUN DUN...
+		assert( false );
 
 		return didDelete;
 	}
@@ -462,7 +470,7 @@ public class DataBaseAccess
 	 * PURPOSE:			This method will find a soap object already in the system,
 	 * 					and replace/update it with the new information
 	------------------------------------------------------*/
-	public Boolean updateSoap( Soap updatedClient )
+	public Boolean updateSoap( SoapBox updatedClient )
 	{
 		Boolean didUpdate = false;
 

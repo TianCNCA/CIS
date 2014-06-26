@@ -5,7 +5,7 @@ import java.util.*;
 public class Client 
 {
 	private boolean active;
-	protected SoapBox visits;
+	protected SoapBox soapBox;
 	
 	//personal information
 	private String name;
@@ -45,7 +45,7 @@ public class Client
 	public Client()
 	{
 		setActive(true);
-		this.visits = new SoapBox( "NULL" );
+		this.soapBox = new SoapBox( "NULL" );
     
 		physician = false;
 		physioTherapist = false;
@@ -64,7 +64,7 @@ public class Client
 	{
 		this.name = name;
 		setActive(true);
-		this.visits = new SoapBox( this.name );
+		this.soapBox = new SoapBox( this.name );
     
 		physician = false;
 		physioTherapist = false;
@@ -107,22 +107,22 @@ public class Client
 	public void addSoap(String info)
 	{
 		Date today = new Date();
-		visits.add(today, info);
+		soapBox.add(today, info);
 	}
 	
 	public void addSoap(Date date, String info)
 	{
-		visits.add(date, info);
+		soapBox.add(date, info);
 	}
 	
 	public Soap lastSoap()
 	{
-		return visits.last();
+		return soapBox.last();
 	}
 	
 	public ArrayList<Soap> getSoaps()
 	{
-		return visits.getSoaps();
+		return soapBox.getSoaps();
 	}
 	
 	public void setName(String name)

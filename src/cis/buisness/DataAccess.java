@@ -69,7 +69,7 @@ public class DataAccess
 		return database.deleteSoap( soap );
 	}
 
-	public Boolean updateSoap( Soap soap )
+	public Boolean updateSoap( SoapBox soap )
 	{
 		return database.updateSoap( soap );
 	}

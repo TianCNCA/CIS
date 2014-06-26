@@ -1,7 +1,6 @@
 package tests;
 
 import cis.buisness.Client;
-import cis.buisness.MyDate;
 import junit.framework.TestCase;
 
 //import org.junit.Test;
