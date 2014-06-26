@@ -28,6 +28,7 @@ public class DataBaseAccess
 	private String 				dbName;
 	private String 				dbDriver;
 	private Integer 			dbSize;
+	private Integer 			key;
 	//private ArrayList<Client> 	allClients;
 	private ArrayList<Soap> 	allSoaps;
 	
@@ -66,6 +67,28 @@ public class DataBaseAccess
 			Class.forName( dbDriver ).newInstance();
 			dbConnection = DriverManager.getConnection( dbLocation, "SA", "" );
 			sqlStatement = dbConnection.createStatement();
+			
+			try
+	        {
+				sqlCommand = "SELECT * FROM ID";
+		        dbResult = sqlStatement.executeQuery( sqlCommand );
+	        }
+	        catch ( SQLException e )
+	        {
+		        System.out.println( e );
+	        }
+			
+			try
+	        {
+		        while( dbResult.next() )
+		        {
+		        	key	= dbResult.getInt( "ID" );
+		        }
+	        }
+	        catch ( SQLException e )
+	        {
+	        	System.out.println( e );
+	        }
 		}
 		catch ( Exception ex )
 		{
@@ -99,6 +122,21 @@ public class DataBaseAccess
 	{
 		try
         {
+			try
+			{
+				// Save the key to the DB
+				sqlCommand 	= "UPDATE ID SET ID = " + key + " WHERE KEY = 0" ;
+				sqlStatement.executeUpdate( sqlCommand );
+				System.out.println( sqlCommand );
+				sqlStatement.execute( sqlCommand );
+				
+				dbSize++;
+			}
+			catch ( SQLException ex )
+			{
+				System.out.println( ex );
+			}
+			
 			sqlCommand = "shutdown compact";
 	        dbResult = sqlStatement.executeQuery( sqlCommand );
 	        dbConnection.close();
@@ -125,35 +163,15 @@ public class DataBaseAccess
 		
 		try
 		{
-			insertString = 
-					  "'" + client.getName() + "'" + ", " 
-				    + "'" + client.getDOB()  + "'" + ", "
-					+ "'" + client.getHomePhone() + "'" + ", "
-				    + "'" + client.getWorkPhone() + "'" + ", "
-					+ "'" + client.getAddress() + "'"  + ", " 
-					+ "'" + client.getCity() + "'"  + ", " 
-					+ "'" + client.getProvince() + "'"  + ", " 
-					+ "'" + client.getPostCode() + "'"  +	", " 
-						  + client.getPhysician() + ", " 
-						  + client.getPhysioTherapist() + ", " 
-						  + client.getChiropractor() + ", " 
-						  + client.getExperience() + ", " 
-					+ "'" + client.getReason() + "'"  + ", " 
-						  + client.getDiet() + ", " 
-						  + client.getMedication() + ", " 
-						  + client.getInsulin() + ", " 
-						  + client.getUncontrolled() + ", " 
-					+ "'" + client.getOccupation() + "'"  + ", " 
-					+ "'" + client.getSports() + "'"  + ", " 
-					+ "'" + client.getSleepPattern()  + "'" + ", " 
-					+ "0" + ", " 
-					+ "0" +	", " 
-					+ "0"  + ", " 
-					+ "0";
-			
+			insertString = buildClientString( client );			
 			sqlCommand = "Insert into Clients " + "Values(" + insertString + ")";
 			System.out.println( sqlCommand );
 			didInsert = sqlStatement.execute( sqlCommand );
+			
+			// Now insert the soaps from the client
+			insertSoap( client.getSoaps() );
+			
+			dbSize++;
 		}
 		catch ( SQLException ex )
 		{
@@ -194,40 +212,16 @@ public class DataBaseAccess
 	public Boolean updateClient( Client updatedClient )
 	{
 		Boolean didUpdate = false;
-		int 	result;
 		String  updateString, where;
+		int 	result;
 		
 		try
         {
-			updateString = 
-					  	  "'" + updatedClient.getName() + "'" + ", " 
-					    + "'" + updatedClient.getDOB()  + "'" + ", "
-						+ "'" + updatedClient.getHomePhone() + "'" + ", "
-					    + "'" + updatedClient.getWorkPhone() + "'" + ", "
-						+ "'" + updatedClient.getAddress() + "'"  + ", " 
-						+ "'" + updatedClient.getCity() + "'"  + ", " 
-						+ "'" + updatedClient.getProvince() + "'"  + ", " 
-						+ "'" + updatedClient.getPostCode() + "'"  +	", " 
-							  + updatedClient.getPhysician() + ", " 
-							  + updatedClient.getPhysioTherapist() + ", " 
-							  + updatedClient.getChiropractor() + ", " 
-							  + updatedClient.getExperience() + ", " 
-						+ "'" + updatedClient.getReason() + "'"  + ", " 
-							  + updatedClient.getDiet() + ", " 
-							  + updatedClient.getMedication() + ", " 
-							  + updatedClient.getInsulin() + ", " 
-							  + updatedClient.getUncontrolled() + ", " 
-						+ "'" + updatedClient.getOccupation() + "'"  + ", " 
-						+ "'" + updatedClient.getSports() + "'"  + ", " 
-						+ "'" + updatedClient.getSleepPattern()  + "'" + ", " 
-						+ "0" + ", " 
-						+ "0" +	", " 
-						+ "0"  + ", " 
-						+ "0";
+			updateString = buildClientString( updatedClient );
 			
-			where = "WHERE Name = " + updatedClient.getName();
-			sqlCommand = "UPDATE CLIENTS SET " + updateString + " " + where;
-			result = sqlStatement.executeUpdate( sqlCommand );
+			where 		= "WHERE Name = " + updatedClient.getName();
+			sqlCommand 	= "UPDATE CLIENTS SET " + updateString + " " + where;
+			result 		= sqlStatement.executeUpdate( sqlCommand );
 			
 			if ( result == 1 )
 			{
@@ -274,8 +268,8 @@ public class DataBaseAccess
 		
 		try
         {
-			sqlCommand = "SELECT * FROM CLIENTS WHERE Name = '" + name + "'";
-	        dbResult = sqlStatement.executeQuery( sqlCommand );
+			sqlCommand 	= "SELECT * FROM CLIENTS WHERE Name = '" + name + "'";
+	        dbResult 	= sqlStatement.executeQuery( sqlCommand );
         }
         catch ( SQLException e )
         {
@@ -344,9 +338,9 @@ public class DataBaseAccess
 	public ArrayList<Client> getAllClients()
 	{
 		// Reset all Clients
-		Client client;
-		String name, address, city;
-		ArrayList<Client> allClients = new ArrayList<Client>();
+		Client 				client;
+		String 				name, address, city;
+		ArrayList<Client> 	allClients = new ArrayList<Client>();
 		
 		try
         {
@@ -391,6 +385,9 @@ public class DataBaseAccess
 	{
 		// Reset all Clients
 		SoapBox allSoaps = null;
+		
+		// This should never be used!
+		assert( false );
 
 		return allSoaps;
 	}
@@ -413,23 +410,20 @@ public class DataBaseAccess
 	/*------------------------------------------------------
 	 * METHOD:			insertSoap
 	 *
-	 * PURPOSE:				
+	 * PURPOSE:			Soap
 	------------------------------------------------------*/
 	public Boolean insertSoap( SoapBox soapBox )
 	{
 		Boolean didInsert = false;
 		String  insertString;
+		// We use soapBox because the name is going to be the same everytime!
+		String 	clientName = soapBox.getClientName();
 		
 		for ( int i = 0; i < soapBox.numSoaps(); i++ )
 		{
-			Soap soap = soapBox.getSoapByIndex( i );
-			insertString = 
-						soapBox.getClientName() + ", "
-					  + soap.getDate() + ", "
-					  + soap.getInfo();
-					 
-			
-			sqlCommand = "Insert into Clients " + "Values(" + insertString + ")";
+			Soap soap 		= soapBox.getSoapByIndex( i );
+			insertString 	= buildSoapString( clientName, soap );					 
+			sqlCommand 		= "Insert into Soaps " + "Values(" + insertString + ")";
 			System.out.println( sqlCommand );
 			
 			try
@@ -438,7 +432,7 @@ public class DataBaseAccess
             }
             catch ( SQLException e )
             {
-	            // TODO Auto-generated catch block
+	            System.out.println( e );
 	            e.printStackTrace();
             }
 		}
@@ -498,7 +492,6 @@ public class DataBaseAccess
 	------------------------------------------------------*/
 	public int getSize()
 	{
-		assert( false );
 		return dbSize;
 	}
 
@@ -520,6 +513,7 @@ public class DataBaseAccess
 	public void genClients()
 	{
 		Client one = new Client( "Pat Ricky" );
+		
 		Client two = new Client( "George Curious" );
 		Client three = new Client( "Fred Freddy" );
 		Client four = new Client( "Patty Rick" );
@@ -529,5 +523,52 @@ public class DataBaseAccess
 		insertClient( three );
 		insertClient( four );
 		insertClient( five );
+	}
+	
+	
+	private String buildClientString( Client client )
+	{
+		String insertString = 
+				 	  + key 						+ "," +
+				  "'" + client.getName() 			+ "'" + ", " 
+			    + "'" + client.getDOB()  			+ "'" + ", "
+				+ "'" + client.getHomePhone() 		+ "'" + ", "
+			    + "'" + client.getWorkPhone() 		+ "'" + ", "
+				+ "'" + client.getAddress() 		+ "'" + ", " 
+				+ "'" + client.getCity() 			+ "'" + ", " 
+				+ "'" + client.getProvince() 		+ "'" + ", " 
+				+ "'" + client.getPostCode() 		+ "'" +	", " 
+					  + client.getPhysician() 		+ ", " 
+					  + client.getPhysioTherapist() + ", " 
+					  + client.getChiropractor() 	+ ", " 
+					  + client.getExperience() 		+ ", " 
+				+ "'" + client.getReason() 			+ "'" + ", " 
+					  + client.getDiet() 			+ ", " 
+					  + client.getMedication() 		+ ", " 
+					  + client.getInsulin() 		+ ", " 
+					  + client.getUncontrolled() 	+ ", " 
+				+ "'" + client.getOccupation() 		+ "'" + ", " 
+				+ "'" + client.getSports() 			+ "'" + ", " 
+				+ "'" + client.getSleepPattern()  	+ "'" + ", " 
+				+ "0" + ", " 
+				+ "0" +	", " 
+				+ "0"  + ", " 
+				+ "0";
+		
+		key++;
+		
+		return insertString;
+	}
+	
+	private String buildSoapString( String clientName, Soap soap )
+	{
+		String insertString = 
+				 	+ key 					+ ","
+				 	+ "'" + clientName 		+ "'" + ", "
+					+ "'" + soap.getDate() 	+ "'" + ", "
+					+ "'" + soap.getInfo() 	+ "'";
+		key++;
+		
+		return insertString;
 	}
 }

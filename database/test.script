@@ -1,3 +1,3 @@
-update count 
------------- 
-0            
+UPDATE ID
+SET ID = 0
+WHERE KEY = 0

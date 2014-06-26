@@ -120,9 +120,9 @@ public class Client
 		return soapBox.last();
 	}
 	
-	public ArrayList<Soap> getSoaps()
+	public SoapBox getSoaps()
 	{
-		return soapBox.getSoaps();
+		return soapBox;
 	}
 	
 	public void setName(String name)
