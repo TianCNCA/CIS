@@ -11,7 +11,7 @@ public class Soap implements Comparable<Soap>
 
 	public Soap()
 	{
-		assert( false );
+		date = new Date();
 	}
 
 

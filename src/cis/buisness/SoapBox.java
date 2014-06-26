@@ -14,15 +14,15 @@ public class SoapBox {
     visits.add(newSoap);
   }
   
+  public void add(Soap newSoap){
+	    visits.add(newSoap);
+	  }
+  
   public Soap last(){
     return visits.get(visits.size());
   }
   
-  public Soap[] getSoaps(){
-	  Soap soaps[] = new Soap[visits.size()];
-	  for(int i=0; i<visits.size(); i++){
-		  soaps[i] = visits.get(i);
-	  }
-	  return soaps;
+  public ArrayList<Soap> getSoaps(){
+	  return visits;
   }
 }
