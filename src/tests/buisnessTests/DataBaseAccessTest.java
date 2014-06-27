@@ -340,6 +340,8 @@ public final class DataBaseAccessTest extends TestCase
 		SoapBox test = new SoapBox( "Patty Rick" );
 		test.add( new Date(), "Everything seems to be well" );
 		
+		System.out.println("Update ID: " + test.getSoapByIndex( 0 ).getKey() );
+		
 		database.insertSoapBox( test );
 		
 		SoapBox soapBox = database.readSoaps( "Patty Rick" );

@@ -15,6 +15,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.graphics.Image;
 
 import app.DBService;
 import cis.buisness.Client;
@@ -197,11 +198,18 @@ public class MainWindow extends Shell
 		address.setWidth(146);
 		city.setWidth(140);
 		
+//		Label lblClientInformationSystem = new Label(this, SWT.NONE);
+//		//lblClientInformationSystem.setFont(SWTResourceManager.getFont("Segoe UI", 16, SWT.NORMAL));
+//		lblClientInformationSystem.setAlignment(SWT.CENTER);
+//		lblClientInformationSystem.setBounds(36, 24, 500, 40);
+//		lblClientInformationSystem.setText("Client Information System");
+
 		Label lblClientInformationSystem = new Label(this, SWT.NONE);
+		lblClientInformationSystem.setImage(new Image(null, "images/logo.png"));
 		//lblClientInformationSystem.setFont(SWTResourceManager.getFont("Segoe UI", 16, SWT.NORMAL));
 		lblClientInformationSystem.setAlignment(SWT.CENTER);
-		lblClientInformationSystem.setBounds(36, 24, 500, 40);
-		lblClientInformationSystem.setText("Client Information System");
+		lblClientInformationSystem.setBounds(0, 0, 580, 196);
+		
 		
 /*		final TableColumn [] columns = table.getColumns ();
 		ArrayList<Client> clients = dataBase.getAllClients();

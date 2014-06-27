@@ -33,7 +33,9 @@ import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 
-public class CreateClientWindow {
+@SuppressWarnings( "unused" )
+public class CreateClientWindow 
+{
 	private Text text_9;
 	private Text text_10;
 	private Text text_11;
@@ -66,7 +68,7 @@ public class CreateClientWindow {
 	private Text text_26;
 	private Text text_27;
 	private Text text_28;
-	private Text text_29;
+    private Text text_29;
 
 	/**
 	 * Launch the application.

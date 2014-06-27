@@ -583,8 +583,8 @@ public class DataBaseAccess
 				if ( tempSoap != null )
 				{
 					updateString = buildSoapUpdateString( tempSoap );
-					where 		 = "Where ID = " + tempSoap.getKey();
-					sqlCommand 	 = "Update Soaps " + updateString + " " + where + ";";
+					where 		 = "WHERE ID = " + tempSoap.getKey();
+					sqlCommand 	 = "UPDATE SOAPS " + updateString + " " + where + ";";
 					System.out.println(sqlCommand);
 					result 		 = sqlStatement.executeUpdate( sqlCommand );
 					
