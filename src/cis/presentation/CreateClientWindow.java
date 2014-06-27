@@ -32,6 +32,7 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 
 @SuppressWarnings( "unused" )
@@ -109,6 +110,7 @@ public class CreateClientWindow
 		composite.setLayout(null);
 
 		TabFolder tabFolder = new TabFolder(composite, SWT.NONE);
+		tabFolder.setBackgroundImage( new Image( null, "images/bg.png") );
 
 		tabFolder.addSelectionListener(new SelectionAdapter() {
 			@Override

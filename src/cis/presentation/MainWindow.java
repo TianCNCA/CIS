@@ -56,10 +56,11 @@ public class MainWindow extends Shell
 			service.genClients();
 			
 			Display display = Display.getDefault();
-			 shell = new MainWindow(display);
+			shell = new MainWindow(display);
 			
 			shell.open();
 			shell.layout();
+			shell.setBackgroundImage( new Image( null, "images/bg.png") );
 			
 			while (!shell.isDisposed()) 
 			{
@@ -225,6 +226,7 @@ public class MainWindow extends Shell
 		//lblClientInformationSystem.setFont(SWTResourceManager.getFont("Segoe UI", 16, SWT.NORMAL));
 		lblClientInformationSystem.setAlignment(SWT.CENTER);
 		lblClientInformationSystem.setBounds(0, 0, 580, 196);
+		
 		
 /*		final TableColumn [] columns = table.getColumns ();
 		ArrayList<Client> clients = dataBase.getAllClients();
