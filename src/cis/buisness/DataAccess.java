@@ -48,15 +48,10 @@ public class DataAccess
 	{
 		return database.renameClient( oldName, newName );
 	}
-
-	public ArrayList<Soap> getAllSoaps()
-	{
-		return database.getAllSoaps();
-	}
 	
-	public Soap readSoap( String clientName )
+	public Soap readSoap( String soapName )
 	{
-		return database.readSoap( clientName );
+		return database.readSoap( soapName );
 	}
 	
 	public Boolean insertSoap( Soap soap )

@@ -2,37 +2,27 @@ package cis.buisness;
 
 import java.util.*;
 
+import app.DBService;
+
 public class Soap implements Comparable<Soap>
 {
-	private Date date;
-	private String info;
-	private String clientName;
+	private Date    date;
+	private String  info;
+	private int 	key;
 
 
 	public Soap()
 	{
-		assert( false );
+		date = null;
+		info = null;
+		key  = DBService.getCurrentKey();
 	}
-
-
-	public Soap( Date date )
-	{
-		this.date = date;
-	}
-
-
-	public Soap( String info, String clientName )
-	{
-		this.date = new Date();
-		this.info = info;
-		this.clientName = clientName;
-	}
-
 
 	public Soap( Date date, String info )
 	{
 		this.date = date;
 		this.info = info;
+		key = DBService.getCurrentKey();
 	}
 
 
@@ -46,13 +36,14 @@ public class Soap implements Comparable<Soap>
 	@Override
 	public int compareTo( Soap other )
 	{
-		return this.date.compareTo( other.getDate() );
+		//return this.date.compareTo( other.getDate() );
+		return 1;
 	}
 
 
-	public void setDate( String date )
+	public void setDate( Date date )
 	{
-		this.date = new Date( date );
+		this.date = date;
 	}
 
 
@@ -73,8 +64,18 @@ public class Soap implements Comparable<Soap>
 		return info;
 	}
 	
-	public String getClientName()
+	
+	public void setKey( int key )
 	{
-		return clientName;
+		if ( key > -1 )
+		{
+			this.key = key;
+		}
+	}
+	
+	
+	public int getKey()
+	{
+		return key;
 	}
 }
