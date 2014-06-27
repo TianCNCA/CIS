@@ -53,9 +53,9 @@ public class Soap implements Comparable<Soap>
 	}
 
 
-	public String getDate()
+	public Date getDate()
 	{
-		return date.toString();
+		return date;
 	}
 
 

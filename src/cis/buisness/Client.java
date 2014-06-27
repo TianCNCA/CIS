@@ -64,6 +64,8 @@ public class Client
 
 		historyReports = new String[17];
 		
+		DOB = new Date();
+		
 		key = DBService.getCurrentKey();
 	}
 
@@ -83,6 +85,8 @@ public class Client
 		oral_medication = false;
 		insulin = false;
 		uncontrolled = false;
+		
+		DOB = new Date();
 		
 		key = DBService.getCurrentKey();
 	}

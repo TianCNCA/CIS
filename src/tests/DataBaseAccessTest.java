@@ -332,6 +332,35 @@ public final class DataBaseAccessTest extends TestCase
 		System.out.println( "End Test All Clients\n" );
 	}
 	
+	
+	public void testUpdateSoap()
+	{
+		database.dbResetForTesting();
+		System.out.println( "\nUPDATE SOAP TEST" );
+		SoapBox test = new SoapBox( "Patty Rick" );
+		test.add( new Date(), "Everything seems to be well" );
+		
+		database.insertSoapBox( test );
+		
+		SoapBox soapBox = database.readSoaps( "Patty Rick" );
+		Soap temp = soapBox.getSoapByIndex( 0 );
+		
+		temp.setInfo( "Everything is going even better!" );
+		
+		soapBox.updateSoap( temp );
+		
+		database.updateSoap( soapBox );
+		
+		soapBox = database.readSoaps( "Patty Rick" );
+		
+		String info = soapBox.getSoapByIndex( 0 ).getInfo();
+		System.out.println( info );
+		Boolean equal = info.equals( "Everything is going even better!" );
+		assertTrue( equal );
+
+		System.out.println( "END UPDATE SOAP TEST\n" );
+	}
+	
 	@Override
 	protected void tearDown() throws Exception 
 	{

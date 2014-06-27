@@ -81,9 +81,9 @@ public class DataAccess
 	}
 
 
-	public Boolean updateSoap( SoapBox soap, String oldMessage )
+	public Boolean updateSoap( SoapBox soapBox )
 	{
-		return database.updateSoap( soap, oldMessage );
+		return database.updateSoap( soapBox );
 	}
 	
 	

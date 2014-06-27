@@ -63,6 +63,25 @@ public class SoapBox
 	{
 		return visits;
 	}
+	
+	
+	public void updateSoap( Soap soapToUpdate )
+	{
+		if ( soapToUpdate == null )
+		{
+			return;
+		}
+		
+		for ( Soap soap: visits )
+		{
+			if ( soap.getKey() == soapToUpdate.getKey() )
+			{
+				soap = soapToUpdate;
+				break;
+			}
+		}
+
+	}
 
 
 	public int numSoaps()
