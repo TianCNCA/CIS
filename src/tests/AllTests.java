@@ -5,9 +5,6 @@ import tests.buisnessTests.*;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-
-
-
 public class AllTests
 {
 	public static TestSuite suite;
