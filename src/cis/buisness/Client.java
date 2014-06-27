@@ -149,6 +149,12 @@ public class Client
 	{
 		soapBox.add( date, info );
 	}
+	
+	
+	public void addSoap( Soap soap )
+	{
+		soapBox.add( soap );
+	}
 
 
 	public Soap lastSoap()

@@ -16,20 +16,19 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 
-import app.Service;
+import app.DBService;
 import cis.buisness.Client;
 import cis.buisness.DataAccess;
-import cis.persistance.DBIntermediary;
 
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
 
 public class MainWindow extends Shell 
 {
-	private Text 				clientTextBox;
-	private Table 				table;
-	private DataAccess 			clientDataBase;
-	private static Service  	service;
+	private 		Text 				clientTextBox;
+	private 		Table 				table;
+	private 		DataAccess 			clientDataBase;
+	private static 	DBService  			service;
 	
 	/**
 	 * Launch the application.
@@ -38,7 +37,18 @@ public class MainWindow extends Shell
 	public static void main(String args[]) {
 		try 
 		{
-			service = new Service();
+			service = new DBService();
+			service.initializeDB();
+			
+			if ( !service.getValid() )
+			{
+				System.out.println( "Error in building DB, exiting now" );
+				service.shutDownDB();
+				System.exit( 0 );
+			}
+			
+			service.genClients();
+			
 			Display display = Display.getDefault();
 			MainWindow shell = new MainWindow(display);
 			
@@ -74,6 +84,8 @@ public class MainWindow extends Shell
 		{
 			@Override
 			public void focusGained(FocusEvent arg0) {
+				//ArrayList<Client> clients = new ArrayList<Client>();
+				//clients.add( clientDataBase.readClient( "Pat Ricky" ) );
 				ArrayList<Client> clients = clientDataBase.getAllClients();
 				final TableColumn [] columns = table.getColumns ();
 				for (int i=0; i<clients.size(); i++) //iterate through the whole list here and fill the table with data
@@ -103,7 +115,7 @@ public class MainWindow extends Shell
 		btnExit.setBounds(615, 323, 75, 25);
 		btnExit.setText("Exit");
 		
-		/*Button btnNewButton_1 = new Button(this, SWT.NONE);
+		Button btnNewButton_1 = new Button(this, SWT.NONE);
 		btnNewButton_1.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) 
@@ -116,7 +128,7 @@ public class MainWindow extends Shell
 			}
 		});
 		btnNewButton_1.setBounds(591, 257, 137, 25);
-		btnNewButton_1.setText("Edit Client Information");*/
+		btnNewButton_1.setText("Edit Client Information");
 		
 		Button btnNewButton_2 = new Button(this, SWT.NONE);
 		btnNewButton_2.addMouseListener(new MouseAdapter() {
