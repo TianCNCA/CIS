@@ -29,6 +29,7 @@ public class MainWindow extends Shell
 	private 		Table 				table;
 	private 		DataAccess 			clientDataBase;
 	private static 	DBService  			service;
+	private static	SoapBoxWindow 	    soapBoxWindow;
 	
 	/**
 	 * Launch the application.
