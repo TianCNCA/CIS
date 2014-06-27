@@ -79,7 +79,6 @@ public class MainWindow extends Shell
 	public static void refresh()
 	{
 		shell.forceFocus();
-		//shell.redraw();
 	}
 
 	/**
