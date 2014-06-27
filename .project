@@ -20,11 +20,4 @@
 		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>images/logo.png</name>
-			<type>1</type>
-			<location>V:/Projects/Comp 3350 Project/CIS/images/logo.png</location>
-		</link>
-	</linkedResources>
 </projectDescription>
