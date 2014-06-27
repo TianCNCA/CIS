@@ -5,7 +5,7 @@ import java.util.*;
 import app.DBService;
 
 @SuppressWarnings( "unused" )
-public class Client
+public class Client implements Comparable<Client>
 {
 	private boolean active;
 	protected SoapBox soapBox;
@@ -492,4 +492,11 @@ public class Client
 	{
 		return name;
 	}
+
+
+	@Override
+    public int compareTo( Client arg0 )
+    {
+	    return ( name.compareTo( arg0.getName() ));
+    }
 }

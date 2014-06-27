@@ -2,6 +2,7 @@ package cis.presentation;
 
 import java.lang.ProcessBuilder.Redirect;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
@@ -96,6 +97,7 @@ public class MainWindow extends Shell
 			public void focusGained(FocusEvent arg0) 
 			{
 				ArrayList<Client> clients = clientDataBase.getAllClients();
+				Collections.sort( clients );
 				
 				table.clearAll();
 				table.setItemCount( 0 );
@@ -189,7 +191,7 @@ public class MainWindow extends Shell
 		lblSearcgForA.setText("Enter client name to search for: ");
 		
 		table = new Table(this, SWT.BORDER | SWT.FULL_SELECTION);
-		table.setBounds(36, 153, 507, 242);
+		table.setBounds(36, 153, 507, 276);
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
 		createContents();
