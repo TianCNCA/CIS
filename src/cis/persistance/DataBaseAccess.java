@@ -79,12 +79,15 @@ public class DataBaseAccess
 	 * PURPOSE:			Setup the DB, load any data that we already have in the DB
 	 * 					up, and general DB setup.
 	------------------------------------------------------*/
-	public void init()
+	public Boolean init()
 	{
-		dbSize = 0;
-		
-		// Build or load the DB
-		initializeDB();
+	Boolean initiated = false;
+
+	// Build or load the DB
+	dbSize = 0;
+	initiated = initializeDB();
+
+	return initiated;
 	}
 
 
