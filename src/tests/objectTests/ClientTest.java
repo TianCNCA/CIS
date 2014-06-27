@@ -1,38 +1,89 @@
 package tests.objectTests;
 
+import java.util.Date;
+
+import app.DBService;
 import cis.buisness.Client;
+import cis.buisness.DataAccess;
+import cis.buisness.Soap;
+import cis.buisness.SoapBox;
 import junit.framework.TestCase;
 
-//import org.junit.Test;
-
-
-public class ClientTest extends TestCase 
+public final class ClientTest extends TestCase 
 {
-	Client user;
-	public ClientTest(String name) 
-	{
-		super(name);
-	}
-
+	private DataAccess database;
+	private DBService  service;
+	
 	@Override
 	protected void setUp() throws Exception 
 	{
 		super.setUp();
-		user = new Client();
+		System.out.println( "Setting up Test DB" );
+		service = new DBService();
+		service.initializeDB();
+		service.setTesting();
 		
-		assertEquals(true, user.isActive());
-		assertEquals(user.lastSoap(), null);
+		database = new DataAccess();
+		database.dbResetForTesting();
+		
+		assertEquals( 0, database.getSize() );
 	}
-
-	public void testSetUp()
+	
+	public void testClients()
 	{
+		Client test    = new Client( "Gorgina" );
+		test.setOccupation( "Nurse" );
+		test.setAddress( "Box 1 Billion" );
+		test.setProvince( "MB" );
+		test.setCity( "Winterpig" );
+		test.setActive( true );
 		
+		assertEquals( test.getOccupation(), "Nurse" );
+		assertEquals( test.getAddress(), "Box 1 Billion" );
+		assertEquals( test.getProvince(), "MB" );
+		assertEquals( test.getCity(), "Winterpig" );
+		assertTrue( test.getActive() );
 	}
+	
+	
+	public void testClientWithSoap()
+	{
+		Client test    = new Client( "Gorgina" );
+		Soap soap = new Soap( new Date(), "Another bloody Soap" );
+		
+		// See if the different soap methods work
+		test.addSoap( "Soap 1" );
+		test.addSoap( soap );
+		test.addSoap( new Date(), "Wee more soaps!" );
+		
+		SoapBox soapBox = test.getSoaps();		
+		
+		Boolean found = false;
+		
+		for ( Soap soaps : soapBox.getSoaps() )
+		{
+			if ( soaps.getInfo().equals( "Soap 1" ) || 
+					soaps.getInfo().equals( "Another bloody Soap" ) || 
+					soaps.getInfo().equals( "Wee more soaps!" ) )
+			{
+				found = true;
+			}
+			else
+			{
+				found = false;
+			}
+		}
+		
+		assertTrue( found );
+	}
+	
 	
 	@Override
 	protected void tearDown() throws Exception 
 	{
+		System.out.println( "Shutting Down Test DB" );
+		database.dbResetForTesting();
+		service.shutDownDB();
 		super.tearDown();
 	}
-
 }

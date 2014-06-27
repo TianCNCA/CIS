@@ -22,7 +22,7 @@ public class DBIntermediaryTest extends TestCase
 	{
 		System.out.println( "Test Insert" );
 		
-		//DBIntermediary db = new DBIntermediary();
+		DBIntermediary db = new DBIntermediary();
 		Client testClient = new Client( "Pat" );
 		Boolean didInsert;
 		db.insertClient( testClient );
