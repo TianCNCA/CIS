@@ -513,6 +513,7 @@ public class CreateClientWindow
 				client.setSleepPattern(text_11.getText());
 				dataBase.insertClient(client);
 				shlCreatClient.dispose();
+				MainWindow.refresh();
 			}
 		});
 		btnSave.setBounds(589, 368, 75, 25);

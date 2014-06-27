@@ -1,5 +1,6 @@
 package cis.presentation;
 
+import java.lang.ProcessBuilder.Redirect;
 import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
@@ -30,6 +31,7 @@ public class MainWindow extends Shell
 	private 		Table 				table;
 	private 		DataAccess 			clientDataBase;
 	private static 	DBService  			service;
+	private static  MainWindow 			shell;
 	
 	/**
 	 * Launch the application.
@@ -51,7 +53,7 @@ public class MainWindow extends Shell
 			service.genClients();
 			
 			Display display = Display.getDefault();
-			MainWindow shell = new MainWindow(display);
+			 shell = new MainWindow(display);
 			
 			shell.open();
 			shell.layout();
@@ -71,6 +73,13 @@ public class MainWindow extends Shell
 		
 		service.shutDownDB();
 	}
+	
+	
+	public static void refresh()
+	{
+		shell.forceFocus();
+		//shell.redraw();
+	}
 
 	/**
 	 * Create the shell.
@@ -84,16 +93,18 @@ public class MainWindow extends Shell
 		addFocusListener(new FocusAdapter() 
 		{
 			@Override
-			public void focusGained(FocusEvent arg0) {
-				//ArrayList<Client> clients = new ArrayList<Client>();
-				//clients.add( clientDataBase.readClient( "Pat Ricky" ) );
+			public void focusGained(FocusEvent arg0) 
+			{
 				ArrayList<Client> clients = clientDataBase.getAllClients();
-				final TableColumn [] columns = table.getColumns ();
+				
+				table.clearAll();
+				table.setItemCount( 0 );
+				final TableColumn [] columns = table.getColumns();
+				
 				for (int i=0; i<clients.size(); i++) //iterate through the whole list here and fill the table with data
 				{
-					
 					TableItem item = new TableItem (table, SWT.NONE);
-					for (int j=0; j<columns.length; j++)
+					for (int j = 0; j<columns.length; j++)
 				    {
 						//TODO add text here from the DB
 						//item.setText (j, "Item " + i);
