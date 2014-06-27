@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.DriverManager;
 import java.sql.SQLWarning;
 
+import app.DBService;
 import cis.buisness.Client;
 import cis.buisness.Soap;
 import cis.buisness.SoapBox;
@@ -60,7 +61,7 @@ public class DataBaseAccess
 	private Boolean initializeDB()
 	{
 		Boolean initiated = false;
-		// The location for the DB
+		// The location for the DB : URL
 		String dbLocation = "jdbc:hsqldb:database/" + dbName;
 		
 		// Attempt to connect or create the DB. If the DB does not already exist,
@@ -73,7 +74,7 @@ public class DataBaseAccess
 			
 			try
 	        {
-				sqlCommand = "SELECT * FROM ID";
+				sqlCommand = "SELECT * FROM ID;";
 		        dbResult = sqlStatement.executeQuery( sqlCommand );
 	        }
 	        catch ( SQLException e )
@@ -89,7 +90,6 @@ public class DataBaseAccess
 		        	key	= dbResult.getInt( "ID" );
 		        	
 		        	// we made it this far! We need ID to be set.
-		        	
 		        	if ( key > -1 )
 		        	{
 		        		initiated = true;
@@ -143,7 +143,7 @@ public class DataBaseAccess
 			try
 			{
 				// Save the key to the DB
-				sqlCommand 	= "UPDATE ID SET ID = " + key + " WHERE KEY = 0" ;
+				sqlCommand 	= "UPDATE ID SET ID = " + key + " WHERE KEY = 0;" ;
 				sqlStatement.executeUpdate( sqlCommand );
 				System.out.println( sqlCommand );
 				sqlStatement.execute( sqlCommand );
@@ -179,10 +179,16 @@ public class DataBaseAccess
 		Boolean didInsert 		= false;
 		String  insertString;
 		
+		if ( client.getName().equals( "" ) || client.getName() == null )
+		{
+			System.out.println("Invalid Client Insert");
+			return false;
+		}
+		
 		try
 		{
 			insertString = buildClientString( client );			
-			sqlCommand = "Insert into Clients " + "Values(" + insertString + ")";
+			sqlCommand = "Insert into Clients " + "Values(" + insertString + ");";
 			System.out.println( sqlCommand );
 			didInsert = sqlStatement.execute( sqlCommand );
 			
@@ -192,18 +198,10 @@ public class DataBaseAccess
 		catch ( SQLException ex )
 		{
 			System.out.println( ex );
-			
-			// 23505 is the SQLIntegrityConstraintViolationException. I.e. the client already exists.
-			// in that case, we attemp to just insert the soaps, maybe we are just updating?
-			if ( ex.getSQLState().equals( "23505" ) )
-			{
-				// Now insert the soaps from the client, regardless weather the client inserted or not.
-				insertSoapBox( client.getSoaps() );
-			}
-			
 		}
 		
-		
+		// Now insert the soaps from the client, regardless weather the client inserted or not.
+		insertSoapBox( client.getSoaps() );
 
 		return didInsert;
 	}
@@ -219,8 +217,6 @@ public class DataBaseAccess
 	{
 		Boolean didDelete = false;
 		
-		// Cannot actually delete, this would violate Canadian Law!!!
-		// DUN DUN DUN...
 		assert( false );
 
 		return didDelete;
@@ -242,13 +238,19 @@ public class DataBaseAccess
 		String  updateString, where;
 		int 	result;
 		
+		if ( updatedClient.getName().equals( "" ) || updatedClient.getName() == null )
+		{
+			System.out.println("Invalid Client Update");
+			return false;
+		}
+		
 		try
         {
 			updateString = buildClientUpdateString( updatedClient );
-			
-			where 		= "WHERE Name = " + updatedClient.getName();
-			sqlCommand 	= "UPDATE CLIENTS SET " + updateString + " " + where;
-			result 		= sqlStatement.executeUpdate( sqlCommand );
+			where 		 = "WHERE Name = " + updatedClient.getName();
+			sqlCommand 	 = "UPDATE CLIENTS " + updateString + " " + where + ";";
+			System.out.println(sqlCommand);
+			result 		 = sqlStatement.executeUpdate( sqlCommand );
 			
 			if ( result == 1 )
 			{
@@ -294,9 +296,14 @@ public class DataBaseAccess
 			   	homePhone, workPhone;
 		int 	smoking, alcohol, stress, appetite;
 		
+		if ( clientName.equals( "" ) || clientName == null )
+		{
+			return null;
+		}
+		
 		try
         {
-			sqlCommand 	= "SELECT * FROM CLIENTS WHERE Name = '" + clientName + "'";
+			sqlCommand 	= "SELECT * FROM CLIENTS WHERE Name = '" + clientName + "';";
 	        dbResult 	= sqlStatement.executeQuery( sqlCommand );
         }
         catch ( SQLException e )
@@ -379,7 +386,7 @@ public class DataBaseAccess
 		
 		try
         {
-			sqlCommand = "SELECT * FROM CLIENTS";
+			sqlCommand = "SELECT * FROM CLIENTS;";
 	        dbResult = sqlStatement.executeQuery( sqlCommand );
         }
         catch ( SQLException e )
@@ -426,7 +433,7 @@ public class DataBaseAccess
 		
 		try
         {
-			sqlCommand 	= "SELECT * FROM SOAPS WHERE Name = '" + clientName + "'";
+			sqlCommand 	= "SELECT * FROM SOAPS WHERE Name = '" + clientName + "';";
 	        dbResult 	= sqlStatement.executeQuery( sqlCommand );
         }
         catch ( SQLException e )
@@ -475,10 +482,16 @@ public class DataBaseAccess
 		Boolean didInsert = false;
 		String  insertString;
 		
-		insertString 	= "Insert into Soaps Values (" + key + " ,'" + clientName + "', " 
-							+ "'" + soap.getDate().toString() + "' , "
-							+ "'" + soap.getInfo() + "'";				 
-		sqlCommand 		= "Insert into Soaps " + "Values(" + insertString + ")";
+		if ( clientName.equals( "" ) || clientName == null )
+		{
+			return false;
+		}
+		
+		insertString = buildSoapString( clientName, soap );
+//		insertString 	= "Insert into Soaps Values (" + key + " ,'" + clientName + "', " 
+//							+ "'" + soap.getDate().toString() + "' , "
+//							+ "'" + soap.getInfo() + "'";				 
+		sqlCommand 		= "Insert into Soaps " + "Values(" + insertString + ");";
 		System.out.println( sqlCommand );
 		
 		try
@@ -507,6 +520,11 @@ public class DataBaseAccess
 		String  insertString;
 		// We use soapBox because the name is going to be the same everytime!
 		String 	clientName = soapBox.getClientName();
+		
+		if ( clientName.equals( "" ) || clientName == null )
+		{
+			return false;
+		}
 		
 		for ( int i = 0; i < soapBox.numSoaps(); i++ )
 		{
@@ -540,8 +558,6 @@ public class DataBaseAccess
 	{
 		Boolean didDelete = false;
 		
-		// Cannot actually delete, this would violate Canadian Law!!!
-		// DUN DUN DUN...
 		assert( false );
 
 		return didDelete;
@@ -554,11 +570,49 @@ public class DataBaseAccess
 	 * PURPOSE:			This method will find a soap object already in the system,
 	 * 					and replace/update it with the new information
 	------------------------------------------------------*/
-	public Boolean updateSoap( SoapBox updatedClient, String oldMessage )
+	public Boolean updateSoap( SoapBox updatedSoap, String oldMessage )
 	{
 		Boolean didUpdate = false;
-
+		String  updateString, where, clientName;
+		int 	result;
+		
+		if ( updatedSoap.getClientName().equals( "" ) || updatedSoap.getClientName() == null )
+		{
+			System.out.println("Invalid Client Update");
+			return false;
+		}
+		
+		clientName = updatedSoap.getClientName();
+		where 		= "WHERE Name = " + clientName;
+		
+		for ( int i = 0; i < updatedSoap.numSoaps(); i++ )
+		{
+			Soap soap 		= updatedSoap.getSoapByIndex( i );
+			updateString 	= buildSoapString( clientName, soap );					 
+			sqlCommand 		= "Insert into Soaps " + "Values(" + updateString + ")";
+			sqlCommand 		= "UPDATE SOAPS " + updateString + " " + where;
+			
+			System.out.println( sqlCommand );
+			
+			try
+            {
+				didUpdate = sqlStatement.execute( sqlCommand );
+	            key++;
+            }
+            catch ( SQLException e )
+            {
+	            System.out.println( e );
+	            e.printStackTrace();
+            }
+		}
+		
 		return didUpdate;
+	}
+	
+	
+	public int getCurrentKey()
+	{
+		return key;
 	}
 
 
@@ -570,8 +624,9 @@ public class DataBaseAccess
 	------------------------------------------------------*/
 	public String DumpDB()
 	{
-		assert( false );
-		return null;
+		ArrayList<Client> temp = getAllClients();
+		
+		return temp.toString();
 	}
 
 
@@ -597,22 +652,6 @@ public class DataBaseAccess
 		// Yeah don't use this anymore
 		assert ( false );
 		return dbSize;
-	}
-
-
-	public void genClients()
-	{
-		Client one = new Client( "Pat Ricky" );
-		
-		Client two = new Client( "George Curious" );
-		Client three = new Client( "Fred Freddy" );
-		Client four = new Client( "Patty Rick" );
-		Client five = new Client( "Travis Almighty" );
-		insertClient( one );
-		insertClient( two );
-		insertClient( three );
-		insertClient( four );
-		insertClient( five );
 	}
 	
 	
@@ -652,7 +691,7 @@ public class DataBaseAccess
 	private String buildClientUpdateString( Client updatedClient )
     {
 		String insertString = 
-		      "Set DOB = '" + updatedClient.getDOB()  						+ "'" + ", "
+		      "Set DOB = '" 		+ updatedClient.getDOB()  				+ "'" + ", "
 			+ "Set HomePhone = '" 	+ updatedClient.getHomePhone() 			+ "'" + ", "
 		    + "Set WorkPhone = '" 	+ updatedClient.getWorkPhone() 			+ "'" + ", "
 			+ "Set Address = '" 	+ updatedClient.getAddress() 			+ "'" + ", " 
@@ -679,6 +718,7 @@ public class DataBaseAccess
 		return insertString;
     }
 	
+	
 	private String buildSoapString( String clientName, Soap soap )
 	{
 		String insertString = 
@@ -688,5 +728,177 @@ public class DataBaseAccess
 					+ "'" + soap.getInfo() 	+ "'";
 
 		return insertString;
+	}
+	
+	
+	private String buildSoapUpdateString( Soap soap )
+	{
+		String insertString = 
+					  "Set Date = '" + soap.getDate() 	+ "'" + ", "
+					+ "Set Disc = '" + soap.getInfo() 	+ "'";
+
+		return insertString;
+	}
+	
+	//*****************************************************************
+	// TESTING ONLY METHODS
+	//*****************************************************************
+	
+	// Be very careful using this!
+	public void clearClientTable()
+	{
+		if ( !DBService.isTesting() )
+		{
+			return;
+		}
+		System.out.println("WARNING: Clearing Client Table!");
+		sqlCommand = "Delete From Clients;";
+		
+		try
+        {
+            sqlStatement.execute( sqlCommand );
+        }
+        catch ( SQLException e )
+        {
+            System.out.println( e );
+            e.printStackTrace();
+        }
+	}
+	
+	
+	// Be very careful using this!
+	public void clearSoapTable()
+	{
+		if ( !DBService.isTesting() )
+		{
+			return;
+		}
+		System.out.println("WARNING: Clearing Soaps Table!");
+		sqlCommand = "Delete From Soaps;";
+		
+		try
+        {
+            sqlStatement.execute( sqlCommand );
+        }
+        catch ( SQLException e )
+        {
+            System.out.println( e );
+            e.printStackTrace();
+        }
+	}
+	
+	
+	// This will clear both tables and reset the id
+	public void resetID()
+	{
+		if ( !DBService.isTesting() )
+		{
+			return;
+		}
+		
+		System.out.println("WARNING: Clearing ID!");
+		clearClientTable();
+		clearSoapTable();
+		
+		sqlCommand = "Update ID Set ID = 0 Where Key = 0;";
+		
+		try
+        {
+            sqlStatement.execute( sqlCommand );
+            key = 0;
+        }
+        catch ( SQLException e )
+        {
+            System.out.println( e );
+            e.printStackTrace();
+        }
+	}
+	
+	
+	public int getClientCount()
+	{
+		if ( !DBService.isTesting() )
+		{
+			return -1;
+		}
+		
+		int count = -1;
+		
+		sqlCommand = "Select Count(*) From Clients;";
+		System.out.println( sqlCommand );
+		
+		try
+        {
+			dbResult = sqlStatement.executeQuery( sqlCommand );
+			dbResult.next();
+			count = dbResult.getInt( 1 );
+			System.out.println("Count: " + count );
+        }
+        catch ( SQLException e )
+        {
+            System.out.println( e );
+            e.printStackTrace();
+        }
+		
+		return count;
+	}
+	
+	
+	public int getSoapCount()
+	{
+		if ( !DBService.isTesting() )
+		{
+			return -1;
+		}
+		
+		int count = -1;
+		
+		sqlCommand = "Select Count(*) From Soaps;";
+		System.out.println( sqlCommand );
+		
+		try
+        {
+			dbResult = sqlStatement.executeQuery( sqlCommand );
+			dbResult.next();
+			count = dbResult.getInt( 1 );
+			System.out.println("Count: " + count );
+        }
+        catch ( SQLException e )
+        {
+            System.out.println( e );
+            e.printStackTrace();
+        }
+		
+		return count;
+	}
+	
+	
+	public void genClients()
+	{
+		Client one = new Client( "Pat Ricky" );
+		Client two = new Client( "George Curious" );
+		Client three = new Client( "Fred Freddy" );
+		Client four = new Client( "Patty Rick" );
+		Client five = new Client( "Travis Almighty" );
+		insertClient( one );
+		insertClient( two );
+		insertClient( three );
+		insertClient( four );
+		insertClient( five );
+		Client test    = new Client( "Georgy Georgerson" );
+		// We are sleeping because the dates need to be unique! One second makes them unique
+		test.addSoap( new Date(), "This was splended! Jolly good show mate!" );
+		try { Thread.sleep( 1000 ); } catch ( InterruptedException e ) { e.printStackTrace(); }
+		test.addSoap( new Date(), "Woohoo!" );
+		try { Thread.sleep( 1000 ); } catch ( InterruptedException e ) { e.printStackTrace(); }
+		test.addSoap( new Date(), "Things are looking ship shape captian!" );
+		try { Thread.sleep( 1000 ); } catch ( InterruptedException e ) { e.printStackTrace(); }
+		test.addSoap( new Date(), "All aboard the boyer express!" );
+		insertClient( test );
+		try { Thread.sleep( 1000 ); } catch ( InterruptedException e ) { e.printStackTrace(); }
+		
+		Client test1 = new Client( "Rick Fredrickson" );
+		test1.addSoap( "Things are getting all soapy up in here!" );
+		insertClient( test1 );
 	}
 }

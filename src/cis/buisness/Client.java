@@ -305,6 +305,12 @@ public class Client
 	{
 		return workPhone;
 	}
+	
+	
+	public Boolean getActive()
+	{
+		return active;
+	}
 
 
 	public void setPhysician( boolean physician )

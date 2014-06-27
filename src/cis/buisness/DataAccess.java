@@ -9,7 +9,6 @@ public class DataAccess
 {
 	private DataBaseAccess database;
 
-
 	public DataAccess()
 	{
 		database = DBService.getDB();
@@ -24,6 +23,7 @@ public class DataAccess
 
 	public Client readClient( String name )
 	{
+		name = name.trim();
 		return database.readClient( name );
 	}
 
@@ -54,12 +54,15 @@ public class DataAccess
 
 	public Boolean renameClient( String oldName, String newName )
 	{
+		oldName = oldName.trim();
+		newName = newName.trim();
 		return database.renameClient( oldName, newName );
 	}
 
 
 	public SoapBox getAllSoaps( String clientName )
 	{
+		clientName = clientName.trim();
 		return database.getAllSoaps( clientName );
 	}
 
@@ -78,6 +81,7 @@ public class DataAccess
 	
 	public Boolean insertSoap( Soap soap, String clientName )
 	{
+		clientName = clientName.trim();
 		return database.insertSoap( soap, clientName );
 	}
 
@@ -90,6 +94,7 @@ public class DataAccess
 
 	public Boolean updateSoap( SoapBox soap, String oldMessage )
 	{
+		oldMessage = oldMessage.trim();
 		return database.updateSoap( soap, oldMessage );
 	}
 	
@@ -97,5 +102,26 @@ public class DataAccess
 	public int getSize()
 	{
 		return database.getSize();
+	}
+	
+	
+	public void dbResetForTesting()
+	{
+		if ( DBService.isTesting() )
+		{
+			System.out.println("WARNING! RESETING DATABASE!!!");
+			database.resetID();
+		}
+	}
+	
+	
+	public int getClientCount()
+	{
+		return database.getClientCount();
+	}
+	
+	public int getSoapCount()
+	{
+		return database.getSoapCount();
 	}
 }

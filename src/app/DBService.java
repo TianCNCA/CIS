@@ -11,14 +11,16 @@ import cis.persistance.DataBaseAccess;
  ------------------------------------------------------*/
 public class DBService
 {
-	private static DataBaseAccess database;
-	private Boolean valid;
+	private static 	DataBaseAccess 	database;
+	private 		Boolean 		valid;
+	private static 	Boolean 		testing;
 
 
 	public DBService()
 	{
 		System.out.println("Creating DB Service");
 		valid	 = false;
+		testing  = false;
 		database = null;
 	}
 
@@ -36,6 +38,8 @@ public class DBService
 	{
 		System.out.println("Shutting down DB Service");
 		database.shutdownDB();
+		testing = false;
+		valid   = false;
 	}
 
 
@@ -43,11 +47,23 @@ public class DBService
 	{
 		return database;
 	}
+	
+	
+	public static Boolean isTesting()
+	{
+		return testing;
+	}
 
 
 	public Boolean getValid()
 	{
 		return valid;
+	}
+	
+	
+	public void setTesting()
+	{
+		testing = true;
 	}
 
 

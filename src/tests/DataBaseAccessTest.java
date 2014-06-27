@@ -20,44 +20,194 @@ public final class DataBaseAccessTest extends TestCase
 	protected void setUp() throws Exception 
 	{
 		super.setUp();
-		
+		System.out.println( "Setting up Test DB" );
 		service = new DBService();
 		service.initializeDB();
+		service.setTesting();
+		
 		database = new DataAccess();
+		database.dbResetForTesting();
 		
 		assertEquals( 0, database.getSize() );
 	}
 	
-	public void testClientInsert()
+	
+	// Basic client insert test :)
+	public void testClientInsertOne()
 	{
-		System.out.println( "INSERT CLIENT TEST" );
+		database.dbResetForTesting();
+		System.out.println( "\nINSERT CLIENT TEST" );
 		Client test    = new Client( "Georgy George" );
-		Boolean insert = database.insertClient( test );
-		System.out.println(insert);
-		//assertTrue( insert );
+		database.insertClient( test );
+		
+		int dbCountt = database.getClientCount();
+		
+		System.out.println( "Count: " + dbCountt );
+		assertEquals( dbCountt, 1 );
 		System.out.println( "END INSERT CLIENT TEST\n" );
 	}
 	
 	
-	public void testSoapInsert()
+	// Just check to see if we can have more than one client :)
+	public void testInsertTwoClients()
 	{
-		System.out.println( "INSERT SOAP TEST" );
+		database.dbResetForTesting();
+		System.out.println( "\nINSERT CLIENT TEST" );
+		Client test    = new Client( "Georgy George" );
+		Client test2   = new Client( "George Patterson" );
+		database.insertClient( test );
+		database.insertClient( test2 );
+
+		int dbCountt = database.getClientCount();
+		
+		System.out.println( "Count: " + dbCountt );
+		assertEquals( dbCountt, 2 );
+		System.out.println( "END INSERT CLIENT TEST\n" );
+	}
+	
+	
+	// This test shouldn't allow duplicate names
+	public void testInsertClientWithDuplicate()
+	{
+		database.dbResetForTesting();
+		System.out.println( "\nINSERT CLIENT TEST" );
+		Client test    = new Client( "Georgy George" );
+		Client test2   = new Client( "George Patterson" );
+		Client test3    = new Client( "Georgy George" );
+		database.insertClient( test );
+		database.insertClient( test2 );
+		database.insertClient( test3 );
+
+		int dbCountt = database.getClientCount();
+		
+		System.out.println( "Count: " + dbCountt );
+		assertEquals( dbCountt, 2 );
+		System.out.println( "END INSERT CLIENT TEST\n" );
+	}
+	
+	
+	public void testInsertClientWithSoap()
+	{
+		database.dbResetForTesting();
+		System.out.println( "\nINSERT CLIENT TEST" );
+		Client test    = new Client( "Georgy George Fredrickson" );
+		test.addSoap( "Things are getting soapy up in here!" );
+		database.insertClient( test );
+
+		int dbCountc = database.getClientCount();
+		int dbCounts = database.getSoapCount();
+		
+		System.out.println( "Client Count: " + dbCountc + " Soap Count: " + dbCounts );
+		assertEquals( dbCountc, 1 );
+		assertEquals( dbCounts, 1 );
+		System.out.println( "END INSERT CLIENT TEST\n" );
+	}
+	
+	
+	public void testInsertClientWithMultipleSoaps() throws InterruptedException
+	{
+		database.dbResetForTesting();
+		System.out.println( "\nINSERT SOAP TEST" );
 		
 		Client test    = new Client( "Georgy Georgerson" );
 		
-		//SoapBox testBox = new SoapBox( test.getName() );
+		// We are sleeping because the dates need to be unique! One second makes them unique
 		test.addSoap( new Date(), "This was splended! Jolly good show mate!" );
+		Thread.sleep( 1000 );
 		test.addSoap( new Date(), "Woohoo!" );
+		Thread.sleep( 1000 );
 		test.addSoap( new Date(), "Things are looking ship shape captian!" );
+		Thread.sleep( 1000 );
 		test.addSoap( new Date(), "All aboard the boyer express!" );
 		
-		Boolean insert = database.insertClient( test );
-		System.out.println(insert);
-		//assertTrue( insert );
+		database.insertClient( test );
+		
+		int dbCountc = database.getClientCount();
+		int dbCounts = database.getSoapCount();
+		
+		System.out.println( "Client Count: " + dbCountc + " Soap Count: " + dbCounts );
+		assertEquals( dbCountc, 1 );
+		assertEquals( dbCounts, 4 );
 		System.out.println( "END INSERT SOAP TEST\n" );
 	}
 	
 	
+	// Make sure we can read with a string
+	public void testReadClient()
+	{
+		database.dbResetForTesting();
+		System.out.println( "\nREAD CLIENT TEST" );
+		Client test    = new Client( "Gorgina Gerald" );
+		test.setOccupation( "Nurse" );
+		test.setAddress( "Box 1 Billion" );
+		test.setProvince( "MB" );
+		test.setCity( "Winterpig" );
+		test.setActive( true );
+		database.insertClient( test );
+		
+		Client read = database.readClient( "Gorgina Gerald" );
+		assertEquals( read.getOccupation(), "Nurse" );
+		assertEquals( read.getAddress(), "Box 1 Billion" );
+		assertEquals( read.getProvince(), "MB" );
+		assertEquals( read.getCity(), "Winterpig" );
+		assertTrue( read.getActive() );
+
+		System.out.println( "END READ CLIENT TEST\n" );
+	}
+	
+	
+	public void testReadClientWithClass()
+	{
+		database.dbResetForTesting();
+		System.out.println( "\nREAD CLIENT TEST" );
+		Client test    = new Client( "Gorgina Gerald" );
+		test.setOccupation( "Nurse" );
+		test.setAddress( "Box 1 Billion" );
+		test.setProvince( "MB" );
+		test.setCity( "Winterpig" );
+		test.setActive( true );
+		database.insertClient( test );
+		
+		// Ooooooh subtle
+		Client read = database.readClient( test );
+		assertEquals( read.getOccupation(), "Nurse" );
+		assertEquals( read.getAddress(), "Box 1 Billion" );
+		assertEquals( read.getProvince(), "MB" );
+		assertEquals( read.getCity(), "Winterpig" );
+		assertTrue( read.getActive() );
+
+		System.out.println( "END READ CLIENT TEST\n" );
+	}
+	
+	// Check to see if we can update a clients information field
+	public void testUpdateClient()
+	{
+		database.dbResetForTesting();
+		System.out.println( "\nUPDATE CLIENT TEST" );
+		Client test    = new Client( "Fredwina Fredders" );
+		test.setCity( "Citttty" );
+		test.setOccupation( "Super Awesome Lawyer Doctor" );
+		database.insertClient( test );
+		
+		int size = database.getClientCount();
+		assertEquals( 1, size );
+		
+		Client updatedClient = database.readClient( "Fredwina Fredders" );
+		updatedClient.setCity( "Dallas Baby!" );
+		updatedClient.setOccupation( "Super Duper Awesome Lawyer Doctor Guy" );
+		database.updateClient( updatedClient );
+		
+		Client updateResult = database.readClient( "Fredwina Fredders" );
+		String city = updatedClient.getCity();
+		String occup= updatedClient.getOccupation();
+		
+		System.out.println( "City: " + city + " Occupation: " + occup );
+		
+		assertEquals( city, "Dallas Baby!" );
+		assertEquals( occup, "Super Duper Awesome Lawyer Doctor Guy" );
+
+		System.out.println( "END UPDATE CLIENT TEST\n" );
+	}
 	
 	public void testAllClientsList()
 	{
@@ -75,6 +225,8 @@ public final class DataBaseAccessTest extends TestCase
 	@Override
 	protected void tearDown() throws Exception 
 	{
+		System.out.println( "Shutting Down Test DB" );
+		database.dbResetForTesting();
 		service.shutDownDB();
 		super.tearDown();
 	}
