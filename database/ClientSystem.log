@@ -1,0 +1,11 @@
+/*C3*/SET SCHEMA PUBLIC
+INSERT INTO SOAPS VALUES(59,'Georgy Georgerson','Fri Jun 27 12:58:55 CDT 2014','This was splended! Jolly good show mate!')
+COMMIT
+INSERT INTO SOAPS VALUES(60,'Georgy Georgerson','Fri Jun 27 12:58:55 CDT 2014','Woohoo!')
+COMMIT
+INSERT INTO SOAPS VALUES(61,'Georgy Georgerson','Fri Jun 27 12:58:55 CDT 2014','Things are looking ship shape captian!')
+COMMIT
+INSERT INTO SOAPS VALUES(62,'Georgy Georgerson','Fri Jun 27 12:58:55 CDT 2014','All aboard the boyer express!')
+COMMIT
+INSERT INTO SOAPS VALUES(68,'Rick Fredrickson','Fri Jun 27 12:58:55 CDT 2014','Things are getting all soapy up in here!')
+COMMIT
