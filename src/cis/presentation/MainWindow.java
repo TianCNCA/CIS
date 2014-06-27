@@ -15,6 +15,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.graphics.Image;
 
 import app.Service;
 import cis.buisness.Client;
@@ -154,6 +155,7 @@ public class MainWindow extends Shell
 				if(clientName != "")
 				{
 					//TODO search for the client
+					
 				}
 			}
 		});
@@ -165,6 +167,25 @@ public class MainWindow extends Shell
 		lblSearcgForA.setText("Enter client name to search for: ");
 		
 		table = new Table(this, SWT.BORDER | SWT.FULL_SELECTION);
+		table.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				ArrayList<Client> clients = clientDataBase.getAllClients();
+				table.removeAll();
+				final TableColumn [] columns = table.getColumns ();
+				for (int i=0; i<clients.size(); i++) //iterate through the whole list here and fill the table with data
+				{
+					
+					TableItem item = new TableItem (table, SWT.NONE);
+					for (int j=0; j<columns.length; j++)
+				    {
+						item.setText(clients.get(i).getName());
+				    }
+				}
+				
+				 for (int i=0; i<columns.length; i++) columns [i].pack ();
+			}
+		});
 		table.setBounds(36, 153, 507, 242);
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
@@ -175,37 +196,21 @@ public class MainWindow extends Shell
 		name.setText("Name");
 		//TableColumn fName= new TableColumn(table, SWT.NONE);
 		//fName.setText("First Name");
-		TableColumn address = new TableColumn(table, SWT.NONE);
-		address.setText("Address");
-		TableColumn city = new TableColumn(table, SWT.NONE);
-		city.setText("City");
+//		TableColumn address = new TableColumn(table, SWT.NONE);
+//		address.setText("Address");
+//		TableColumn city = new TableColumn(table, SWT.NONE);
+//		city.setText("City");
 		
 		name.setWidth(116);
 		//ame.setWidth(100);
-		address.setWidth(146);
-		city.setWidth(140);
+		//address.setWidth(146);
+		//city.setWidth(140);
 		
 		Label lblClientInformationSystem = new Label(this, SWT.NONE);
+		lblClientInformationSystem.setImage(new Image(null, "images/logo2.png"));
 		//lblClientInformationSystem.setFont(SWTResourceManager.getFont("Segoe UI", 16, SWT.NORMAL));
 		lblClientInformationSystem.setAlignment(SWT.CENTER);
-		lblClientInformationSystem.setBounds(36, 24, 500, 40);
-		lblClientInformationSystem.setText("Client Information System");
-		
-/*		final TableColumn [] columns = table.getColumns ();
-		ArrayList<Client> clients = dataBase.getAllClients();
-		for (int i=0; i<clients.size(); i++) //iterate through the whole list here and fill the table with data
-		{
-			TableItem item = new TableItem (table, SWT.NONE);
-			for (int j=0; j<columns.length; j++)
-		    {
-				//TODO add text here from the DB
-				//item.setText (j, "Item " + i);
-				item.setText(clients.get(i).getName());
-				
-		    }
-		}
-		
-		 for (int i=0; i<columns.length; i++) columns [i].pack ();*/
+		lblClientInformationSystem.setBounds(36, 24, 192, 65);
 	}
 
 	/**
