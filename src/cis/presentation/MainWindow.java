@@ -52,7 +52,7 @@ public class MainWindow extends Shell {
 	 * @param display
 	 */
 	public MainWindow(final Display display) {
-		super(display, SWT.SHELL_TRIM);
+		super(display, SWT.CLOSE | SWT.MIN | SWT.TITLE);
 		addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent arg0) {

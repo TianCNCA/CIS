@@ -8,12 +8,10 @@ public class Soap implements Comparable<Soap>
 	private String info;
 	private String clientName;
 
-
 	public Soap()
 	{
 		date = new Date();
 	}
-
 
 	public Soap( Date date )
 	{
@@ -50,6 +48,7 @@ public class Soap implements Comparable<Soap>
 	}
 
 
+	@SuppressWarnings("deprecation")
 	public void setDate( String date )
 	{
 		this.date = new Date( date );
