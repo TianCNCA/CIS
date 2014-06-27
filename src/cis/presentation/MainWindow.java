@@ -19,6 +19,7 @@ import org.eclipse.swt.events.MouseEvent;
 import app.DBService;
 import cis.buisness.Client;
 import cis.buisness.DataAccess;
+import cis.buisness.SearchClients;
 
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
@@ -84,7 +85,7 @@ public class MainWindow extends Shell
 		{
 			@Override
 			public void focusGained(FocusEvent arg0) {
-				ArrayList<Client> clients = clientDataBase.getAllClients();
+				ArrayList<Client> clients = clientDataBase.getAllClients(); // TODO refactor this so that it grabs a set list for the search instead of all clients
 				final TableColumn [] columns = table.getColumns ();
 				for (int i=0; i<clients.size(); i++) //iterate through the whole list here and fill the table with data
 				{
@@ -99,7 +100,10 @@ public class MainWindow extends Shell
 				    }
 				}
 				
-				 for (int i=0; i<columns.length; i++) columns [i].pack ();
+				for (int i=0; i<columns.length; i++) 
+				{
+					columns [i].pack ();
+				}
 			}
 		});
 		
@@ -163,7 +167,8 @@ public class MainWindow extends Shell
 				String clientName = clientTextBox.getText();
 				if(clientName != "")
 				{
-					//TODO search for the client
+					//TODO IN PROGREESS
+					//ArrayList<Client> clientSet = SearchClient(clientName); 
 				}
 			}
 		});
