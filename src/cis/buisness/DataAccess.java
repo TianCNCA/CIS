@@ -23,7 +23,6 @@ public class DataAccess
 
 	public Client readClient( String name )
 	{
-		name = name.trim();
 		return database.readClient( name );
 	}
 
@@ -54,16 +53,7 @@ public class DataAccess
 
 	public Boolean renameClient( String oldName, String newName )
 	{
-		oldName = oldName.trim();
-		newName = newName.trim();
 		return database.renameClient( oldName, newName );
-	}
-
-
-	public SoapBox getAllSoaps( String clientName )
-	{
-		clientName = clientName.trim();
-		return database.getAllSoaps( clientName );
 	}
 
 
@@ -81,7 +71,6 @@ public class DataAccess
 	
 	public Boolean insertSoap( Soap soap, String clientName )
 	{
-		clientName = clientName.trim();
 		return database.insertSoap( soap, clientName );
 	}
 
@@ -94,7 +83,6 @@ public class DataAccess
 
 	public Boolean updateSoap( SoapBox soap, String oldMessage )
 	{
-		oldMessage = oldMessage.trim();
 		return database.updateSoap( soap, oldMessage );
 	}
 	

@@ -247,7 +247,7 @@ public class DataBaseAccess
 		try
         {
 			updateString = buildClientUpdateString( updatedClient );
-			where 		 = "WHERE Name = " + updatedClient.getName();
+			where 		 = "WHERE ID = " + updatedClient.getKey();
 			sqlCommand 	 = "UPDATE CLIENTS " + updateString + " " + where + ";";
 			System.out.println(sqlCommand);
 			result 		 = sqlStatement.executeUpdate( sqlCommand );
@@ -295,6 +295,8 @@ public class DataBaseAccess
 			   	reason, occupation, sports, sleep, DOB,
 			   	homePhone, workPhone;
 		int 	smoking, alcohol, stress, appetite, key;
+		
+		clientName = parseForSQLValid( clientName );
 		
 		if ( clientName.equals( "" ) || clientName == null )
 		{
@@ -419,16 +421,16 @@ public class DataBaseAccess
 
 
 	/*------------------------------------------------------
-	 * METHOD:			getAllSoaps
+	 * METHOD:			readSoap
 	 *
-	 * PURPOSE:			This method will return the entire list of
-	 * 					soaps. To be used in displaying them 
-	 * 					and what not.
+	 * PURPOSE:			This method will take a client name String, and search
+	 * 					for the appropriate soaps. Returns a whole list of them
 	------------------------------------------------------*/
 	@SuppressWarnings( "deprecation" )
-    public SoapBox getAllSoaps( String clientName )
+    public SoapBox readSoaps( String clientName )
 	{
-		SoapBox allSoaps = new SoapBox( clientName );
+		SoapBox soap = new SoapBox( clientName );
+		clientName = parseForSQLValid( clientName );
 		
 		Client newClient = null;
 		String date, disc;
@@ -453,28 +455,14 @@ public class DataBaseAccess
 	        	tempSoap.setDate( new Date( date ) );
 	        	tempSoap.setInfo( disc );
 	        	
-	        	allSoaps.add( tempSoap );
+	        	soap.add( tempSoap );
 	        }
         }
         catch ( SQLException e )
         {
         	System.out.println( e );
         }
-
-		return allSoaps;
-	}
-	
-	
-	/*------------------------------------------------------
-	 * METHOD:			readSoap
-	 *
-	 * PURPOSE:			This method will take a client name String, and search
-	 * 					for the appropriate soap
-	------------------------------------------------------*/
-	public SoapBox readSoaps( String clientName )
-	{
-		SoapBox soap = null;
-
+		
 		return soap;
 	}
 	
@@ -489,11 +477,8 @@ public class DataBaseAccess
 			return false;
 		}
 		
-		insertString = buildSoapString( clientName, soap );
-//		insertString 	= "Insert into Soaps Values (" + key + " ,'" + clientName + "', " 
-//							+ "'" + soap.getDate().toString() + "' , "
-//							+ "'" + soap.getInfo() + "'";				 
-		sqlCommand 		= "Insert into Soaps " + "Values(" + insertString + ");";
+		insertString = buildSoapString( clientName, soap );			 
+		sqlCommand 		= "INSERT into SOAPS " + "VALUES (" + insertString + ");";
 		System.out.println( sqlCommand );
 		
 		try
@@ -532,7 +517,7 @@ public class DataBaseAccess
 		{
 			Soap soap 		= soapBox.getSoapByIndex( i );
 			insertString 	= buildSoapString( clientName, soap );					 
-			sqlCommand 		= "Insert into Soaps " + "Values(" + insertString + ")";
+			sqlCommand 		= "INSERT into SOAPS " + "VALUES (" + insertString + ")";
 			System.out.println( sqlCommand );
 			
 			try
@@ -585,11 +570,12 @@ public class DataBaseAccess
 		}
 		
 		clientName = updatedSoap.getClientName();
-		where 		= "WHERE Name = " + clientName;
+		
 		
 		for ( int i = 0; i < updatedSoap.numSoaps(); i++ )
 		{
 			Soap soap 		= updatedSoap.getSoapByIndex( i );
+			where 			= "WHERE ID = " + soap.getKey();
 			updateString 	= buildSoapString( clientName, soap );					 
 			sqlCommand 		= "Insert into Soaps " + "Values(" + updateString + ")";
 			sqlCommand 		= "UPDATE SOAPS " + updateString + " " + where;
@@ -667,31 +653,31 @@ public class DataBaseAccess
 	private String buildClientString( Client client )
 	{
 		String insertString = 
-				 	  	  client.getKey()				+ "," +
-				  "'" 	+ client.getName() 				+ "'" + "," 
-			    + "'" 	+ client.getDOB()  				+ "'" + ","
-				+ "'" 	+ client.getHomePhone() 		+ "'" + ","
-			    + "'" 	+ client.getWorkPhone() 		+ "'" + ","
-				+ "'" 	+ client.getAddress() 			+ "'" + "," 
-				+ "'" 	+ client.getCity() 				+ "'" + "," 
-				+ "'" 	+ client.getProvince() 			+ "'" + "," 
-				+ "'" 	+ client.getPostCode() 			+ "'" +	"," 
-					  	+ client.getPhysician() 		+ ", " 
-					  	+ client.getPhysioTherapist() 	+ ", " 
-					  	+ client.getChiropractor() 		+ ", " 
-					  	+ client.getExperience() 		+ ", " 
-				+ "'"	+ client.getReason() 			+ "'" + "," 
-					  	+ client.getDiet() 				+ ", " 
-					  	+ client.getMedication() 		+ ", " 
-					  	+ client.getInsulin() 			+ ", " 
-					  	+ client.getUncontrolled() 		+ ", " 
-				+ "'" 	+ client.getOccupation() 		+ "'" + "," 
-				+ "'" 	+ client.getSports() 			+ "'" + "," 
-				+ "'" 	+ client.getSleepPattern()  	+ "'" + "," 
-						+ client.getSmoking() 			+ "," 
-						+ client.getAlcohol() 			+ "," 
-						+ client.getStress()  			+ "," 
-						+ client.getAppetite();
+				  client.getKey()								+ ","
+				+ parseForSQLQuery( client.getName() )	 		+ "," 
+			    + client.getDOB()  								+ ","
+				+ parseForSQLQuery( client.getHomePhone() )		+ ","
+			    + parseForSQLQuery( client.getWorkPhone() )		+ ","
+				+ parseForSQLQuery( client.getAddress() )		+ "," 
+				+ parseForSQLQuery( client.getCity() )			+ "," 
+				+ parseForSQLQuery( client.getProvince() )		+ "," 
+				+ parseForSQLQuery( client.getPostCode() )		+ "," 
+			  	+ client.getPhysician() 						+ "," 
+			  	+ client.getPhysioTherapist() 					+ "," 
+			  	+ client.getChiropractor() 						+ "," 
+			  	+ client.getExperience() 						+ "," 
+				+ parseForSQLQuery( client.getReason()	)		+ "," 
+			  	+ client.getDiet() 								+ "," 
+			  	+ client.getMedication() 						+ "," 
+			  	+ client.getInsulin() 							+ "," 
+			  	+ client.getUncontrolled() 						+ "," 
+				+ parseForSQLQuery( client.getOccupation()	) 	+ "," 
+				+ parseForSQLQuery( client.getSports()	)		+ "," 
+				+ parseForSQLQuery(client.getSleepPattern() ) 	+ "," 
+				+ client.getSmoking() 							+ "," 
+				+ client.getAlcohol() 							+ "," 
+				+ client.getStress()  							+ "," 
+				+ client.getAppetite();
 		
 		return insertString;
 	}
@@ -700,28 +686,28 @@ public class DataBaseAccess
 	private String buildClientUpdateString( Client updatedClient )
     {
 		String insertString = 
-		      "Set DOB = '" 		+ updatedClient.getDOB()  				+ "'" + ", "
-			+ "Set HomePhone = '" 	+ updatedClient.getHomePhone() 			+ "'" + ", "
-		    + "Set WorkPhone = '" 	+ updatedClient.getWorkPhone() 			+ "'" + ", "
-			+ "Set Address = '" 	+ updatedClient.getAddress() 			+ "'" + ", " 
-			+ "Set City = '" 		+ updatedClient.getCity() 				+ "'" + ", " 
-			+ "Set PRovince = '" 	+ updatedClient.getProvince() 			+ "'" + ", " 
-			+ "Set PostalCode = '" 	+ updatedClient.getPostCode() 			+ "'" +	", " 
-			+ "Set Physician = "	+ updatedClient.getPhysician() 			+ ", " 
-			+ "Set Physther = "	  	+ updatedClient.getPhysioTherapist() 	+ ", " 
-			+ "Set Chiro = " 	  	+ updatedClient.getChiropractor() 		+ ", " 
-			+ "Set PrevExp = "	  	+ updatedClient.getExperience() 		+ ", " 
-			+ "Set Reason = '" 		+ updatedClient.getReason() 			+ "'" + ", " 
-			+ "Set Diet = "	  		+ updatedClient.getDiet() 				+ ", " 
-			+ "Set Med = "	  		+ updatedClient.getMedication() 		+ ", " 
-			+ "Set Insulin = "	  	+ updatedClient.getInsulin() 			+ ", " 
-			+ "Set Unctrl = "	  	+ updatedClient.getUncontrolled() 		+ ", " 
-			+ "Set Occupation = '" 	+ updatedClient.getOccupation() 		+ "'" + ", " 
-			+ "Set Sports = '" 		+ updatedClient.getSports() 			+ "'" + ", " 
-			+ "Set Sleep = '" 		+ updatedClient.getSleepPattern()  		+ "'" + ", " 
-			+ "Set Smoking = " 		+ updatedClient.getSmoking()			+ ", " 
-			+ "Set Alchohol = " 	+ updatedClient.getAlcohol()			+	", " 
-			+ "Set Stress = " 		+ updatedClient.getStress()				+ ", " 
+		      "Set DOB = " 			+ updatedClient.getDOB()  							+ ","
+			+ "Set HomePhone = " 	+ parseForSQLQuery(updatedClient.getHomePhone() )	+ ","
+		    + "Set WorkPhone = " 	+ parseForSQLQuery(updatedClient.getWorkPhone() )	+ ","
+			+ "Set Address = " 		+ parseForSQLQuery(updatedClient.getAddress() )		+ "," 
+			+ "Set City = " 		+ parseForSQLQuery(updatedClient.getCity() )		+ "," 
+			+ "Set PRovince = " 	+ parseForSQLQuery(updatedClient.getProvince() )	+ "," 
+			+ "Set PostalCode = " 	+ parseForSQLQuery(updatedClient.getPostCode() )	+ "," 
+			+ "Set Physician = "	+ updatedClient.getPhysician() 						+ "," 
+			+ "Set Physther = "	  	+ updatedClient.getPhysioTherapist() 				+ "," 
+			+ "Set Chiro = " 	  	+ updatedClient.getChiropractor() 					+ "," 
+			+ "Set PrevExp = "	  	+ updatedClient.getExperience() 					+ "," 
+			+ "Set Reason = " 		+ parseForSQLQuery(updatedClient.getReason() )		+ "," 
+			+ "Set Diet = "	  		+ updatedClient.getDiet() 							+ "," 
+			+ "Set Med = "	  		+ updatedClient.getMedication() 					+ "," 
+			+ "Set Insulin = "	  	+ updatedClient.getInsulin() 						+ "," 
+			+ "Set Unctrl = "	  	+ updatedClient.getUncontrolled() 					+ "," 
+			+ "Set Occupation = '" 	+ parseForSQLQuery(updatedClient.getOccupation() )	+ "," 
+			+ "Set Sports = " 		+ updatedClient.getSports() 						+ "," 
+			+ "Set Sleep = " 		+ parseForSQLQuery(updatedClient.getSleepPattern() )+ "," 
+			+ "Set Smoking = " 		+ updatedClient.getSmoking()						+ "," 
+			+ "Set Alchohol = " 	+ updatedClient.getAlcohol()						+ "," 
+			+ "Set Stress = " 		+ updatedClient.getStress()							+ "," 
 			+ "Set Appetite = " 	+ updatedClient.getAppetite();
 	
 		return insertString;
@@ -731,10 +717,10 @@ public class DataBaseAccess
 	private String buildSoapString( String clientName, Soap soap )
 	{
 		String insertString = 
-				 	        soap.getKey()	+ ","
-				 	+ "'" + clientName 		+ "'" + ","
-					+ "'" + soap.getDate() 	+ "'" + ","
-					+ "'" + soap.getInfo() 	+ "'";
+				 	  soap.getKey()							+ ","
+				 	+ parseForSQLQuery( clientName )		+ ","
+					+ parseForSQLQuery( soap.getDate() )	+ ","
+					+ parseForSQLQuery( soap.getInfo() );
 
 		return insertString;
 	}
@@ -743,10 +729,62 @@ public class DataBaseAccess
 	private String buildSoapUpdateString( Soap soap )
 	{
 		String insertString = 
-					  "Set Date = '" + soap.getDate() 	+ "'" + ", "
-					+ "Set Disc = '" + soap.getInfo() 	+ "'";
+					  "Set Date = " + parseForSQLQuery( soap.getDate() ) + ", "
+					+ "Set Disc = " + parseForSQLQuery( soap.getInfo() );
 
 		return insertString;
+	}
+	
+	
+	/*------------------------------------------------------
+	* METHOD:			parseStringForSQL
+	*
+	* PURPOSE:			replaces some unfriendly SQL strings 
+	* 					with friendly versions, adds string quotes
+	* 					This method is for writing
+	------------------------------------------------------*/
+	private String parseForSQLQuery( String input )
+	{
+		String parsedString = "'";
+		String finalString = null;
+		
+		if ( input != null )
+		{
+			input = input.trim();
+			parsedString = input.replace( "'", "''" );
+		}
+		else
+		{
+			parsedString = "null";
+		}
+		
+		finalString = "'" + parsedString + "'";
+		
+		return finalString;
+	}
+	
+	
+	/*------------------------------------------------------
+	* METHOD:			parseStringForSQL
+	*
+	* PURPOSE:			replaces some unfriendly SQL strings 
+	* 					with friendly versions
+	------------------------------------------------------*/
+	private String parseForSQLValid( String input )
+	{
+		String finalString = null;
+		
+		if ( input != null )
+		{
+			input = input.trim();
+			finalString = input.replace( "'", "''" );
+		}
+		else
+		{
+			finalString = "null";
+		}
+		
+		return finalString;
 	}
 	
 	//*****************************************************************
@@ -897,14 +935,10 @@ public class DataBaseAccess
 		Client test    = new Client( "Georgy Georgerson" );
 		// We are sleeping because the dates need to be unique! One second makes them unique
 		test.addSoap( new Date(), "This was splended! Jolly good show mate!" );
-		try { Thread.sleep( 1000 ); } catch ( InterruptedException e ) { e.printStackTrace(); }
 		test.addSoap( new Date(), "Woohoo!" );
-		try { Thread.sleep( 1000 ); } catch ( InterruptedException e ) { e.printStackTrace(); }
 		test.addSoap( new Date(), "Things are looking ship shape captian!" );
-		try { Thread.sleep( 1000 ); } catch ( InterruptedException e ) { e.printStackTrace(); }
 		test.addSoap( new Date(), "All aboard the boyer express!" );
 		insertClient( test );
-		try { Thread.sleep( 1000 ); } catch ( InterruptedException e ) { e.printStackTrace(); }
 		
 		Client test1 = new Client( "Rick Fredrickson" );
 		test1.addSoap( "Things are getting all soapy up in here!" );

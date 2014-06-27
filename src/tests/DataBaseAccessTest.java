@@ -6,6 +6,7 @@ import java.util.Date;
 import app.DBService;
 import cis.buisness.Client;
 import cis.buisness.DataAccess;
+import cis.buisness.Soap;
 import cis.buisness.SoapBox;
 import cis.persistance.DataBaseAccess;
 import junit.framework.TestCase;
@@ -104,7 +105,7 @@ public final class DataBaseAccessTest extends TestCase
 	}
 	
 	
-	public void testInsertClientWithMultipleSoaps() throws InterruptedException
+	public void testInsertClientWithMultipleSoaps()
 	{
 		database.dbResetForTesting();
 		System.out.println( "\nINSERT SOAP TEST" );
@@ -113,11 +114,8 @@ public final class DataBaseAccessTest extends TestCase
 		
 		// We are sleeping because the dates need to be unique! One second makes them unique
 		test.addSoap( new Date(), "This was splended! Jolly good show mate!" );
-		Thread.sleep( 1000 );
 		test.addSoap( new Date(), "Woohoo!" );
-		Thread.sleep( 1000 );
 		test.addSoap( new Date(), "Things are looking ship shape captian!" );
-		Thread.sleep( 1000 );
 		test.addSoap( new Date(), "All aboard the boyer express!" );
 		
 		database.insertClient( test );
@@ -137,7 +135,7 @@ public final class DataBaseAccessTest extends TestCase
 	{
 		database.dbResetForTesting();
 		System.out.println( "\nREAD CLIENT TEST" );
-		Client test    = new Client( "Gorgina Gerald" );
+		Client test = new Client( "Georgy Georgerson" );
 		test.setOccupation( "Nurse" );
 		test.setAddress( "Box 1 Billion" );
 		test.setProvince( "MB" );
@@ -145,7 +143,7 @@ public final class DataBaseAccessTest extends TestCase
 		test.setActive( true );
 		database.insertClient( test );
 		
-		Client read = database.readClient( "Gorgina Gerald" );
+		Client read = database.readClient( "Georgy Georgerson" );
 		assertEquals( read.getOccupation(), "Nurse" );
 		assertEquals( read.getAddress(), "Box 1 Billion" );
 		assertEquals( read.getProvince(), "MB" );
@@ -170,6 +168,7 @@ public final class DataBaseAccessTest extends TestCase
 		
 		// Ooooooh subtle
 		Client read = database.readClient( test );
+		System.out.println( read.getOccupation() + " " + read.getAddress() + " " + read.getProvince() + " " + read.getCity() );
 		assertEquals( read.getOccupation(), "Nurse" );
 		assertEquals( read.getAddress(), "Box 1 Billion" );
 		assertEquals( read.getProvince(), "MB" );
@@ -206,6 +205,37 @@ public final class DataBaseAccessTest extends TestCase
 		System.out.println( "\nREAD SOAP TEST" );
 		SoapBox soapbox = new SoapBox( "Patty Rick" );
 		soapbox.add( new Date(), "Everything seems to be well" );
+		
+		database.insertSoapBox( soapbox );
+		int size = database.getSoapCount();
+		
+		assertEquals( size, 1 );
+
+		System.out.println( "END READ SOAP TEST\n" );
+	}
+	
+	
+	public void testInsertManySoap()
+	{
+		database.dbResetForTesting();
+		System.out.println( "\nREAD SOAP TEST" );
+		SoapBox soapbox = new SoapBox( "Patty Rick" );
+		soapbox.add( new Date(), "Everything seems to be well" );
+		soapbox.add( new Date(), "Land ho" );
+		soapbox.add( new Date(), "Treasure Planet" );
+		soapbox.add( new Date(), "Don't ask about all this..." );
+		
+		SoapBox soapbox2 = new SoapBox( "Hubert" );
+		soapbox2.add( new Date(), "Hubert seems nice" );
+		
+		database.insertSoapBox( soapbox );
+		int size = database.getSoapCount();
+		System.out.println( "Size: " +  size );
+		assertEquals( size, 4 );
+		
+		database.insertSoapBox( soapbox2 );
+		size = database.getSoapCount();
+		assertEquals( size, 5 );
 
 		System.out.println( "END READ SOAP TEST\n" );
 	}
@@ -217,6 +247,14 @@ public final class DataBaseAccessTest extends TestCase
 		System.out.println( "\nREAD SOAP TEST" );
 		SoapBox soapbox = new SoapBox( "Patty Rick" );
 		soapbox.add( new Date(), "Everything seems to be well" );
+		
+		database.insertSoapBox( soapbox );
+		
+		SoapBox read = database.readSoaps( "Patty Rick" );
+		ArrayList<Soap> soaps = read.getSoaps();
+		
+		assertEquals( soaps.size(), 1 );
+		assertEquals( soaps.get(0).getInfo(), "Everything seems to be well" );
 
 		System.out.println( "END READ SOAP TEST\n" );
 	}
@@ -253,11 +291,41 @@ public final class DataBaseAccessTest extends TestCase
 	
 	public void testAllClientsList()
 	{
+		database.dbResetForTesting();
 		System.out.println( "Test All Clients\n" );
+		Client test1    = new Client( "Fredwina Fredders" );
+		Client test2    = new Client( "Gorgina Gerald" );
+		Client test3    = new Client( "Georgy George" );
+		Client test4   	= new Client( "George Patterson" );
+		Client one 		= new Client( "Pat Ricky" );
+		Client two 		= new Client( "George Curious" );
+		Client three 	= new Client( "Fred Freddy" );
+		Client four 	= new Client( "Patty Rick" );
+		Client five 	= new Client( "Travis Almighty" );
+		database.insertClient( five );
+		database.insertClient( four );
+		database.insertClient( three );
+		database.insertClient( two );
+		database.insertClient( one );
+		database.insertClient( test4 );
+		database.insertClient( test3 );
+		database.insertClient( test2 );
+		database.insertClient( test1 );
+		database.insertClient( five );
+		database.insertClient( four );
+		database.insertClient( three );
+		database.insertClient( two );
+		database.insertClient( one );
+		database.insertClient( test4 );
+		database.insertClient( test3 );
+		database.insertClient( test2 );
+		database.insertClient( test1 );
 		
 		ArrayList<Client> listOfClients;
 		
 		listOfClients = database.getAllClients();
+		
+		assertEquals( listOfClients.size(), 9 );
 		
 		System.out.println( listOfClients );
 		

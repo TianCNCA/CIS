@@ -84,6 +84,8 @@ public class MainWindow extends Shell
 		{
 			@Override
 			public void focusGained(FocusEvent arg0) {
+				//ArrayList<Client> clients = new ArrayList<Client>();
+				//clients.add( clientDataBase.readClient( "Pat Ricky" ) );
 				ArrayList<Client> clients = clientDataBase.getAllClients();
 				final TableColumn [] columns = table.getColumns ();
 				for (int i=0; i<clients.size(); i++) //iterate through the whole list here and fill the table with data
