@@ -4,12 +4,21 @@ import java.util.ArrayList;
 
 public class SearchClients
 {
-	private DataAccess dataAccess;
+	
+	
+	
+	// Depreciated, do not use
+	
+	
+	
+	
+	
+/*	private DataAccess dataAccess;
 	private ArrayList<Client> clientList = dataAccess.getAllClients();
 
-	SearchClients(){};
+	public SearchClients(){};
 	
-	ArrayList<Client> SearchClient(String clientName)
+	public ArrayList<Client> searchClient(String clientName)
 	{
 		ArrayList<Client> searchSet = new ArrayList<Client>();
 		
@@ -21,6 +30,6 @@ public class SearchClients
 				}
 		}
 		return searchSet;
-	}
+	} */
 	
 }

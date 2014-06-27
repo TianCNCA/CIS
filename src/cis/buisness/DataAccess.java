@@ -8,6 +8,8 @@ import cis.persistance.DataBaseAccess;
 public class DataAccess
 {
 	private DataBaseAccess database;
+	private static DataAccess fullList = new DataAccess();
+	private static ArrayList<Client> allClients = fullList.getAllClients();
 
 
 	public DataAccess()
@@ -97,5 +99,20 @@ public class DataAccess
 	public int getSize()
 	{
 		return database.getSize();
+	}
+	
+	public ArrayList<Client> searchClients( String target )
+	{
+		ArrayList<Client> searchSet = new ArrayList<Client>();
+		
+		for (Client c : allClients)
+		{
+			if (!(c.getName().toLowerCase().contains(target.toLowerCase()))) // TODO: code smell? more like code REEKS! refactor this ASAP
+				{
+					searchSet.add(c);
+				}
+		}
+		return searchSet;
+		
 	}
 }
