@@ -25,7 +25,6 @@ import cis.buisness.DataAccess;
 
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.graphics.Point;
 
 public class MainWindow extends Shell 
@@ -92,7 +91,6 @@ public class MainWindow extends Shell
 	{
 		super(display, SWT.SHELL_TRIM);
 		setMinimumSize(new Point(779, 477));
-		setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
 		clientDataBase = new DataAccess();
 		
 		addFocusListener(new FocusAdapter() 
