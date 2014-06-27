@@ -25,6 +25,8 @@ import cis.buisness.DataAccess;
 import cis.persistance.DBIntermediary;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 
 public class CreateClientWindow {
 	private Text text_9;
@@ -99,6 +101,13 @@ public class CreateClientWindow {
 		composite.setLayout(null);
 		
 		TabFolder tabFolder = new TabFolder(composite, SWT.NONE);
+		
+		tabFolder.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				widgetSelected(arg0);
+			}
+		});
 		tabFolder.setBounds(0, 0, 755, 362);
 		
 		TabItem tbtmNewItem = new TabItem(tabFolder, SWT.NONE);
@@ -504,6 +513,8 @@ public class CreateClientWindow {
 		});
 		btnCancel.setBounds(670, 368, 75, 25);
 		btnCancel.setText("Cancel");
+		
+		tabFolder.setSelection(1);
 
 		shlCreatClient.open();
 		shlCreatClient.layout();
