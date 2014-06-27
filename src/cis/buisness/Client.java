@@ -2,6 +2,8 @@ package cis.buisness;
 
 import java.util.*;
 
+import app.DBService;
+
 @SuppressWarnings( "unused" )
 public class Client
 {
@@ -42,6 +44,7 @@ public class Client
 	private int alcohol;
 	private int stress;
 	private int appetite;
+	private int key;
 
 
 	public Client()
@@ -60,6 +63,8 @@ public class Client
 		uncontrolled = false;
 
 		historyReports = new String[17];
+		
+		key = DBService.getCurrentKey();
 	}
 
 
@@ -78,6 +83,8 @@ public class Client
 		oral_medication = false;
 		insulin = false;
 		uncontrolled = false;
+		
+		key = DBService.getCurrentKey();
 	}
 
 
@@ -95,6 +102,20 @@ public class Client
 	public void setActive( boolean active )
 	{
 		this.active = active;
+	}
+	
+	
+	public void setKey( int key )
+	{
+		if ( key > -1 )
+		{
+			this.key = key;
+		}
+	}
+	
+	public int getKey()
+	{
+		return key;
 	}
 
 

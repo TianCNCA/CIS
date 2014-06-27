@@ -294,7 +294,7 @@ public class DataBaseAccess
 		String 	name, address, city, province, postalCode, 
 			   	reason, occupation, sports, sleep, DOB,
 			   	homePhone, workPhone;
-		int 	smoking, alcohol, stress, appetite;
+		int 	smoking, alcohol, stress, appetite, key;
 		
 		if ( clientName.equals( "" ) || clientName == null )
 		{
@@ -331,6 +331,7 @@ public class DataBaseAccess
 	        	alcohol 	= dbResult.getInt( "Alcohol" );
 	        	stress 		= dbResult.getInt( "Stress" );
 	        	appetite 	= dbResult.getInt( "Appetite" );
+	        	key 		= dbResult.getInt( "ID" );
 	        	
 	        	newClient 	= new Client( name );
 	        	
@@ -349,6 +350,7 @@ public class DataBaseAccess
 	        	newClient.setAlcohol( alcohol );
 	        	newClient.setStress( stress );
 	        	newClient.setAppetite( appetite );
+	        	newClient.setKey( key );
 	        }
         }
         catch ( SQLException e )
@@ -610,8 +612,15 @@ public class DataBaseAccess
 	}
 	
 	
+	/*------------------------------------------------------
+	 * METHOD:			getCurrentKey
+	 *
+	 * PURPOSE:			Used for assigning the key, gets the key and then
+	 * 					returns it.
+	------------------------------------------------------*/
 	public int getCurrentKey()
 	{
+		key++;
 		return key;
 	}
 
@@ -658,30 +667,30 @@ public class DataBaseAccess
 	private String buildClientString( Client client )
 	{
 		String insertString = 
-				 	  	+ key 							+ "," +
-				  "'" 	+ client.getName() 				+ "'" + ", " 
-			    + "'" 	+ client.getDOB()  				+ "'" + ", "
-				+ "'" 	+ client.getHomePhone() 		+ "'" + ", "
-			    + "'" 	+ client.getWorkPhone() 		+ "'" + ", "
-				+ "'" 	+ client.getAddress() 			+ "'" + ", " 
-				+ "'" 	+ client.getCity() 				+ "'" + ", " 
-				+ "'" 	+ client.getProvince() 			+ "'" + ", " 
-				+ "'" 	+ client.getPostCode() 			+ "'" +	", " 
+				 	  	  client.getKey()				+ "," +
+				  "'" 	+ client.getName() 				+ "'" + "," 
+			    + "'" 	+ client.getDOB()  				+ "'" + ","
+				+ "'" 	+ client.getHomePhone() 		+ "'" + ","
+			    + "'" 	+ client.getWorkPhone() 		+ "'" + ","
+				+ "'" 	+ client.getAddress() 			+ "'" + "," 
+				+ "'" 	+ client.getCity() 				+ "'" + "," 
+				+ "'" 	+ client.getProvince() 			+ "'" + "," 
+				+ "'" 	+ client.getPostCode() 			+ "'" +	"," 
 					  	+ client.getPhysician() 		+ ", " 
 					  	+ client.getPhysioTherapist() 	+ ", " 
 					  	+ client.getChiropractor() 		+ ", " 
 					  	+ client.getExperience() 		+ ", " 
-				+ "'"	+ client.getReason() 			+ "'" + ", " 
+				+ "'"	+ client.getReason() 			+ "'" + "," 
 					  	+ client.getDiet() 				+ ", " 
 					  	+ client.getMedication() 		+ ", " 
 					  	+ client.getInsulin() 			+ ", " 
 					  	+ client.getUncontrolled() 		+ ", " 
-				+ "'" 	+ client.getOccupation() 		+ "'" + ", " 
-				+ "'" 	+ client.getSports() 			+ "'" + ", " 
-				+ "'" 	+ client.getSleepPattern()  	+ "'" + ", " 
-						+ client.getSmoking() 			+ ", " 
-						+ client.getAlcohol() 			+	", " 
-						+ client.getStress()  			+ ", " 
+				+ "'" 	+ client.getOccupation() 		+ "'" + "," 
+				+ "'" 	+ client.getSports() 			+ "'" + "," 
+				+ "'" 	+ client.getSleepPattern()  	+ "'" + "," 
+						+ client.getSmoking() 			+ "," 
+						+ client.getAlcohol() 			+ "," 
+						+ client.getStress()  			+ "," 
 						+ client.getAppetite();
 		
 		return insertString;
@@ -722,9 +731,9 @@ public class DataBaseAccess
 	private String buildSoapString( String clientName, Soap soap )
 	{
 		String insertString = 
-				 	+ key 					+ ","
-				 	+ "'" + clientName 		+ "'" + ", "
-					+ "'" + soap.getDate() 	+ "'" + ", "
+				 	        soap.getKey()	+ ","
+				 	+ "'" + clientName 		+ "'" + ","
+					+ "'" + soap.getDate() 	+ "'" + ","
 					+ "'" + soap.getInfo() 	+ "'";
 
 		return insertString;

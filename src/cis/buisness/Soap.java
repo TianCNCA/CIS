@@ -2,21 +2,27 @@ package cis.buisness;
 
 import java.util.*;
 
+import app.DBService;
+
 public class Soap implements Comparable<Soap>
 {
-	private Date date;
-	private String info;
+	private Date    date;
+	private String  info;
+	private int 	key;
 
 
 	public Soap()
 	{
-		assert( false );
+		date = null;
+		info = null;
+		key  = DBService.getCurrentKey();
 	}
 
 	public Soap( Date date, String info )
 	{
 		this.date = date;
 		this.info = info;
+		key = DBService.getCurrentKey();
 	}
 
 
@@ -56,5 +62,20 @@ public class Soap implements Comparable<Soap>
 	public String getInfo()
 	{
 		return info;
+	}
+	
+	
+	public void setKey( int key )
+	{
+		if ( key > -1 )
+		{
+			this.key = key;
+		}
+	}
+	
+	
+	public int getKey()
+	{
+		return key;
 	}
 }

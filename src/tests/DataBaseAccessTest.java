@@ -179,6 +179,48 @@ public final class DataBaseAccessTest extends TestCase
 		System.out.println( "END READ CLIENT TEST\n" );
 	}
 	
+	
+	public void testFailReadClient()
+	{
+		database.dbResetForTesting();
+		System.out.println( "\nREAD CLIENT TEST" );
+		Client test    = new Client( "Gorgina" );
+		test.setOccupation( "Nurse" );
+		test.setAddress( "Box 1 Billion" );
+		test.setProvince( "MB" );
+		test.setCity( "Winterpig" );
+		test.setActive( true );
+		database.insertClient( test );
+		
+		// Ooooooh subtle
+		Client read = database.readClient( "Gorgina Fred" );
+		assertNull( read );
+
+		System.out.println( "END READ CLIENT TEST\n" );
+	}
+	
+	
+	public void testInsertSoap()
+	{
+		database.dbResetForTesting();
+		System.out.println( "\nREAD SOAP TEST" );
+		SoapBox soapbox = new SoapBox( "Patty Rick" );
+		soapbox.add( new Date(), "Everything seems to be well" );
+
+		System.out.println( "END READ SOAP TEST\n" );
+	}
+	
+	
+	public void testReadSoap()
+	{
+		database.dbResetForTesting();
+		System.out.println( "\nREAD SOAP TEST" );
+		SoapBox soapbox = new SoapBox( "Patty Rick" );
+		soapbox.add( new Date(), "Everything seems to be well" );
+
+		System.out.println( "END READ SOAP TEST\n" );
+	}
+	
 	// Check to see if we can update a clients information field
 	public void testUpdateClient()
 	{

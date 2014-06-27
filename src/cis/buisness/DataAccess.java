@@ -120,6 +120,7 @@ public class DataAccess
 		return database.getClientCount();
 	}
 	
+	
 	public int getSoapCount()
 	{
 		return database.getSoapCount();
