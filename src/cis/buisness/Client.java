@@ -77,6 +77,7 @@ public class Client
     	uncontrolled = false;
 	}
 
+	@SuppressWarnings("deprecation")
 	public int getAge()
 	{
 		Date current = new Date();
@@ -90,6 +91,7 @@ public class Client
 		this.active = active;
 	}
 
+	@SuppressWarnings("deprecation")
 	public boolean isActive()
 	{
 		if(active == true)
@@ -102,6 +104,11 @@ public class Client
 				setActive(false);
 		}
 		return active;
+	}
+
+	public void addSoap(Soap theSoap)
+	{
+		visits.add(theSoap);
 	}
 	
 	public void addSoap(String info)
@@ -120,7 +127,7 @@ public class Client
 		return visits.last();
 	}
 	
-	public Soap[] getSoaps()
+	public ArrayList<Soap> getSoaps()
 	{
 		return visits.getSoaps();
 	}
@@ -150,6 +157,7 @@ public class Client
 		this.postCode = postCode;
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void setDOB(String DOB)
 	{
 		this.DOB = new Date(DOB);

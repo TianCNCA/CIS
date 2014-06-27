@@ -13,16 +13,17 @@ public class SoapBox {
     Soap newSoap = new Soap(date, info);
     visits.add(newSoap);
   }
-  
+
+  public void add(Soap theSoap) {
+	  visits.add(theSoap);
+  }
+
   public Soap last(){
     return visits.get(visits.size());
   }
   
-  public Soap[] getSoaps(){
-	  Soap soaps[] = new Soap[visits.size()];
-	  for(int i=0; i<visits.size(); i++){
-		  soaps[i] = visits.get(i);
-	  }
-	  return soaps;
+  public ArrayList<Soap> getSoaps(){
+	  return visits;
   }
+
 }

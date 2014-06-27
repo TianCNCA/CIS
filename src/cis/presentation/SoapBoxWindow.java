@@ -64,14 +64,14 @@ public class SoapBoxWindow extends Shell {
 		tblclmnNewColumn.setWidth(100);
 		tblclmnNewColumn.setText("Date");
 		
-		Soap[] soaps = theClient.getSoaps();
+		ArrayList<Soap> soaps = theClient.getSoaps();
 		final TableColumn [] columns = table.getColumns ();
-		for (int i=0; i<soaps.length; i++) //iterate through the whole list here and fill the table with data
+		for (int i=0; i<soaps.size(); i++) //iterate through the whole list here and fill the table with data
 		{
 			TableItem item = new TableItem (table, SWT.NONE);
 			for (int j=0; j<columns.length; j++)
 		    {
-				item.setText(soaps[i].getDate().toString());
+				item.setText(soaps.get(i).getDate().toString());
 		    }
 		}
 		
@@ -84,12 +84,12 @@ public class SoapBoxWindow extends Shell {
 		tblclmnSoap.setText("Soap");
 
 		final TableColumn [] soapColumns = table.getColumns ();
-		for (int i=0; i<soaps.length; i++) //iterate through the whole list here and fill the table with data
+		for (int i=0; i<soaps.size(); i++) //iterate through the whole list here and fill the table with data
 		{
 			TableItem item = new TableItem (table, SWT.NONE);
 			for (int j=0; j<soapColumns.length; j++)
 		    {
-				item.setText(soaps[i].getDate().toString());
+				item.setText(soaps.get(i).getInfo());
 		    }
 		}
 		
@@ -116,8 +116,6 @@ public class SoapBoxWindow extends Shell {
 		
 		Label lblNewLabel = new Label(this, SWT.NONE);
 		fd_table.top = new FormAttachment(lblNewLabel, 6);
-		lblNewLabel.setFont(SWTResourceManager.getFont("Segoe UI", 16, SWT.NORMAL));
-		lblNewLabel.setBackground(SWTResourceManager.getColor(255, 250, 205));
 		FormData fd_lblNewLabel = new FormData();
 		fd_lblNewLabel.right = new FormAttachment(100, -131);
 		fd_lblNewLabel.left = new FormAttachment(0, 10);
