@@ -103,7 +103,7 @@ public class MainWindow extends Shell
 		btnExit.setBounds(615, 323, 75, 25);
 		btnExit.setText("Exit");
 		
-		Button btnNewButton_1 = new Button(this, SWT.NONE);
+		/*Button btnNewButton_1 = new Button(this, SWT.NONE);
 		btnNewButton_1.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) 
@@ -116,7 +116,7 @@ public class MainWindow extends Shell
 			}
 		});
 		btnNewButton_1.setBounds(591, 257, 137, 25);
-		btnNewButton_1.setText("Edit Client Information");
+		btnNewButton_1.setText("Edit Client Information");*/
 		
 		Button btnNewButton_2 = new Button(this, SWT.NONE);
 		btnNewButton_2.addMouseListener(new MouseAdapter() {

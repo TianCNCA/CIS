@@ -1,4 +1,4 @@
-package tests;
+package tests.objectTests;
 
 import cis.buisness.Client;
 import junit.framework.TestCase;

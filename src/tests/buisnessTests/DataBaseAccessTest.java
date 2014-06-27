@@ -1,4 +1,4 @@
-package tests;
+package tests.buisnessTests;
 
 import java.util.ArrayList;
 
