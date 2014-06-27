@@ -143,6 +143,12 @@ public class Client
 		Date today = new Date();
 		soapBox.add( today, info );
 	}
+	
+	
+	public void addSoap( Soap soap )
+	{
+		soapBox.add(  soap );
+	}
 
 
 	public void addSoap( Date date, String info )
