@@ -194,7 +194,7 @@ public class DataBaseAccess
 			System.out.println( ex );
 			
 			// 23505 is the SQLIntegrityConstraintViolationException. I.e. the client already exists.
-			// in that case, we attemp to just insert the soaps, maybe we are just updating?
+			// in that case, we attempt to just insert the soaps, maybe we are just updating?
 			if ( ex.getSQLState().equals( "23505" ) )
 			{
 				// Now insert the soaps from the client, regardless weather the client inserted or not.

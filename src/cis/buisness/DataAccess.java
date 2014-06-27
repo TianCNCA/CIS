@@ -38,13 +38,17 @@ public class DataAccess
 
 	public Boolean insertClient( Client client )
 	{
-		return database.insertClient( client );
+		boolean worked = database.insertClient( client );
+		if (worked) { allClients.add( client ); }
+		return worked;
 	}
 
 
 	public Boolean deleteClient( Client client )
 	{
-		return database.deleteClient( client );
+		boolean worked = database.deleteClient( client );
+		if (worked) { allClients.remove( client ); }
+		return worked;
 	}
 
 
@@ -107,7 +111,7 @@ public class DataAccess
 		
 		for (Client c : allClients)
 		{
-			if (!(c.getName().toLowerCase().contains(target.toLowerCase()))) // TODO: code smell? more like code REEKS! refactor this ASAP
+			if ((c.getName().toLowerCase().contains(target.toLowerCase()))) // TODO: code smell? more like code REEKS! refactor this ASAP
 				{
 					searchSet.add(c);
 				}

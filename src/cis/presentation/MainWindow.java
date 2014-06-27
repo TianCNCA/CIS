@@ -19,7 +19,6 @@ import org.eclipse.swt.events.MouseEvent;
 import app.DBService;
 import cis.buisness.Client;
 import cis.buisness.DataAccess;
-import cis.buisness.SearchClients;
 
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
@@ -168,7 +167,7 @@ public class MainWindow extends Shell
 				if(clientName != "")
 				{
 					//TODO IN PROGREESS
-					//ArrayList<Client> clientSet = SearchClient(clientName); 
+					//ArrayList<Client> clientSet = searchClients(clientName); 
 				}
 			}
 		});
