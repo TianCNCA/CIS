@@ -1,6 +1,5 @@
 package cis.presentation;
 
-import java.lang.ProcessBuilder.Redirect;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -25,6 +24,7 @@ import cis.buisness.DataAccess;
 
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
+
 import org.eclipse.swt.graphics.Point;
 
 public class MainWindow extends Shell 
@@ -187,10 +187,6 @@ public class MainWindow extends Shell
 		});
 		btnNewButton_3.setBounds(445, 116, 98, 21);
 		btnNewButton_3.setText("Search");
-		
-		Label lblSearcgForA = new Label(this, SWT.NONE);
-		lblSearcgForA.setBounds(36, 95, 167, 15);
-		lblSearcgForA.setText("Enter client name to search for: ");
 		
 		table = new Table(this, SWT.BORDER | SWT.FULL_SELECTION);
 		table.setBounds(36, 153, 507, 276);
