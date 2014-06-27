@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.SWT;
-import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FormLayout;
@@ -35,7 +34,7 @@ public class SoapBoxWindow extends Shell {
 		
 		setMinimumSize(new Point(550, 175));
 		setText("Soap Box");
-		setBackground(SWTResourceManager.getColor(255, 250, 205));
+
 		setLayout(new FormLayout());
 		
 		Button btnClose = new Button(this, SWT.NONE);
@@ -52,7 +51,7 @@ public class SoapBoxWindow extends Shell {
 		
 		table = new Table(this, SWT.BORDER | SWT.FULL_SELECTION);
 		fd_btnClose.top = new FormAttachment(table, 5);
-		table.setBackground(SWTResourceManager.getColor(240, 248, 255));
+
 		FormData fd_table = new FormData();
 		fd_table.right = new FormAttachment(btnClose, 0, SWT.RIGHT);
 		fd_table.bottom = new FormAttachment(100, -40);
@@ -65,14 +64,14 @@ public class SoapBoxWindow extends Shell {
 		tblclmnNewColumn.setWidth(100);
 		tblclmnNewColumn.setText("Date");
 		
-		ArrayList<Soap> soaps = theClient.getSoaps();
+		Soap[] soaps = theClient.getSoaps();
 		final TableColumn [] columns = table.getColumns ();
-		for (int i=0; i<soaps.size(); i++) //iterate through the whole list here and fill the table with data
+		for (int i=0; i<soaps.length; i++) //iterate through the whole list here and fill the table with data
 		{
 			TableItem item = new TableItem (table, SWT.NONE);
 			for (int j=0; j<columns.length; j++)
 		    {
-				item.setText(soaps.get(i).getDate().toString());
+				item.setText(soaps[i].getDate().toString());
 		    }
 		}
 		
@@ -85,12 +84,12 @@ public class SoapBoxWindow extends Shell {
 		tblclmnSoap.setText("Soap");
 
 		final TableColumn [] soapColumns = table.getColumns ();
-		for (int i=0; i<soaps.size(); i++) //iterate through the whole list here and fill the table with data
+		for (int i=0; i<soaps.length; i++) //iterate through the whole list here and fill the table with data
 		{
 			TableItem item = new TableItem (table, SWT.NONE);
 			for (int j=0; j<soapColumns.length; j++)
 		    {
-				item.setText(soaps.get(i).getDate().toString());
+				item.setText(soaps[i].getDate().toString());
 		    }
 		}
 		

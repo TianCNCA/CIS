@@ -1,7 +1,6 @@
 package cis.presentation;
 
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.SWT;
 
@@ -46,7 +45,6 @@ public class SoapWindow extends Shell {
 	@SuppressWarnings("deprecation")
 	public void open(){
 		setText("Soap");
-		setBackground(SWTResourceManager.getColor(255, 250, 205));
 		
 		Button btnCancel = new Button(this, SWT.NONE);
 		btnCancel.setBounds(268, 226, 75, 25);
@@ -59,8 +57,6 @@ public class SoapWindow extends Shell {
 		});
 		
 		Label lblNewLabel = new Label(this, SWT.NONE);
-		lblNewLabel.setBackground(SWTResourceManager.getColor(255, 250, 205));
-		lblNewLabel.setFont(SWTResourceManager.getFont("Segoe UI", 16, SWT.NORMAL));
 		lblNewLabel.setBounds(10, 10, 333, 30);
 		lblNewLabel.setText(clientName);
 
