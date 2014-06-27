@@ -178,6 +178,28 @@ public class MainWindow extends Shell
 		lblSearcgForA.setText("Enter client name to search for: ");
 		
 		table = new Table(this, SWT.BORDER | SWT.FULL_SELECTION);
+		table.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				ArrayList<Client> clients = clientDataBase.getAllClients();
+				table.removeAll();
+				final TableColumn [] columns = table.getColumns ();
+				for (int i=0; i<clients.size(); i++) //iterate through the whole list here and fill the table with data
+				{
+					
+					TableItem item = new TableItem (table, SWT.NONE);
+					for (int j=0; j<columns.length; j++)
+				    {
+						//TODO add text here from the DB
+						//item.setText (j, "Item " + i);
+						item.setText(clients.get(i).getName());
+						
+				    }
+				}
+				
+				 for (int i=0; i<columns.length; i++) columns [i].pack ();
+			}
+		});
 		table.setBounds(36, 153, 507, 242);
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
