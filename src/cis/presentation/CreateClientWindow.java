@@ -32,6 +32,7 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Point;
 
 @SuppressWarnings( "unused" )
 public class CreateClientWindow 
@@ -98,6 +99,7 @@ public class CreateClientWindow
 	public void open() {
 		final Display display = Display.getDefault();
 		final Shell shlCreatClient = new Shell(display);
+		shlCreatClient.setMinimumSize(new Point(779, 477));
 		shlCreatClient.setSize(771, 442);
 		shlCreatClient.setText("Creat Client");
 		shlCreatClient.setLayout(new BorderLayout(0, 0));
