@@ -173,10 +173,6 @@ public class MainWindow extends Shell
 		btnNewButton_3.setBounds(445, 116, 98, 21);
 		btnNewButton_3.setText("Search");
 		
-		Label lblSearcgForA = new Label(this, SWT.NONE);
-		lblSearcgForA.setBounds(36, 95, 167, 15);
-		lblSearcgForA.setText("Enter client name to search for: ");
-		
 		table = new Table(this, SWT.BORDER | SWT.FULL_SELECTION);
 		table.addFocusListener(new FocusAdapter() {
 			@Override
