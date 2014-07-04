@@ -5,6 +5,7 @@ import java.util.Date;
 
 import app.DBService;
 import cis.buisness.Client;
+import cis.buisness.ClientHistory;
 import cis.buisness.DataAccess;
 import cis.buisness.Soap;
 import cis.buisness.SoapBox;
@@ -330,6 +331,49 @@ public final class DataBaseAccessTest extends TestCase
 		System.out.println( listOfClients );
 		
 		System.out.println( "End Test All Clients\n" );
+	}
+	
+	
+	public void testInsertHist()
+	{
+		System.out.println( "Insert Hist\n" );
+		database.dbResetForTesting();
+		ClientHistory hist = new ClientHistory( "Fred" );
+		
+		hist.setByIndex( true, "Something crazy is going on", 2 );
+		
+		database.insertHistory( hist );
+		
+		assertEquals( database.getHistCount(), 1 );
+		System.out.println( "End Insert Hist\n" );
+	}
+	
+	
+	public void testReadHist()
+	{
+		System.out.println( "Read Hist\n" );
+		database.dbResetForTesting();
+		ClientHistory hist = new ClientHistory( "Fred" );
+		
+		hist.setByIndex( true, "Dude", 2 );
+		hist.setByIndex( true, "Whoa", 5 );
+		hist.setByIndex( true, "Nooo", 13 );
+		hist.setByIndex( true, "Wayy", 16 );
+		
+		database.insertHistory( hist );
+		
+		ClientHistory read = database.readHistory( "Fred" );
+		
+		assertTrue( hist.getByIndex( 2 ).getChecked() );
+		assertTrue( hist.getByIndex( 5 ).getChecked() );
+		assertTrue( hist.getByIndex( 13 ).getChecked() );
+		assertTrue( hist.getByIndex( 16 ).getChecked() );
+		assertEquals( hist.getByIndex( 2 ).getDisc(), "Dude" );
+		assertEquals( hist.getByIndex( 5 ).getDisc(), "Whoa" );
+		assertEquals( hist.getByIndex( 13 ).getDisc(), "Nooo" );
+		assertEquals( hist.getByIndex( 16 ).getDisc(), "Wayy" );
+		
+		System.out.println( "End Read Hist\n" );
 	}
 
 	

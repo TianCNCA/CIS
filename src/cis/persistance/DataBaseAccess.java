@@ -12,6 +12,8 @@ import java.sql.SQLWarning;
 
 import app.DBService;
 import cis.buisness.Client;
+import cis.buisness.ClientHistory;
+import cis.buisness.HistoryItem;
 import cis.buisness.Soap;
 import cis.buisness.SoapBox;
 
@@ -194,14 +196,22 @@ public class DataBaseAccess
 			
 			key++;			
 			dbSize++;
+			
+			didInsert = true;
 		}
 		catch ( SQLException ex )
 		{
 			System.out.println( ex );
 		}
 		
-		// Now insert the soaps from the client, regardless weather the client inserted or not.
-		insertSoapBox( client.getSoaps() );
+		if ( didInsert )
+		{
+			// Now insert the soaps from the client
+			insertSoapBox( client.getSoaps() );
+			
+			// Now insert the history of the client
+			//insertHistory( client.getHistory() );
+		}
 
 		return didInsert;
 	}
@@ -605,6 +615,215 @@ public class DataBaseAccess
 	}
 	
 	
+	public ClientHistory readHistory( String clientName )
+    {
+		ClientHistory history = new ClientHistory( clientName );
+		
+		Boolean b_heart = false;
+		Boolean b_tingle = false;
+		Boolean b_blood = false;
+		Boolean b_breath = false;
+		Boolean b_diabetes = false;
+		Boolean b_faint = false;
+		Boolean b_head = false;
+		Boolean b_cont = false;
+		Boolean b_shoes = false;
+		Boolean b_varc = false;
+		Boolean b_arth = false;
+		Boolean b_cancer = false;
+		Boolean b_diarrhea = false;
+		Boolean b_meds = false;
+		Boolean b_cort = false;
+		Boolean b_skin = false;
+		Boolean b_other = false;
+		String 	str_heart = "";
+		String 	str_tingle = "";
+		String 	str_blood = "";
+		String 	str_breath = "";
+		String 	str_diabetes = "";
+		String 	str_faint = "";
+		String 	str_head = "";
+		String 	str_cont = "";
+		String 	str_shoes  = "";
+		String 	str_varc = "";
+		String 	str_arth = "";
+		String 	str_cancer = "";
+		String 	str_diarrhea = "";
+		String 	str_meds = "";
+		String 	str_cort = "";
+		String 	str_skin = "";
+		String 	str_other = "";
+		int 	key1 = -1; 
+		int 	key2 = -1;
+		
+		
+		clientName = parseForSQLValid( clientName );
+		
+		if ( clientName.equals( "" ) || clientName == null )
+		{
+			return null;
+		}
+		
+		try
+        {
+			sqlCommand 	= "SELECT * FROM HISTORYBOOL WHERE Name = '" + clientName + "';";
+	        dbResult 	= sqlStatement.executeQuery( sqlCommand );
+        }
+        catch ( SQLException e )
+        {
+	        System.out.println( e );
+        }
+		
+		try
+        {
+	        while( dbResult.next() )
+	        {
+	        	b_heart 	= dbResult.getBoolean( "Heart" );
+	        	b_tingle 	= dbResult.getBoolean( "Tingl" );
+	        	b_blood 	= dbResult.getBoolean( "Blood" );
+	        	b_breath 	= dbResult.getBoolean( "Breath" );
+	        	b_diabetes 	= dbResult.getBoolean( "Diabetes" );
+	        	b_faint 	= dbResult.getBoolean( "Faint" );
+	        	b_head 		= dbResult.getBoolean( "Headaches" );
+	        	b_cont 		= dbResult.getBoolean( "Contact" );
+	        	b_shoes 	= dbResult.getBoolean( "Shoes" );
+	        	b_varc 		= dbResult.getBoolean( "Varicose" );
+	        	b_arth 		= dbResult.getBoolean( "Arthritis" );
+	        	b_cancer 	= dbResult.getBoolean( "Cancer" );
+	        	b_diarrhea  = dbResult.getBoolean( "Diarrhea" );
+	        	b_meds 		= dbResult.getBoolean( "Meds" );
+	        	b_cort 		= dbResult.getBoolean( "Coritsone" );
+	        	b_skin 		= dbResult.getBoolean( "Skin" );
+	        	b_other 	= dbResult.getBoolean( "Other" );
+	        	key1 		= dbResult.getInt( "Key" );
+	        }
+        }
+        catch ( SQLException e )
+        {
+        	System.out.println( e );
+        }
+		
+		try
+        {
+			sqlCommand 	= "SELECT * FROM HISTORYDISC WHERE Name = '" + clientName + "';";
+	        dbResult 	= sqlStatement.executeQuery( sqlCommand );
+        }
+        catch ( SQLException e )
+        {
+	        System.out.println( e );
+        }
+		
+		try
+        {
+	        while( dbResult.next() )
+	        {
+		    	str_heart 	= dbResult.getString( "Heart" );
+		    	str_tingle 	= dbResult.getString( "Tingl" );
+		    	str_blood 	= dbResult.getString( "Blood" );
+		    	str_breath 	= dbResult.getString( "Breath" );
+		    	str_diabetes= dbResult.getString( "Diabetes" );
+		    	str_faint 	= dbResult.getString( "Faint" );
+		    	str_head 	= dbResult.getString( "Headaches" );
+		    	str_cont 	= dbResult.getString( "Contact" );
+		    	str_shoes 	= dbResult.getString( "Shoes" );
+		    	str_varc 	= dbResult.getString( "Varicose" );
+		    	str_arth 	= dbResult.getString( "Arthritis" );
+		    	str_cancer 	= dbResult.getString( "Cancer" );
+		    	str_diarrhea= dbResult.getString( "Diarrhea" );
+		    	str_meds 	= dbResult.getString( "Meds" );
+		    	str_cort 	= dbResult.getString( "Coritsone" );
+		    	str_skin 	= dbResult.getString( "Skin" );
+		    	str_other	= dbResult.getString( "Other" );
+		    	key2 		= dbResult.getInt( "Key" );
+	        }
+        }
+		catch ( SQLException e )
+        {
+        	System.out.println( e );
+        }
+		
+		if ( key1 == key2 && key1 != -1 && key2 != -1 )
+		{
+	        history.setHeart( b_heart, str_heart );
+	    	history.setTingling( b_tingle, str_tingle );
+	    	history.setBloodPres( b_blood, str_blood );
+	    	history.setBreathing( b_breath, str_breath );
+	    	history.setDiabetes( b_diabetes, str_diabetes );
+	    	history.setFaintness( b_faint, str_faint );
+	    	history.setHeadaches( b_head, str_head );
+	    	history.setContactLenses( b_cont, str_cont );
+	    	history.setShoes( b_shoes, str_shoes );
+	    	history.setVaricose( b_varc, str_varc );
+	    	history.setArthritis( b_arth, str_arth );
+	    	history.setCancer( b_cancer, str_cancer );
+	    	history.setDiarrhea( b_diarrhea, str_diarrhea );
+	    	history.setMeds( b_meds, str_meds );
+	    	history.setCortisone( b_cort, str_cort );
+	    	history.setSkin( b_skin, str_skin );
+	    	history.setOther( b_other, str_other );
+	    	history.setKey( key1 );
+		}
+		else
+		{
+			history = null;
+		}
+	    
+	    return history;
+    }
+
+
+	public Boolean insertHistory( ClientHistory history )
+    {
+		Boolean didInsert = false;
+		String  insertStringBool, insertStringDisc;
+		String clientName = history.getName();
+		
+		if ( clientName.equals( "" ) || clientName == null )
+		{
+			return false;
+		}
+		
+		insertStringBool = buildBoolHistString( history );			 
+		sqlCommand 		= "INSERT into HISTORYBOOL " + "VALUES (" + insertStringBool + ");";
+		System.out.println( sqlCommand );
+		
+		try
+        {
+            didInsert = sqlStatement.execute( sqlCommand );
+            key++;
+        }
+        catch ( SQLException e )
+        {
+            System.out.println( e );
+            e.printStackTrace();
+        }
+		
+		insertStringDisc = buildDiscHistString( history );
+		sqlCommand 		= "INSERT into HISTORYDISC " + "VALUES (" + insertStringDisc + ");";
+		System.out.println( sqlCommand );
+		
+		try
+		{
+			didInsert = sqlStatement.execute( sqlCommand );
+            key++;
+		}
+		catch ( SQLException e )
+        {
+            System.out.println( e );
+            e.printStackTrace();
+        }
+
+		return didInsert;
+    }
+
+
+	public Boolean updateHistory( ClientHistory history )
+    {
+	    // TODO Auto-generated method stub
+	    return null;
+    }
+	
+	
 	/*------------------------------------------------------
 	 * METHOD:			getCurrentKey
 	 *
@@ -743,6 +962,46 @@ public class DataBaseAccess
 	}
 	
 	
+	private String buildBoolHistString( ClientHistory history )
+    {
+	    String 	insertString = history.getKey() + "," + 
+	    		parseForSQLQuery( history.getName() ) + ",";
+	    int 	i;
+	    
+	    for ( i = 0; i < history.length() - 1; i++ )
+	    {
+	    	insertString += history.getByIndex( i ).getChecked() + ",";
+	    }
+	    
+	    //i++;
+	    insertString += history.getByIndex( i ).getChecked();
+	    
+	    return insertString;
+    }
+	
+	
+	private String buildDiscHistString( ClientHistory history )
+    {
+	    String 		insertString = history.getKey() + "," + 
+	    			parseForSQLQuery( history.getName() ) + ",";
+	    HistoryItem item;
+	    int 		i;
+	    
+	    for ( i = 0; i < history.length() - 1; i++ )
+	    {
+	    	item = history.getByIndex( i );
+	    	insertString += parseForSQLQuery( item.getDisc() ) + ",";
+	    }
+	    
+	    //i++;
+	    item = history.getByIndex( i );
+	    
+	    insertString += parseForSQLQuery( item.getDisc() );
+	    
+	    return insertString;
+    }
+	
+	
 	/*------------------------------------------------------
 	* METHOD:			parseStringForSQL
 	*
@@ -842,6 +1101,41 @@ public class DataBaseAccess
 	}
 	
 	
+	// Be very careful using this!
+	public void clearHistTable()
+	{
+		if ( !DBService.isTesting() )
+		{
+			return;
+		}
+		
+		System.out.println("WARNING: Clearing History Table!");
+		sqlCommand = "Delete From HistoryDisc;";
+		
+		try
+        {
+            sqlStatement.execute( sqlCommand );
+        }
+        catch ( SQLException e )
+        {
+            System.out.println( e );
+            e.printStackTrace();
+        }
+		
+		sqlCommand = "Delete From HistoryBool;";
+		
+		try
+        {
+            sqlStatement.execute( sqlCommand );
+        }
+        catch ( SQLException e )
+        {
+            System.out.println( e );
+            e.printStackTrace();
+        }
+	}
+	
+	
 	// This will clear both tables and reset the id
 	public void resetID()
 	{
@@ -853,6 +1147,7 @@ public class DataBaseAccess
 		System.out.println("WARNING: Clearing ID!");
 		clearClientTable();
 		clearSoapTable();
+		clearHistTable();
 		
 		sqlCommand = "Update ID Set ID = 0 Where Key = 0;";
 		
@@ -927,7 +1222,36 @@ public class DataBaseAccess
 	}
 	
 	
-	public void genClients()
+	public int getHistCount()
+	{
+		if ( !DBService.isTesting() )
+		{
+			return -1;
+		}
+		
+		int count = -1;
+		
+		sqlCommand = "Select Count(*) From HistoryBool;";
+		System.out.println( sqlCommand );
+		
+		try
+        {
+			dbResult = sqlStatement.executeQuery( sqlCommand );
+			dbResult.next();
+			count = dbResult.getInt( 1 );
+			System.out.println("Count: " + count );
+        }
+        catch ( SQLException e )
+        {
+            System.out.println( e );
+            e.printStackTrace();
+        }
+		
+		return count;
+	}
+	
+	
+	public void genMockDatabase()
 	{
 		Client one = new Client( "Pat Ricky" );
 		Client two = new Client( "George Curious" );
@@ -950,5 +1274,12 @@ public class DataBaseAccess
 		Client test1 = new Client( "Rick Fredrickson" );
 		test1.addSoap( "Things are getting all soapy up in here!" );
 		insertClient( test1 );
+		
+		ClientHistory history = new ClientHistory( "Pat Ricky" );
+		history.setByIndex( true, "Everything in ship shape", 2 );
+		insertHistory( history );
 	}
+
+
+
 }

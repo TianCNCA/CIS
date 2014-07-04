@@ -1,8 +1,12 @@
 package cis.buisness;
 
+import app.DBService;
+
 public class ClientHistory
 {
-	private HistoryItem[] items;
+	private String  		clientName;
+	private int 			key;
+	private HistoryItem[] 	items;
 	
 	// Attributes
 	// Heart, Tingling, Blood Pressure, Breathing, Diabetes, Faintness, Headaches, ContactLenses,
@@ -10,13 +14,78 @@ public class ClientHistory
 	
 	public ClientHistory()
 	{
-		// We have 17 attributes...
-		items 		= new HistoryItem[17];
+		this.clientName = null;
+		items 			= new HistoryItem[17];
+		key  			= DBService.getCurrentKey();
 		
 		for ( int i = 0; i < items.length; i++ )
 		{
 			items[i] = new HistoryItem();
 		}
+	}
+	
+	public ClientHistory( String clientName )
+	{
+		this.clientName = clientName;
+		key  			= DBService.getCurrentKey();
+		items 			= new HistoryItem[17];
+		
+		for ( int i = 0; i < items.length; i++ )
+		{
+			items[i] = new HistoryItem();
+		}
+	}
+	
+	
+	// This constructor builds the items from an array of bools and strings. Really handy
+	// since we know the order we are going in.
+	public ClientHistory( Boolean[] check, String[] disc )
+	{
+		assert( check.length == items.length );
+		assert(  disc.length == items.length );
+		
+		if ( check.length == items.length && disc.length == items.length )
+		{
+			for ( int i = 0; i < items.length; i++ )
+			{
+				items[i] = new HistoryItem();
+			}
+			
+			for ( int i = 0; i < check.length; i++ )
+			{
+				setByIndex( check[i], disc[i], i );
+				//items[i].setCheckAndDisc( check[i], disc[i] );
+			}
+		}
+	}
+	
+	
+	public int getKey()
+	{
+		return key;
+	}
+	
+	public void setKey( int key )
+	{
+		if ( key > -1 )
+		{
+			this.key = key;
+		}
+	}
+	
+	public String getName()
+	{
+		return clientName;
+	}
+	
+	public void setName( String clientName )
+	{
+		this.clientName = clientName;
+	}
+	
+	public int length()
+	{
+		return items.length;
 	}
 	
 	// Setter Methods
@@ -58,7 +127,7 @@ public class ClientHistory
 	
 	public void setContactLenses( Boolean check, String checkString )
 	{
-		items[71].setCheckAndDisc( check, checkString );
+		items[7].setCheckAndDisc( check, checkString );
 	}
 	
 	public void setShoes( Boolean check, String checkString )

@@ -7,13 +7,21 @@ public class HistoryItem
 	
 	public HistoryItem()
 	{
-		discription = "";
+		discription = "null";
 		checked 	= false;
 	}
 	
 	public HistoryItem( String discription, Boolean checked )
 	{
-		this.discription 	= discription;
+		if ( discription == null )
+		{
+			this.discription = "null";
+		}
+		else
+		{
+			this.discription 	= discription;
+		}
+		
 		this.checked 		= checked;
 	}
 	
@@ -35,7 +43,7 @@ public class HistoryItem
 		}
 		else
 		{
-			discription = "";
+			discription = "null";
 		}
 	}
 	

@@ -8,7 +8,8 @@ import app.DBService;
 public class Client
 {
 	private boolean active;
-	protected SoapBox soapBox;
+	private SoapBox soapBox;
+	private ClientHistory history;
 
 	// personal information
 	private String name;
@@ -51,6 +52,7 @@ public class Client
 	{
 		setActive( true );
 		this.soapBox = new SoapBox( "NULL" );
+		history = new ClientHistory();
 
 		physician = false;
 		physioTherapist = false;
@@ -75,6 +77,7 @@ public class Client
 		this.name = name;
 		setActive( true );
 		this.soapBox = new SoapBox( this.name );
+		history = new ClientHistory( this.name );
 
 		physician = false;
 		physioTherapist = false;
@@ -136,6 +139,19 @@ public class Client
 		}
 		return active;
 	}
+	
+	
+	public void addHistory( ClientHistory history )
+	{
+		this.history = history;
+		history.setName( name );
+	}
+	
+	
+	public ClientHistory getHistory()
+	{
+		return history;
+	}
 
 
 	public void addSoap( String info )
@@ -166,6 +182,13 @@ public class Client
 	public SoapBox getSoaps()
 	{
 		return soapBox;
+	}
+	
+	
+	public void setSoaps( SoapBox soapBox )
+	{
+		this.soapBox = soapBox;
+		soapBox.setClientName( name );
 	}
 
 
