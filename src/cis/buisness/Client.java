@@ -49,18 +49,13 @@ public class Client {
 	private int key;
 	private int age;
 
-<<<<<<< HEAD
-	public Client() {
-		setActive(true);
-		this.soapBox = new SoapBox("NULL");
-=======
+
 
 	public Client()
 	{
 		setActive( true );
 		this.soapBox = new SoapBox( "NULL" );
 		history = new ClientHistory();
->>>>>>> refs/remotes/origin/iteration3
 
 		physician = false;
 		physioTherapist = false;
@@ -81,14 +76,10 @@ public class Client {
 
 	public Client(String name) {
 		this.name = name;
-<<<<<<< HEAD
-		setActive(true);
-		this.soapBox = new SoapBox(this.name);
-=======
+
 		setActive( true );
 		this.soapBox = new SoapBox( this.name );
 		history = new ClientHistory( this.name );
->>>>>>> refs/remotes/origin/iteration3
 
 		physician = false;
 		physioTherapist = false;
@@ -105,27 +96,6 @@ public class Client {
 		key = DBService.getCurrentKey();
 	}
 
-<<<<<<< HEAD
-	@SuppressWarnings("deprecation")
-	public int getAge() {
-		Date current = new Date();
-		int current_year = current.getYear();
-		int year = this.DOB.getYear();
-		int age = current_year - year;
-		return age;
-	}
-=======
-
-//	@SuppressWarnings( "deprecation" )
-//	public int getAge()
-//	{
-//		Date current = new Date();
-//		int current_year = current.getYear();
-//		int year = this.DOB.getYear();
-//		int age = current_year - year;
-//		return age;
-//	}
->>>>>>> refs/remotes/origin/iteration3
 
 	public void setActive(boolean active) {
 		this.active = active;
