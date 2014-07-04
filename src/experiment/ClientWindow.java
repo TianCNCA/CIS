@@ -36,6 +36,10 @@ public class ClientWindow extends Shell {
 	private Text text_7;
 	private Text text_8;
 	private Text text_9;
+	private Button btnCheckButton;
+	private Button btnCheckButton_1;
+	private Button btnCheckButton_2;
+	private Button btnCheckButton_3;
 
 
 
@@ -221,21 +225,21 @@ public class ClientWindow extends Shell {
 		lblNewLabel.setLayoutData(fd_lblNewLabel);
 		lblNewLabel.setText("Are you presently under care of another professional?");
 		
-		Button btnCheckButton = new Button(composite, SWT.CHECK);
+		btnCheckButton = new Button(composite, SWT.CHECK);
 		FormData fd_btnCheckButton = new FormData();
 		fd_btnCheckButton.top = new FormAttachment(lblNewLabel, 6);
 		fd_btnCheckButton.left = new FormAttachment(lblName, 0, SWT.LEFT);
 		btnCheckButton.setLayoutData(fd_btnCheckButton);
 		btnCheckButton.setText("Physician");
 		
-		Button btnCheckButton_1 = new Button(composite, SWT.CHECK);
+		btnCheckButton_1 = new Button(composite, SWT.CHECK);
 		FormData fd_btnCheckButton_1 = new FormData();
 		fd_btnCheckButton_1.top = new FormAttachment(lblNewLabel, 6);
 		fd_btnCheckButton_1.right = new FormAttachment(text_1, 0, SWT.RIGHT);
 		btnCheckButton_1.setLayoutData(fd_btnCheckButton_1);
 		btnCheckButton_1.setText("Physiotherapist");
 		
-		Button btnCheckButton_2 = new Button(composite, SWT.CHECK);
+		btnCheckButton_2 = new Button(composite, SWT.CHECK);
 		FormData fd_btnCheckButton_2 = new FormData();
 		fd_btnCheckButton_2.top = new FormAttachment(lblNewLabel, 6);
 		fd_btnCheckButton_2.left = new FormAttachment(text_2, 0, SWT.LEFT);
@@ -250,7 +254,7 @@ public class ClientWindow extends Shell {
 		fd_label_4.left = new FormAttachment(label, 0, SWT.LEFT);
 		label_4.setLayoutData(fd_label_4);
 		
-		Button btnCheckButton_3 = new Button(composite, SWT.CHECK);
+		btnCheckButton_3 = new Button(composite, SWT.CHECK);
 		FormData fd_btnCheckButton_3 = new FormData();
 		fd_btnCheckButton_3.top = new FormAttachment(label_4, 18);
 		fd_btnCheckButton_3.left = new FormAttachment(lblName, 0, SWT.LEFT);
@@ -329,6 +333,7 @@ public class ClientWindow extends Shell {
 			msg.open();
 		} else {
 			saveClientInfo();
+			dataAccess.insertClient(client);
 		}		
 	}
 	
@@ -338,10 +343,15 @@ public class ClientWindow extends Shell {
 		client.setCity(text_2.getText());
 		client.setProvince(text_3.getText());
 		client.setPostCode(text_4.getText());
-		//TODO age
+		client.setAge(Integer.parseInt(text_5.getText()));
 		client.setDOB(text_9.getText());
 		client.setHomePhone(text_6.getText());
 		client.setWorkPhone(text_7.getText());
+		client.setPhysician(btnCheckButton.getSelection());
+		client.setPhysioTherapist(btnCheckButton_1.getSelection());
+		client.setChiropractor(btnCheckButton_2.getSelection());
+		client.setExperience(btnCheckButton_3.getSelection());
+		client.setReason(text_8.getText());
 		
 	}
 	
