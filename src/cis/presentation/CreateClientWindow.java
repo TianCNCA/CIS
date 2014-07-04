@@ -516,23 +516,23 @@ public class CreateClientWindow
 				client.setSleepPattern(text_11.getText());
 				
 				// Save History
-				history.setByIndex( btnDf.isEnabled(), text.getMessage(), 0 );
-				history.setByIndex( btnCheckButton_1.getSelection(), text_1.getText(), 1 );
-				history.setByIndex( btnCheckButton_2.getSelection(), text_2.getText(), 2 );
-				history.setByIndex( btnCheckButton_3.getSelection(), text_3.getText(), 3 );
-				history.setByIndex( btnCheckButton_4.getSelection(), text_4.getText(), 4 );
-				history.setByIndex( btnCheckButton_5.getSelection(), text_5.getText(), 5 );
-				history.setByIndex( btnCheckButton_6.getSelection(), text_6.getText(), 6 );
-				history.setByIndex( btnCheckButton_7.getSelection(), text_7.getText(), 7 );
-				history.setByIndex( btnCheckButton_8.getSelection(), text_8.getText(), 8 );
-				history.setByIndex( btnCheckButton_9.getSelection(), text_22.getText(), 9 );
-				history.setByIndex( btnCheckButton_10.getSelection(), text_23.getText(), 10 );
-				history.setByIndex( btnCheckButton_11.getSelection(), text_24.getText(), 11 );
-				history.setByIndex( btnCheckButton_12.getSelection(), text_25.getText(), 12 );
-				history.setByIndex( btnCheckButton_13.getSelection(), text_26.getText(), 13 );
-				history.setByIndex( btnCheckButton_14.getSelection(), text_27.getText(), 14 );
-				history.setByIndex( btnCheckButton_15.getSelection(), text_28.getText(), 15 );
-				history.setByIndex( btnCheckButton_16.getSelection(), text_29.getText(), 16 );
+				history.setHeart( btnDf.isEnabled(), text_1.getText() );
+				history.setTingling( btnCheckButton_1.getSelection(), text_2.getText() );
+				history.setBloodPres( btnCheckButton_2.getSelection(), text_3.getText() );
+				history.setBreathing( btnCheckButton_3.getSelection(), text_4.getText() );
+				history.setDiabetes( btnCheckButton_4.getSelection(), text_5.getText() );
+				history.setFaintness( btnCheckButton_5.getSelection(), text_6.getText() );
+				history.setHeadaches( btnCheckButton_6.getSelection(), text_7.getText() );
+				history.setContactLenses( btnCheckButton_7.getSelection(), text_8.getText() );
+				history.setShoes( btnCheckButton_8.getSelection(), text_22.getText() );
+				history.setVaricose( btnCheckButton_9.getSelection(), text_23.getText() );
+				history.setArthritis( btnCheckButton_10.getSelection(), text_24.getText() );
+				history.setCancer( btnCheckButton_11.getSelection(), text_25.getText() );
+				history.setDiarrhea( btnCheckButton_12.getSelection(), text_26.getText() );
+				history.setMeds( btnCheckButton_13.getSelection(), text.getText());
+				history.setCortisone( btnCheckButton_14.getSelection(), text_27.getText() );
+				history.setSkin( btnCheckButton_15.getSelection(), text_28.getText() );
+				history.setOther( btnCheckButton_16.getSelection(), text_29.getText() );
 				
 				client.setHistory( history );
 				
