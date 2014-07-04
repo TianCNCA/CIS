@@ -6,7 +6,7 @@ import java.util.Map;
 
 import app.DBService;
 
-@SuppressWarnings("unused")
+
 public class Client {
 	private boolean active;
 	private SoapBox soapBox;
@@ -18,7 +18,7 @@ public class Client {
 	private String city;
 	private String province;
 	private String postCode;
-	private Date DOB;
+	private String DOB;
 	private String homePhone;
 	private String workPhone;
 
@@ -69,8 +69,6 @@ public class Client {
 
 		historyReports = new String[17];
 
-		DOB = new Date();
-
 		key = DBService.getCurrentKey();
 	}
 
@@ -90,8 +88,6 @@ public class Client {
 		oral_medication = false;
 		insulin = false;
 		uncontrolled = false;
-
-		DOB = new Date();
 
 		key = DBService.getCurrentKey();
 	}
@@ -265,7 +261,7 @@ public class Client {
 		return postCode;
 	}
 
-	public Date getDOB() {
+	public String getDOB() {
 		return DOB;
 	}
 
