@@ -375,6 +375,34 @@ public final class DataBaseAccessTest extends TestCase
 		
 		System.out.println( "End Read Hist\n" );
 	}
+	
+	
+	public void testHistUpdate()
+	{
+		System.out.println( "Update Hist\n" );
+		database.dbResetForTesting();
+		ClientHistory hist = new ClientHistory( "Fred" );
+		
+		hist.setByIndex( true, "Dude", 2 );
+		hist.setByIndex( true, "Whoa", 5 );
+		
+		database.insertHistory( hist );
+		
+		ClientHistory toUpdate = database.readHistory( "Fred" );
+		
+		toUpdate.setByIndex( false, "", 2 );
+		
+		database.updateHistory( toUpdate );
+		
+		ClientHistory shouldBeUpdated = database.readHistory( "Fred" );
+		
+		assertFalse( shouldBeUpdated.getByIndex( 2 ).getChecked() );
+		assertTrue( shouldBeUpdated.getByIndex( 5 ).getChecked() );
+		assertEquals( shouldBeUpdated.getByIndex( 2 ).getDisc(), "" );
+		assertEquals( shouldBeUpdated.getByIndex( 5 ).getDisc(), "Whoa" );
+		
+		System.out.println( "End Update Hist\n" );
+	}
 
 	
 	@Override

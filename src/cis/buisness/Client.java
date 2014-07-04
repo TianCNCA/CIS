@@ -141,7 +141,7 @@ public class Client
 	}
 	
 	
-	public void addHistory( ClientHistory history )
+	public void setHistory( ClientHistory history )
 	{
 		this.history = history;
 		history.setName( name );
