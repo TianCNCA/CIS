@@ -87,6 +87,21 @@ public class DataAccess
 	}
 	
 	
+	public Boolean insertHistory( ClientHistory history )
+	{
+		return database.insertHistory( history );
+	}
+	
+	public ClientHistory readHistory( String clientName )
+	{
+		return database.readHistory( clientName );
+	}
+	
+	public Boolean updateHistory( ClientHistory history )
+	{
+		return database.updateHistory( history );
+	}
+	
 	public int getSize()
 	{
 		return database.getSize();
@@ -112,5 +127,10 @@ public class DataAccess
 	public int getSoapCount()
 	{
 		return database.getSoapCount();
+	}
+	
+	public int getHistCount()
+	{
+		return database.getHistCount();
 	}
 }

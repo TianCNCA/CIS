@@ -76,7 +76,7 @@ public class DBService
 
 	public void genClients()
 	{
-		database.genClients();
+		database.genMockDatabase();
 	}
 	
 	
