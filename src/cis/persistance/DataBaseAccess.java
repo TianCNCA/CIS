@@ -210,7 +210,7 @@ public class DataBaseAccess
 			insertSoapBox( client.getSoaps() );
 			
 			// Now insert the history of the client
-			//insertHistory( client.getHistory() );
+			insertHistory( client.getHistory() );
 		}
 
 		return didInsert;
@@ -1258,6 +1258,9 @@ public class DataBaseAccess
 		Client three = new Client( "Fred Freddy" );
 		Client four = new Client( "Patty Rick" );
 		Client five = new Client( "Travis Almighty" );
+		ClientHistory history = new ClientHistory( "Pat Ricky" );
+		history.setByIndex( true, "Everything in ship shape", 2 );
+		one.setHistory( history );
 		insertClient( one );
 		insertClient( two );
 		insertClient( three );
@@ -1274,10 +1277,6 @@ public class DataBaseAccess
 		Client test1 = new Client( "Rick Fredrickson" );
 		test1.addSoap( "Things are getting all soapy up in here!" );
 		insertClient( test1 );
-		
-		ClientHistory history = new ClientHistory( "Pat Ricky" );
-		history.setByIndex( true, "Everything in ship shape", 2 );
-		insertHistory( history );
 	}
 
 

@@ -517,24 +517,24 @@ public class CreateClientWindow
 				
 				// Save History
 				history.setByIndex( btnDf.isEnabled(), text.getMessage(), 0 );
-				history.setByIndex( btnCheckButton_1.isEnabled(), text_1.getMessage(), 1 );
-				history.setByIndex( btnCheckButton_2.isEnabled(), text_2.getMessage(), 2 );
-				history.setByIndex( btnCheckButton_3.isEnabled(), text_3.getMessage(), 3 );
-				history.setByIndex( btnCheckButton_4.isEnabled(), text_4.getMessage(), 4 );
-				history.setByIndex( btnCheckButton_5.isEnabled(), text_5.getMessage(), 5 );
-				history.setByIndex( btnCheckButton_6.isEnabled(), text_6.getMessage(), 6 );
-				history.setByIndex( btnCheckButton_7.isEnabled(), text_7.getMessage(), 7 );
-				history.setByIndex( btnCheckButton_8.isEnabled(), text_8.getMessage(), 8 );
-				history.setByIndex( btnCheckButton_9.isEnabled(), text_22.getMessage(), 9 );
-				history.setByIndex( btnCheckButton_10.isEnabled(), text_23.getMessage(), 10 );
-				history.setByIndex( btnCheckButton_11.isEnabled(), text_24.getMessage(), 11 );
-				history.setByIndex( btnCheckButton_12.isEnabled(), text_25.getMessage(), 12 );
-				history.setByIndex( btnCheckButton_13.isEnabled(), text_26.getMessage(), 13 );
-				history.setByIndex( btnCheckButton_14.isEnabled(), text_27.getMessage(), 14 );
-				history.setByIndex( btnCheckButton_15.isEnabled(), text_28.getMessage(), 15 );
-				history.setByIndex( btnCheckButton_16.isEnabled(), text_29.getMessage(), 16 );
+				history.setByIndex( btnCheckButton_1.getSelection(), text_1.getText(), 1 );
+				history.setByIndex( btnCheckButton_2.getSelection(), text_2.getText(), 2 );
+				history.setByIndex( btnCheckButton_3.getSelection(), text_3.getText(), 3 );
+				history.setByIndex( btnCheckButton_4.getSelection(), text_4.getText(), 4 );
+				history.setByIndex( btnCheckButton_5.getSelection(), text_5.getText(), 5 );
+				history.setByIndex( btnCheckButton_6.getSelection(), text_6.getText(), 6 );
+				history.setByIndex( btnCheckButton_7.getSelection(), text_7.getText(), 7 );
+				history.setByIndex( btnCheckButton_8.getSelection(), text_8.getText(), 8 );
+				history.setByIndex( btnCheckButton_9.getSelection(), text_22.getText(), 9 );
+				history.setByIndex( btnCheckButton_10.getSelection(), text_23.getText(), 10 );
+				history.setByIndex( btnCheckButton_11.getSelection(), text_24.getText(), 11 );
+				history.setByIndex( btnCheckButton_12.getSelection(), text_25.getText(), 12 );
+				history.setByIndex( btnCheckButton_13.getSelection(), text_26.getText(), 13 );
+				history.setByIndex( btnCheckButton_14.getSelection(), text_27.getText(), 14 );
+				history.setByIndex( btnCheckButton_15.getSelection(), text_28.getText(), 15 );
+				history.setByIndex( btnCheckButton_16.getSelection(), text_29.getText(), 16 );
 				
-				client.addHistory( history );
+				client.setHistory( history );
 				
 				dataBase.insertClient(client);	
 				
