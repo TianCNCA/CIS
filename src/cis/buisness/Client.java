@@ -46,6 +46,7 @@ public class Client
 	private int stress;
 	private int appetite;
 	private int key;
+	private int age;
 
 
 	public Client()
@@ -95,15 +96,15 @@ public class Client
 	}
 
 
-	@SuppressWarnings( "deprecation" )
-	public int getAge()
-	{
-		Date current = new Date();
-		int current_year = current.getYear();
-		int year = this.DOB.getYear();
-		int age = current_year - year;
-		return age;
-	}
+//	@SuppressWarnings( "deprecation" )
+//	public int getAge()
+//	{
+//		Date current = new Date();
+//		int current_year = current.getYear();
+//		int year = this.DOB.getYear();
+//		int age = current_year - year;
+//		return age;
+//	}
 
 
 	public void setActive( boolean active )
@@ -514,5 +515,16 @@ public class Client
 	public String toString()
 	{
 		return name;
+	}
+	
+	
+	public int getAge()
+	{
+		return age;
+	}
+	
+	public void setAge( int age )
+	{
+		this.age = age;
 	}
 }

@@ -33,8 +33,6 @@ public class DataBaseAccess
 	private String 				dbDriver;
 	private Integer 			dbSize;
 	private Integer 			key;
-	//private ArrayList<Client> 	allClients;
-	private ArrayList<Soap> 	allSoaps;
 	
 	// DB Specifics
 	private Statement 			sqlStatement;
@@ -302,9 +300,9 @@ public class DataBaseAccess
 	{
 		Client 	newClient = null;
 		String 	name, address, city, province, postalCode, 
-			   	reason, occupation, sports, sleep, DOB,
+			   	reason, occupation, sports, sleep,
 			   	homePhone, workPhone;
-		int 	smoking, alcohol, stress, appetite, key;
+		int 	smoking, alcohol, stress, appetite, key, age;
 		
 		clientName = parseForSQLValid( clientName );
 		
@@ -336,9 +334,9 @@ public class DataBaseAccess
 	        	occupation 	= dbResult.getString( "Occupation" );
 	        	sports 		= dbResult.getString( "Sports" );
 	        	sleep 		= dbResult.getString( "Sleep" );
-	        	DOB 		= dbResult.getString( "DOB" );
 	        	homePhone 	= dbResult.getString( "Homephone" );
 	        	workPhone 	= dbResult.getString( "Workphone" );
+	        	age 		= dbResult.getInt( "Age" );
 	        	smoking 	= dbResult.getInt( "Smoking" );
 	        	alcohol 	= dbResult.getInt( "Alcohol" );
 	        	stress 		= dbResult.getInt( "Stress" );
@@ -355,7 +353,7 @@ public class DataBaseAccess
 	        	newClient.setOccupation( occupation );
 	        	newClient.setSports( sports );
 	        	newClient.setSleepPattern( sleep );
-	        	newClient.setDOB( DOB );
+	        	newClient.setAge( age );
 	        	newClient.setHomePhone( homePhone );
 	        	newClient.setWorkPhone( workPhone );
 	        	newClient.setSmoking( smoking );
@@ -936,7 +934,7 @@ public class DataBaseAccess
 		String insertString = 
 				  client.getKey()								+ ","
 				+ parseForSQLQuery( client.getName() )	 		+ "," 
-			    + parseForSQLQuery( client.getDOB().toString() )+ ","
+			    +  					client.getAge()				+ ","
 				+ parseForSQLQuery( client.getHomePhone() )		+ ","
 			    + parseForSQLQuery( client.getWorkPhone() )		+ ","
 				+ parseForSQLQuery( client.getAddress() )		+ "," 

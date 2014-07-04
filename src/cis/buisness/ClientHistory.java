@@ -1,6 +1,8 @@
 package cis.buisness;
 
+
 import app.DBService;
+import cis.buisness.HistoryItem;
 
 public class ClientHistory
 {
