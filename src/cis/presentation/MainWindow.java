@@ -54,6 +54,7 @@ public class MainWindow extends Shell
 			
 			shell.open();
 			shell.layout();
+			shell.setBackgroundImage( new Image( null, "images/bg.png") );
 			
 			while (!shell.isDisposed()) 
 			{
