@@ -41,10 +41,19 @@ public class ClientHistory
 	
 	// This constructor builds the items from an array of bools and strings. Really handy
 	// since we know the order we are going in.
-	public ClientHistory( Boolean[] check, String[] disc )
+	public ClientHistory( String clientName, Boolean[] check, String[] disc )
 	{
 		assert( check.length == items.length );
 		assert(  disc.length == items.length );
+		
+		this.clientName = clientName;
+		key  			= DBService.getCurrentKey();
+		items 			= new HistoryItem[17];
+		
+		for ( int i = 0; i < items.length; i++ )
+		{
+			items[i] = new HistoryItem();
+		}
 		
 		if ( check.length == items.length && disc.length == items.length )
 		{
