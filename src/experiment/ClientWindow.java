@@ -53,15 +53,14 @@ public class ClientWindow extends Shell {
 		// TODO need a better coding
 		if (null == this.client)
 			this.client = new Client();
-
 		setLayout(new FormLayout());
 
 		CTabFolder tabFolder = new CTabFolder(this, SWT.BORDER);
 		FormData fd_tabFolder = new FormData();
-		fd_tabFolder.top = new FormAttachment(0);
-		fd_tabFolder.left = new FormAttachment(0);
 		fd_tabFolder.bottom = new FormAttachment(0, 371);
 		fd_tabFolder.right = new FormAttachment(0, 693);
+		fd_tabFolder.top = new FormAttachment(0);
+		fd_tabFolder.left = new FormAttachment(0);
 		tabFolder.setLayoutData(fd_tabFolder);
 		tabFolder.setSelectionBackground(Display.getCurrent().getSystemColor(
 				SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
@@ -299,37 +298,44 @@ public class ClientWindow extends Shell {
 		text_9.setLayoutData(fd_text_9);
 
 		CTabItem tbtmNewItem_1 = new CTabItem(tabFolder, SWT.NONE);
-		tbtmNewItem_1.setText("New Item");
+		tbtmNewItem_1.setText("Client History");
+		
+		Composite composite_1 = new Composite(tabFolder, SWT.NONE);
+		tbtmNewItem_1.setControl(composite_1);
 
 		CTabItem tbtmNewItem_2 = new CTabItem(tabFolder, SWT.NONE);
 		tbtmNewItem_2.setText("New Item");
+		
+		Composite composite_2 = new Composite(tabFolder, SWT.NONE);
+		tbtmNewItem_2.setControl(composite_2);
+		composite_2.setLayout(new FormLayout());
 
 		Button btnSave = new Button(this, SWT.NONE);
+		FormData fd_btnSave = new FormData();
+		fd_btnSave.right = new FormAttachment(0, 82);
+		fd_btnSave.top = new FormAttachment(0, 377);
+		fd_btnSave.left = new FormAttachment(0);
+		btnSave.setLayoutData(fd_btnSave);
 		btnSave.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				saveClient();
 			}
 		});
-		FormData fd_btnSave = new FormData();
-		fd_btnSave.top = new FormAttachment(tabFolder, 6);
-		fd_btnSave.left = new FormAttachment(tabFolder, 0, SWT.LEFT);
-		fd_btnSave.right = new FormAttachment(0, 82);
-		btnSave.setLayoutData(fd_btnSave);
 		btnSave.setText("Save");
 
 		Button btnNewButton = new Button(this, SWT.NONE);
+		FormData fd_btnNewButton = new FormData();
+		fd_btnNewButton.right = new FormAttachment(0, 693);
+		fd_btnNewButton.top = new FormAttachment(0, 377);
+		fd_btnNewButton.left = new FormAttachment(0, 611);
+		btnNewButton.setLayoutData(fd_btnNewButton);
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				getShell().dispose();
 			}
 		});
-		FormData fd_btnNewButton = new FormData();
-		fd_btnNewButton.left = new FormAttachment(100, -92);
-		fd_btnNewButton.top = new FormAttachment(tabFolder, 6);
-		fd_btnNewButton.right = new FormAttachment(100, -10);
-		btnNewButton.setLayoutData(fd_btnNewButton);
 		btnNewButton.setText("Exit");
 	}
 
