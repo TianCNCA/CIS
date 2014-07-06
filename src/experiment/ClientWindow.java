@@ -47,7 +47,7 @@ public class ClientWindow extends Shell {
 	private Text text_8;
 	private Text text_9;
 
-	// For history tab
+	// For history tab TODO use of numbers should really be avoided, but...
 	private Button[] btns = new Button[17];
 	private Text[] texts = new Text[17];
 	
@@ -435,8 +435,18 @@ public class ClientWindow extends Shell {
 	}
 
 	private void saveHistory() {
+		ClientHistory history;
+		
+		Boolean[] bools = new Boolean[17];
+		String[] strs = new String[17];
+		for (int i = 0; i < bools.length; i++) {
+			bools[i] = btns[i].getSelection();
+			strs[i] = texts[i].getText();
+		}
 
-		client.setHistory(new ClientHistory());
+		history = new ClientHistory(client.getName(), bools, strs);
+		client.setHistory(history);
+		
 	}
 
 	private boolean validateTexts() {
