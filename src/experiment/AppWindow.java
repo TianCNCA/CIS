@@ -30,13 +30,14 @@ public class AppWindow extends Shell {
 	private DataAccess dataAccess;
 	private Table table;
 	private Button btnAddClient;
+	private Button btnEditClient;
 
 	public AppWindow(Display display, DataAccess dataAccess) {
 		super(display);
 		this.dataAccess = dataAccess;
 
 		setText("Client Information System");
-		setSize(745, 455);
+		setSize(745, 484);
 		setLayout(new FormLayout());
 
 		table = new Table(this, SWT.BORDER | SWT.FULL_SELECTION);
@@ -66,6 +67,21 @@ public class AppWindow extends Shell {
 		fd_btnAddClient.left = new FormAttachment(table, 0, SWT.LEFT);
 		btnAddClient.setLayoutData(fd_btnAddClient);
 		btnAddClient.setText("Add Client");
+		
+		btnEditClient = new Button(this, SWT.NONE);
+		FormData fd_btnEditClient = new FormData();
+		fd_btnEditClient.top = new FormAttachment(table, 6);
+		fd_btnEditClient.left = new FormAttachment(table, 0, SWT.LEFT);
+		btnEditClient.setLayoutData(fd_btnEditClient);
+		btnEditClient.setText("Edit Client");
+		
+		Button btnExit = new Button(this, SWT.NONE);
+		FormData fd_btnExit = new FormData();
+		fd_btnExit.left = new FormAttachment(100, -78);
+		fd_btnExit.bottom = new FormAttachment(100, -9);
+		fd_btnExit.right = new FormAttachment(100, -10);
+		btnExit.setLayoutData(fd_btnExit);
+		btnExit.setText("Exit");
 
 	}
 

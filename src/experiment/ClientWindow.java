@@ -50,12 +50,15 @@ public class ClientWindow extends Shell {
 	// For history tab TODO use of numbers should really be avoided, but...
 	private Button[] btns = new Button[17];
 	private Text[] texts = new Text[17];
-	
+
 	private Button btnCheckButton;
 	private Button btnCheckButton_1;
 	private Button btnCheckButton_2;
 	private Button btnCheckButton_3;
 	private Composite composite_1;
+	private Text text_10;
+	private Text text_11;
+	private Text text_12;
 
 	public ClientWindow(Display display, DataAccess dataAccess, Client client) {
 		super(display);
@@ -300,8 +303,9 @@ public class ClientWindow extends Shell {
 		fd_text_9.bottom = new FormAttachment(100, -27);
 		fd_text_9.top = new FormAttachment(lblNewLabel_1, 16);
 		text_9.setLayoutData(fd_text_9);
-		
-		Label label_2 = new Label(composite, SWT.BORDER | SWT.SEPARATOR | SWT.HORIZONTAL);
+
+		Label label_2 = new Label(composite, SWT.BORDER | SWT.SEPARATOR
+				| SWT.HORIZONTAL);
 		fd_lblAge.bottom = new FormAttachment(label_2, -14);
 		FormData fd_label_2 = new FormData();
 		fd_label_2.top = new FormAttachment(text_7, -21, SWT.TOP);
@@ -310,27 +314,67 @@ public class ClientWindow extends Shell {
 		fd_label_2.bottom = new FormAttachment(text_7, -19);
 		label_2.setLayoutData(fd_label_2);
 		// 1st tab: Client Information end
-		
-		
+
 		// 2nd tab: Client History start
 		CTabItem tbtmNewItem_1 = new CTabItem(tabFolder, SWT.NONE);
 		tbtmNewItem_1.setText("Client History");
-		
+
 		composite_1 = new Composite(tabFolder, SWT.NONE);
 		tbtmNewItem_1.setControl(composite_1);
 		composite_1.setLayout(new GridLayout(2, false));
-		
-		drawHistoryTab();
-		
 
-		
-		
+		drawHistoryTab();
+
 		CTabItem tbtmNewItem_2 = new CTabItem(tabFolder, SWT.NONE);
-		tbtmNewItem_2.setText("New Item");
-		
+		tbtmNewItem_2.setText("Personal Habits and Lifestyle");
+
 		Composite composite_2 = new Composite(tabFolder, SWT.NONE);
 		tbtmNewItem_2.setControl(composite_2);
 		composite_2.setLayout(new FormLayout());
+
+		Label lblOccupation = new Label(composite_2, SWT.NONE);
+		FormData fd_lblOccupation = new FormData();
+		fd_lblOccupation.top = new FormAttachment(0, 25);
+		fd_lblOccupation.left = new FormAttachment(0, 10);
+		lblOccupation.setLayoutData(fd_lblOccupation);
+		lblOccupation.setText("Occupation");
+
+		text_10 = new Text(composite_2, SWT.BORDER);
+		FormData fd_text_10 = new FormData();
+		fd_text_10.right = new FormAttachment(lblOccupation, 176, SWT.RIGHT);
+		fd_text_10.top = new FormAttachment(0, 19);
+		fd_text_10.left = new FormAttachment(lblOccupation, 20);
+		text_10.setLayoutData(fd_text_10);
+
+		Label lblNewLabel_2 = new Label(composite_2, SWT.NONE);
+		FormData fd_lblNewLabel_2 = new FormData();
+		fd_lblNewLabel_2.top = new FormAttachment(lblOccupation, 24);
+		fd_lblNewLabel_2.left = new FormAttachment(lblOccupation, 0, SWT.LEFT);
+		lblNewLabel_2.setLayoutData(fd_lblNewLabel_2);
+		lblNewLabel_2
+				.setText("List any sport/exercise/hobbies you participate in:");
+
+		text_11 = new Text(composite_2, SWT.BORDER);
+		FormData fd_text_11 = new FormData();
+		fd_text_11.right = new FormAttachment(lblNewLabel_2, 267, SWT.RIGHT);
+		fd_text_11.top = new FormAttachment(0, 58);
+		fd_text_11.left = new FormAttachment(lblNewLabel_2, 31);
+		text_11.setLayoutData(fd_text_11);
+
+		Label lblNewLabel_3 = new Label(composite_2, SWT.NONE);
+		FormData fd_lblNewLabel_3 = new FormData();
+		fd_lblNewLabel_3.top = new FormAttachment(lblNewLabel_2, 25);
+		fd_lblNewLabel_3.left = new FormAttachment(lblOccupation, 0, SWT.LEFT);
+		lblNewLabel_3.setLayoutData(fd_lblNewLabel_3);
+		lblNewLabel_3
+				.setText("Describe your sleep pattern (usual position, quality, etc.) :");
+
+		text_12 = new Text(composite_2, SWT.BORDER);
+		FormData fd_text_12 = new FormData();
+		fd_text_12.top = new FormAttachment(lblNewLabel_3, -3, SWT.TOP);
+		fd_text_12.left = new FormAttachment(lblNewLabel_3, 16);
+		fd_text_12.right = new FormAttachment(text_11, 0, SWT.RIGHT);
+		text_12.setLayoutData(fd_text_12);
 
 		Button btnSave = new Button(this, SWT.NONE);
 		fd_tabFolder.bottom = new FormAttachment(btnSave, -6);
@@ -371,44 +415,46 @@ public class ClientWindow extends Shell {
 				"Respiratory or breathing problems (asthma, allergies, bronchitis)?",
 				"Diabetes?",
 				"Faintness, dizziness, lightheadedness or blackouts?",
-				"Frequent headaches?",
-				"Contact lenses?",
-				"Special shoes or orthotic supports?",
-				"Varicose veins?",
+				"Frequent headaches?", "Contact lenses?",
+				"Special shoes or orthotic supports?", "Varicose veins?",
 				"Arthritis or osteoporosis? Joints affected.",
-				"Any type of cancer?",
-				"Chronic diarrhea or constipation?",
-				"Currently on medication?",
-				"Receieved Cortisone injections?",
+				"Any type of cancer?", "Chronic diarrhea or constipation?",
+				"Currently on medication?", "Receieved Cortisone injections?",
 				"Any skin conditions or reactions to lotions or creams?",
-				"Any other diagnosis or medical condition?"
-		};
-		
+				"Any other diagnosis or medical condition?" };
+
 		for (int i = 0; i < btns.length; i++) {
 			// check button
 			btns[i] = new Button(composite_1, SWT.CHECK);
-			btns[i].setLayoutData(new GridData(SWT.LEFT, SWT.BEGINNING, true, false));
+			btns[i].setLayoutData(new GridData(SWT.LEFT, SWT.BEGINNING, true,
+					false));
 			btns[i].setText(strs[i]);
-			
+
 			// text
 			texts[i] = new Text(composite_1, SWT.BORDER);
-			GridData gd_text = new GridData(SWT.RIGHT, SWT.BEGINNING, true, false);
+			GridData gd_text = new GridData(SWT.RIGHT, SWT.BEGINNING, true,
+					false);
 			gd_text.widthHint = 250;
 			texts[i].setLayoutData(gd_text);
 		}
-		
-		
+
 	}
-	
+
 	private void saveClient() {
 		if (validateTexts()) {
 			saveClientInfo();
 			saveHistory();
+			saveHabits();
 
 			try {
-				dataAccess.insertClient(client);
-				messageBox("Success", "Client added successfully!",
-						SWT.ICON_INFORMATION);
+				if (dataAccess.insertClient(client)) {
+					messageBox("Success", "Client added successfully!",
+							SWT.ICON_INFORMATION);
+					getShell().dispose();
+				} else {
+					messageBox("Fail", "Client added unsuccessfully!",
+							SWT.ICON_ERROR);
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 				messageBox("Whoops!", e.getMessage(), SWT.ICON_ERROR);
@@ -436,7 +482,7 @@ public class ClientWindow extends Shell {
 
 	private void saveHistory() {
 		ClientHistory history;
-		
+
 		Boolean[] bools = new Boolean[17];
 		String[] strs = new String[17];
 		for (int i = 0; i < bools.length; i++) {
@@ -446,7 +492,13 @@ public class ClientWindow extends Shell {
 
 		history = new ClientHistory(client.getName(), bools, strs);
 		client.setHistory(history);
-		
+
+	}
+
+	private void saveHabits() {
+		client.setOccupation(text_10.getText());
+		client.setSports(text_11.getText());
+		client.setSleepPattern(text_12.getText());
 	}
 
 	private boolean validateTexts() {
