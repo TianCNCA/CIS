@@ -176,7 +176,6 @@ public class AppWindow extends Shell {
 	}
 	
 	private void fillTable(Table table, ArrayList<Client> clients) {
-		//ArrayList<Client> clients = dataAccess.getAllClients();
 		final TableColumn[] columns = table.getColumns();
 
 		for (int i = 0; i < clients.size(); i++) {
