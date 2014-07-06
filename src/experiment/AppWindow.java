@@ -1,6 +1,7 @@
 package experiment;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
@@ -177,6 +178,7 @@ public class AppWindow extends Shell {
 	
 	private void fillTable(Table table, ArrayList<Client> clients) {
 		final TableColumn[] columns = table.getColumns();
+		Collections.sort( clients );
 
 		for (int i = 0; i < clients.size(); i++) {
 			final TableItem item = new TableItem(table, SWT.NONE);

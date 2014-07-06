@@ -79,6 +79,8 @@ public class DataBaseAccess
 		        {
 					sqlCommand = "Insert into ID values (0,0);";
 			        sqlStatement.execute( sqlCommand );
+			        sqlCommand = "Insert into ID values (1,0);";
+			        sqlStatement.execute( sqlCommand );
 		        }
 		        catch ( SQLException e )
 		        {
@@ -89,7 +91,7 @@ public class DataBaseAccess
 			
 			try
 	        {
-				sqlCommand = "SELECT * FROM ID;";
+				sqlCommand = "SELECT id FROM ID where key = 0;";
 		        dbResult = sqlStatement.executeQuery( sqlCommand );
 	        }
 	        catch ( SQLException e )
@@ -1410,31 +1412,70 @@ public class DataBaseAccess
 	
 	public void genMockDatabase()
 	{
-		Client one = new Client( "Pat Ricky" );
-		Client two = new Client( "George Curious" );
-		Client three = new Client( "Fred Freddy" );
-		Client four = new Client( "Patty Rick" );
-		Client five = new Client( "Travis Almighty" );
-		ClientHistory history = new ClientHistory( "Pat Ricky" );
-		history.setByIndex( true, "Everything in ship shape", 2 );
-		one.setHistory( history );
-		two.setDOB( new Date().toString() );
-		insertClient( one );
-		insertClient( two );
-		insertClient( three );
-		insertClient( four );
-		insertClient( five );
-		Client test    = new Client( "Georgy Georgerson" );
-		// We are sleeping because the dates need to be unique! One second makes them unique
-		test.addSoap( new Date(), "This was splended! Jolly good show mate!" );
-		test.addSoap( new Date(), "Woohoo!" );
-		test.addSoap( new Date(), "Things are looking ship shape captian!" );
-		test.addSoap( new Date(), "All aboard the boyer express!" );
-		insertClient( test );
+		int shouldUpdate = 0;
+		try
+        {
+			sqlCommand = "SELECT id FROM ID where key = 1;";
+	        dbResult = sqlStatement.executeQuery( sqlCommand );
+        }
+        catch ( SQLException e )
+        {
+	        System.out.println( e );
+        }
 		
-		Client test1 = new Client( "Rick Fredrickson" );
-		test1.addSoap( "Things are getting all soapy up in here!" );
-		insertClient( test1 );
+		
+		try
+        {
+	        while( dbResult.next() )
+	        {
+	        	shouldUpdate	= dbResult.getInt( "ID" );
+	        }
+        }
+		catch ( SQLException e )
+		{
+			System.out.println( e );
+			e.printStackTrace();
+		}
+		
+		if ( shouldUpdate == 0 )
+		{
+		
+			Client one = new Client( "Pat Ricky" );
+			Client two = new Client( "George Curious" );
+			Client three = new Client( "Fred Freddy" );
+			Client four = new Client( "Patty Rick" );
+			Client five = new Client( "Travis Almighty" );
+			ClientHistory history = new ClientHistory( "Pat Ricky" );
+			history.setByIndex( true, "Everything in ship shape", 2 );
+			one.setHistory( history );
+			two.setDOB( new Date().toString() );
+			insertClient( one );
+			insertClient( two );
+			insertClient( three );
+			insertClient( four );
+			insertClient( five );
+			Client test    = new Client( "Georgy Georgerson" );
+			// We are sleeping because the dates need to be unique! One second makes them unique
+			test.addSoap( new Date(), "This was splended! Jolly good show mate!" );
+			test.addSoap( new Date(), "Woohoo!" );
+			test.addSoap( new Date(), "Things are looking ship shape captian!" );
+			test.addSoap( new Date(), "All aboard the boyer express!" );
+			insertClient( test );
+			
+			Client test1 = new Client( "Rick Fredrickson" );
+			test1.addSoap( "Things are getting all soapy up in here!" );
+			insertClient( test1 );
+		}
+		
+		try
+        {
+			sqlCommand = "Update ID set id = 1 where key = 1;";
+	        sqlStatement.execute( sqlCommand );
+        }
+        catch ( SQLException e )
+        {
+	        System.out.println( e );
+        }
 	}
 
 

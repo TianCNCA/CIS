@@ -36,6 +36,8 @@ public class RunApp {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		service.shutDownDB();
 	}
 
 }

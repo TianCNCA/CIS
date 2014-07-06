@@ -7,7 +7,7 @@ import java.util.Map;
 import app.DBService;
 
 
-public class Client {
+public class Client implements Comparable {
 	private boolean active;
 	private SoapBox soapBox;
 	private ClientHistory history;
@@ -389,4 +389,12 @@ public class Client {
 	{
 		this.age = age;
 	}
+
+	@Override
+    public int compareTo( Object arg0 )
+    {
+		Client client = (Client)arg0;
+	    String otherName = client.getName();
+		return ( name.compareTo( otherName ) );
+    }
 }
