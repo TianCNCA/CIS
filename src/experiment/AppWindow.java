@@ -3,6 +3,8 @@ package experiment;
 import java.util.ArrayList;
 
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
@@ -22,6 +24,7 @@ import org.eclipse.swt.layout.FormAttachment;
 
 import cis.buisness.Client;
 import cis.buisness.DataAccess;
+
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
@@ -29,6 +32,7 @@ import org.eclipse.swt.events.MouseEvent;
 public class AppWindow extends Shell {
 	private DataAccess dataAccess;
 	private Table table;
+	private TableItem selected;
 	private Button btnAddClient;
 	private Button btnEditClient;
 
@@ -49,6 +53,15 @@ public class AppWindow extends Shell {
 		table.setLayoutData(fd_table);
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
+		table.addListener(SWT.Selection, new Listener() {
+			
+			@Override
+			public void handleEvent(Event event) {
+		        TableItem[] selection = table.getSelection();
+		        selected = selection[0];
+		        System.out.println("Selection={" + selected + "}");
+			}
+		});
 
 		TableColumn tblclmnName = new TableColumn(table, SWT.NONE);
 		tblclmnName.setWidth(217);
@@ -69,6 +82,12 @@ public class AppWindow extends Shell {
 		btnAddClient.setText("Add Client");
 		
 		btnEditClient = new Button(this, SWT.NONE);
+		btnEditClient.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(MouseEvent e) {
+				editClient();
+			}
+		});
 		FormData fd_btnEditClient = new FormData();
 		fd_btnEditClient.top = new FormAttachment(table, 6);
 		fd_btnEditClient.left = new FormAttachment(table, 0, SWT.LEFT);
@@ -90,7 +109,7 @@ public class AppWindow extends Shell {
 		final TableColumn[] columns = table.getColumns();
 
 		for (int i = 0; i < clients.size(); i++) {
-			TableItem item = new TableItem(table, SWT.NONE);
+			final TableItem item = new TableItem(table, SWT.NONE);
 			item.setText(clients.get(i).getName());
 		}
 
@@ -104,6 +123,14 @@ public class AppWindow extends Shell {
 				null);
 		clientWindow.open();
 		clientWindow.layout();
+	}
+	
+	private void editClient() {
+		Shell clientWindow = new ClientWindow(this.getDisplay(), dataAccess,
+				dataAccess.readClient(selected.getText()));
+		clientWindow.open();
+		clientWindow.layout();
+		
 	}
 
 	@Override
