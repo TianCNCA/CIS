@@ -7,7 +7,7 @@ import java.util.Map;
 import app.DBService;
 
 
-public class Client implements Comparable {
+public class Client implements Comparable<Client> {
 	private boolean active;
 	private SoapBox soapBox;
 	private ClientHistory history;
@@ -28,9 +28,6 @@ public class Client implements Comparable {
 	private boolean prev_experience;
 
 	private String reason;
-
-	private Map<String, String> reports = new HashMap<String, String>();
-	private String[] historyReports;
 
 	private boolean diet;
 	private boolean oral_medication;
@@ -66,8 +63,6 @@ public class Client implements Comparable {
 		oral_medication = false;
 		insulin = false;
 		uncontrolled = false;
-
-		historyReports = new String[17];
 
 		key = DBService.getCurrentKey();
 	}
@@ -319,14 +314,6 @@ public class Client implements Comparable {
 		return reason;
 	}
 
-	public void set(String identifier, String report) {
-		reports.put(identifier, report);
-	}
-
-	public String get(String identifier) {
-		return reports.get(identifier);
-	}
-
 	public void setDiet(boolean diet) {
 		this.diet = diet;
 	}
@@ -391,9 +378,8 @@ public class Client implements Comparable {
 	}
 
 	@Override
-    public int compareTo( Object arg0 )
+    public int compareTo( Client client )
     {
-		Client client = (Client)arg0;
 	    String otherName = client.getName();
 		return ( name.compareTo( otherName ) );
     }
