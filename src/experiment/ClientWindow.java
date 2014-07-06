@@ -59,8 +59,6 @@ public class ClientWindow extends Shell {
 		this.mainWindow = parent;
 		this.dataAccess = dataAccess;
 		this.client = client;
-		System.out.println("Passed ClientID: " + client.getKey() );
-		System.out.println("Passed HistID: " + client.getHistory().getKey() );
 		
 		// TODO need a better coding
 

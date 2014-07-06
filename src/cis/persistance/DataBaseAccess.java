@@ -1336,13 +1336,7 @@ public class DataBaseAccess
 	
 	
 	public int getClientCount()
-	{
-//		if ( !DBService.isTesting() )
-//		{
-//			System.out.println( "TESTING" );
-//			return -1;
-//		}
-		
+	{		
 		int count = -1;
 		
 		sqlCommand = "Select Count(*) From Clients;";
@@ -1367,12 +1361,6 @@ public class DataBaseAccess
 	
 	public int getSoapCount()
 	{
-//		if ( !DBService.isTesting() )
-//		{
-//			System.out.println( "TESTING" );
-//			return -1;
-//		}
-		
 		int count = -1;
 		
 		sqlCommand = "Select Count(*) From Soaps;";
@@ -1420,12 +1408,7 @@ public class DataBaseAccess
 	
 	
 	public int getHistCount()
-	{
-//		if ( !DBService.isTesting() )
-//		{
-//			return -1;
-//		}
-		
+	{		
 		int count = -1;
 		
 		sqlCommand = "Select Count(*) From HistoryBool;";
