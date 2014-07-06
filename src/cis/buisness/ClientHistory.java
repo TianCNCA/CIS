@@ -47,6 +47,7 @@ public class ClientHistory
 		assert(  disc.length == items.length );
 		
 		this.clientName = clientName;
+		
 		key  			= DBService.getCurrentKey();
 		items 			= new HistoryItem[17];
 		
