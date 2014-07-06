@@ -49,8 +49,6 @@ public class AppWindow extends Shell {
 	private Table soapTable;
 	private TableColumn tblclmnDate;
 	private TableColumn tblclmnSoap;
-
-	//TODO delete this
 	
 	public AppWindow(Display display, DataAccess dataAccess) {
 		super(display);
