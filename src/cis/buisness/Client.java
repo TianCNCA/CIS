@@ -180,7 +180,9 @@ public class Client {
 		this.postCode = postCode;
 	}
 
-	public void setDOB(String DOB) {
+	public void setDOB(String DOB) 
+	{
+		this.DOB = DOB;
 		// this.DOB = new Date(DOB);
 	}
 

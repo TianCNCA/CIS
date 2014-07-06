@@ -300,7 +300,7 @@ public class DataBaseAccess
 	{
 		Client 	newClient = null;
 		String 	name, address, city, province, postalCode, 
-			   	reason, occupation, sports, sleep,
+			   	reason, occupation, sports, sleep, DOB,
 			   	homePhone, workPhone;
 		int 	smoking, alcohol, stress, appetite, key, age;
 		
@@ -330,6 +330,7 @@ public class DataBaseAccess
 	        	city 		= dbResult.getString( "City" );
 	        	province 	= dbResult.getString( "Province" );
 	        	postalCode	= dbResult.getString( "PostalCode" );
+	        	DOB 		= dbResult.getString( "DOB" );
 	        	reason 		= dbResult.getString( "Reason" );
 	        	occupation 	= dbResult.getString( "Occupation" );
 	        	sports 		= dbResult.getString( "Sports" );
@@ -346,6 +347,7 @@ public class DataBaseAccess
 	        	newClient 	= new Client( name );
 	        	
 	        	newClient.setAddress( address );
+	        	newClient.setDOB( DOB );
 	        	newClient.setCity( city );
 	        	newClient.setProvince( province );
 	        	newClient.setPostCode( postalCode );
@@ -934,6 +936,7 @@ public class DataBaseAccess
 		String insertString = 
 				  client.getKey()								+ ","
 				+ parseForSQLQuery( client.getName() )	 		+ "," 
+				+ parseForSQLQuery( client.getDOB() ) 			+ ","
 			    +  					client.getAge()				+ ","
 				+ parseForSQLQuery( client.getHomePhone() )		+ ","
 			    + parseForSQLQuery( client.getWorkPhone() )		+ ","
@@ -966,6 +969,7 @@ public class DataBaseAccess
     {
 		String insertString = 
 		      "Set DOB = " 			+ parseForSQLQuery( updatedClient.getDOB().toString() ) + ","
+		    + "Set Age = "			+ 					updatedClient.getAge() 				+ ","
 			+ "Set HomePhone = " 	+ parseForSQLQuery( updatedClient.getHomePhone() )		+ ","
 		    + "Set WorkPhone = " 	+ parseForSQLQuery( updatedClient.getWorkPhone() )		+ ","
 			+ "Set Address = " 		+ parseForSQLQuery( updatedClient.getAddress() )		+ "," 
@@ -1364,6 +1368,7 @@ public class DataBaseAccess
 		ClientHistory history = new ClientHistory( "Pat Ricky" );
 		history.setByIndex( true, "Everything in ship shape", 2 );
 		one.setHistory( history );
+		two.setDOB( new Date().toString() );
 		insertClient( one );
 		insertClient( two );
 		insertClient( three );
