@@ -3,36 +3,27 @@ package experiment;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.layout.FormAttachment;
+import org.eclipse.swt.layout.FormData;
+import org.eclipse.swt.layout.FormLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
-import org.eclipse.swt.layout.RowLayout;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.layout.RowData;
-import org.eclipse.swt.custom.CBanner;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.custom.ViewForm;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.FormLayout;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.FormAttachment;
+import org.eclipse.swt.widgets.Text;
 
 import cis.buisness.Client;
 import cis.buisness.DataAccess;
-
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.events.KeyAdapter;
-import org.eclipse.swt.events.KeyEvent;
 
 public class AppWindow extends Shell {
 	private DataAccess dataAccess;
@@ -172,8 +163,7 @@ public class AppWindow extends Shell {
 	}
 	
 	private void clearTable() {
-		table.removeAll();
-		
+		table.removeAll();;
 	}
 	
 	private void fillTable(Table table, ArrayList<Client> clients) {
