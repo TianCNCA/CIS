@@ -163,8 +163,7 @@ public class AppWindow extends Shell {
 	}
 	
 	private void clearTable() {
-		table.removeAll();
-		
+		table.removeAll();;
 	}
 	
 	private void fillTable(Table table, ArrayList<Client> clients) {
