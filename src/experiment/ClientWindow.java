@@ -1,35 +1,26 @@
 package experiment;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.custom.CTabItem;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.layout.FormAttachment;
+import org.eclipse.swt.layout.FormData;
+import org.eclipse.swt.layout.FormLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
 import cis.buisness.Client;
 import cis.buisness.ClientHistory;
 import cis.buisness.DataAccess;
-
-import org.eclipse.swt.layout.FormLayout;
-import org.eclipse.swt.custom.CTabFolder;
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.FormAttachment;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.custom.CTabItem;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Dialog;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.DateTime;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Sash;
-import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.TableItem;
 
 public class ClientWindow extends Shell {
 	private DataAccess dataAccess;
@@ -67,8 +58,7 @@ public class ClientWindow extends Shell {
 		this.client = client;
 
 		// TODO need a better coding
-		if (null == this.client)
-			this.client = new Client();
+
 		setLayout(new FormLayout());
 
 		CTabFolder tabFolder = new CTabFolder(this, SWT.BORDER);
@@ -404,6 +394,9 @@ public class ClientWindow extends Shell {
 			}
 		});
 		btnNewButton.setText("Exit");
+
+		initialize();
+
 	}
 
 	private void drawHistoryTab() {
@@ -438,6 +431,17 @@ public class ClientWindow extends Shell {
 			texts[i].setLayoutData(gd_text);
 		}
 
+	}
+
+	private void initialize() {
+		if (null == this.client) { // add new client window
+			this.client = new Client();
+			setText("Add Client");
+		} else { // edit client
+			// initialize the texts
+			setText("Edit Client");
+			getClientInfo();
+		}
 	}
 
 	private void saveClient() {
@@ -481,8 +485,6 @@ public class ClientWindow extends Shell {
 	}
 
 	private void saveHistory() {
-		ClientHistory history;
-
 		Boolean[] bools = new Boolean[17];
 		String[] strs = new String[17];
 		for (int i = 0; i < bools.length; i++) {
@@ -499,6 +501,23 @@ public class ClientWindow extends Shell {
 		client.setOccupation(text_10.getText());
 		client.setSports(text_11.getText());
 		client.setSleepPattern(text_12.getText());
+	}
+
+	private void getClientInfo() {
+		text.setText(client.getName());
+		text_1.setText(client.getAddress());
+		text_2.setText(client.getCity());
+		text_3.setText(client.getProvince());
+		text_4.setText(client.getPostCode());
+		text_5.setText(Integer.toString(client.getAge()));
+		text_6.setText(client.getDOB());
+		text_7.setText(client.getHomePhone());
+		text_8.setText(client.getWorkPhone());
+		text_9.setText(client.getReason());
+		btnCheckButton.setSelection(client.getPhysician());
+		btnCheckButton_1.setSelection(client.getPhysioTherapist());
+		btnCheckButton_2.setSelection(client.getChiropractor());
+		btnCheckButton_3.setSelection(client.getExperience());
 	}
 
 	private boolean validateTexts() {

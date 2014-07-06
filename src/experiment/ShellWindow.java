@@ -3,6 +3,7 @@ package experiment;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.List;
 
 public class ShellWindow extends Shell {
 
@@ -32,6 +33,10 @@ public class ShellWindow extends Shell {
 	 */
 	public ShellWindow(Display display) {
 		super(display, SWT.SHELL_TRIM);
+		
+		List list = new List(this, SWT.BORDER);
+		list.setBounds(21, 25, 151, 206);
+		list.add("wwwaaa");
 		createContents();
 	}
 
@@ -48,5 +53,4 @@ public class ShellWindow extends Shell {
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
 	}
-
 }
