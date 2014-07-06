@@ -151,6 +151,7 @@ public class AppWindow extends Shell {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				refreshTable();
+				text.setText( "" );
 			}
 		});
 		FormData fd_btnClear = new FormData();
