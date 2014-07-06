@@ -298,6 +298,9 @@ public class DataBaseAccess
 	        System.out.println( e );
         }
 		
+		updateSoap( updatedClient.getSoaps() );
+		updateHistory( updatedClient.getHistory() );
+		
 		return didUpdate;
 	}
 
@@ -809,7 +812,8 @@ public class DataBaseAccess
 		}
 		else
 		{
-			history = null;
+			System.out.println("Error Reading History, Key Mismatch!");
+			history = new ClientHistory( clientName );
 		}
 	    
 	    return history;
