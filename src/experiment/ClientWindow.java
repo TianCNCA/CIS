@@ -520,6 +520,18 @@ public class ClientWindow extends Shell {
 		btnCheckButton_3.setSelection(client.getExperience());
 	}
 
+	private void getHistory() {
+		Boolean[] bools = new Boolean[17];
+		String[] strs = new String[17];
+		for (int i = 0; i < bools.length; i++) {
+			bools[i] = btns[i].getSelection();
+			strs[i] = texts[i].getText();
+		}
+
+		history = new ClientHistory(client.getName(), bools, strs);
+		client.setHistory(history);
+	}
+	
 	private boolean validateTexts() {
 		boolean rc = true;
 

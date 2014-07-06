@@ -57,6 +57,7 @@ public class AppWindow extends Shell {
 			
 			@Override
 			public void handleEvent(Event event) {
+				btnEditClient.setEnabled(true);
 		        TableItem[] selection = table.getSelection();
 		        selected = selection[0];
 		        System.out.println("Selection={" + selected + "}");
@@ -82,6 +83,7 @@ public class AppWindow extends Shell {
 		btnAddClient.setText("Add Client");
 		
 		btnEditClient = new Button(this, SWT.NONE);
+		btnEditClient.setEnabled(false);
 		btnEditClient.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseUp(MouseEvent e) {
@@ -95,6 +97,12 @@ public class AppWindow extends Shell {
 		btnEditClient.setText("Edit Client");
 		
 		Button btnExit = new Button(this, SWT.NONE);
+		btnExit.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(MouseEvent e) {
+				getShell().dispose();
+			}
+		});
 		FormData fd_btnExit = new FormData();
 		fd_btnExit.left = new FormAttachment(100, -78);
 		fd_btnExit.bottom = new FormAttachment(100, -9);
