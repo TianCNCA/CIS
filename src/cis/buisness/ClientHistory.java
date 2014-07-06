@@ -18,7 +18,7 @@ public class ClientHistory
 	{
 		this.clientName = null;
 		items 			= new HistoryItem[17];
-		key  			= DBService.getCurrentKey();
+		key  			= -1;
 		
 		for ( int i = 0; i < items.length; i++ )
 		{
@@ -29,7 +29,7 @@ public class ClientHistory
 	public ClientHistory( String clientName )
 	{
 		this.clientName = clientName;
-		key  			= DBService.getCurrentKey();
+		key  			= -1;
 		items 			= new HistoryItem[17];
 		
 		for ( int i = 0; i < items.length; i++ )
@@ -47,7 +47,7 @@ public class ClientHistory
 		assert(  disc.length == items.length );
 		
 		this.clientName = clientName;
-		key  			= DBService.getCurrentKey();
+		key  			= -1;
 		items 			= new HistoryItem[17];
 		
 		for ( int i = 0; i < items.length; i++ )
@@ -65,7 +65,6 @@ public class ClientHistory
 			for ( int i = 0; i < check.length; i++ )
 			{
 				setByIndex( check[i], disc[i], i );
-				//items[i].setCheckAndDisc( check[i], disc[i] );
 			}
 		}
 	}

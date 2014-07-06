@@ -163,7 +163,6 @@ public class DataBaseAccess
 				try
 				{
 					// Save the key to the DB
-				
 					sqlCommand 	= "UPDATE ID SET ID = " + key + " WHERE KEY = 0;" ;
 					sqlStatement.executeUpdate( sqlCommand );
 					
@@ -206,6 +205,11 @@ public class DataBaseAccess
 		{
 			System.out.println("Invalid Client Insert");
 			return false;
+		}
+		
+		if ( client.getKey() < 0 )
+		{
+			client.setKey( DBService.getCurrentKey() );
 		}
 		
 		try
@@ -278,8 +282,8 @@ public class DataBaseAccess
 		try
         {
 			updateString = buildClientUpdateString( updatedClient );
-			where 		 = "WHERE ID = " + updatedClient.getKey();
-			sqlCommand 	 = "UPDATE CLIENTS " + updateString + " " + where + ";";
+			where 		 = "WHERE id = " + updatedClient.getKey();
+			sqlCommand 	 = "UPDATE clients " + updateString + " " + where + ";";
 			System.out.println(sqlCommand);
 			result 		 = sqlStatement.executeUpdate( sqlCommand );
 			
@@ -392,6 +396,18 @@ public class DataBaseAccess
         {
         	System.out.println( e );
         }
+		
+		if ( newClient != null )
+		{
+			SoapBox 		soap;
+			ClientHistory 	history;
+			
+			soap 	= readSoaps( clientName );
+			history = readHistory( clientName );
+			
+			newClient.setSoaps( soap );
+			newClient.setHistory( history );
+		}
 
 		return newClient;
 	}
@@ -511,6 +527,11 @@ public class DataBaseAccess
 		if ( clientName.equals( "" ) || clientName == null )
 		{
 			return false;
+		}
+		
+		if ( soap.getKey() < 0 )
+		{
+			soap.setKey( DBService.getCurrentKey() );
 		}
 		
 		insertString = buildSoapString( clientName, soap );			 
@@ -806,6 +827,11 @@ public class DataBaseAccess
 			return false;
 		}
 		
+		if ( history.getKey() < 0 )
+		{
+			history.setKey( DBService.getCurrentKey() );
+		}
+		
 		insertStringBool = buildBoolHistString( history );			 
 		sqlCommand 		= "INSERT into HISTORYBOOL " + "VALUES (" + insertStringBool + ");";
 		System.out.println( sqlCommand );
@@ -910,6 +936,7 @@ public class DataBaseAccess
 	------------------------------------------------------*/
 	public int getCurrentKey()
 	{
+		System.out.println("KEY INCR");
 		key++;
 		return key;
 	}
@@ -991,30 +1018,30 @@ public class DataBaseAccess
 	private String buildClientUpdateString( Client updatedClient )
     {
 		String insertString = 
-		      "Set DOB = " 			+ parseForSQLQuery( updatedClient.getDOB().toString() ) + ","
-		    + "Set Age = "			+ 					updatedClient.getAge() 				+ ","
-			+ "Set HomePhone = " 	+ parseForSQLQuery( updatedClient.getHomePhone() )		+ ","
-		    + "Set WorkPhone = " 	+ parseForSQLQuery( updatedClient.getWorkPhone() )		+ ","
-			+ "Set Address = " 		+ parseForSQLQuery( updatedClient.getAddress() )		+ "," 
-			+ "Set City = " 		+ parseForSQLQuery( updatedClient.getCity() )			+ "," 
-			+ "Set PRovince = " 	+ parseForSQLQuery( updatedClient.getProvince() )		+ "," 
-			+ "Set PostalCode = " 	+ parseForSQLQuery( updatedClient.getPostCode() )		+ "," 
-			+ "Set Physician = "	+ 					updatedClient.getPhysician() 		+ "," 
-			+ "Set Physther = "	  	+ 					updatedClient.getPhysioTherapist()  + "," 
-			+ "Set Chiro = " 	  	+ 					updatedClient.getChiropractor() 	+ "," 
-			+ "Set PrevExp = "	  	+ 					updatedClient.getExperience() 		+ "," 
-			+ "Set Reason = " 		+ parseForSQLQuery( updatedClient.getReason() )			+ "," 
-			+ "Set Diet = "	  		+ 					updatedClient.getDiet() 			+ "," 
-			+ "Set Med = "	  		+ 					updatedClient.getMedication() 		+ "," 
-			+ "Set Insulin = "	  	+ 					updatedClient.getInsulin() 			+ "," 
-			+ "Set Unctrl = "	  	+ 					updatedClient.getUncontrolled() 	+ "," 
-			+ "Set Occupation = '" 	+ parseForSQLQuery( updatedClient.getOccupation() )		+ "," 
-			+ "Set Sports = " 		+ 					updatedClient.getSports() 			+ "," 
-			+ "Set Sleep = " 		+ parseForSQLQuery( updatedClient.getSleepPattern() )	+ "," 
-			+ "Set Smoking = " 		+ 					updatedClient.getSmoking()			+ "," 
-			+ "Set Alchohol = " 	+ 					updatedClient.getAlcohol()			+ "," 
-			+ "Set Stress = " 		+ 					updatedClient.getStress()			+ "," 
-			+ "Set Appetite = " 	+ 					updatedClient.getAppetite();
+		      "SET DOB = " 			+ parseForSQLQuery( updatedClient.getDOB().toString() ) + ","
+		    + "SET Age = "			+ 					updatedClient.getAge() 				+ ","
+			+ "SET HomePhone = " 	+ parseForSQLQuery( updatedClient.getHomePhone() )		+ ","
+		    + "SET WorkPhone = " 	+ parseForSQLQuery( updatedClient.getWorkPhone() )		+ ","
+			+ "SET Address = " 		+ parseForSQLQuery( updatedClient.getAddress() )		+ "," 
+			+ "SET City = " 		+ parseForSQLQuery( updatedClient.getCity() )			+ "," 
+			+ "SET PRovince = " 	+ parseForSQLQuery( updatedClient.getProvince() )		+ "," 
+			+ "SET PostalCode = " 	+ parseForSQLQuery( updatedClient.getPostCode() )		+ "," 
+			+ "SET Physician = "	+ 					updatedClient.getPhysician() 		+ "," 
+			+ "SET Physther = "	  	+ 					updatedClient.getPhysioTherapist()  + "," 
+			+ "SET Chiro = " 	  	+ 					updatedClient.getChiropractor() 	+ "," 
+			+ "SET PrevExp = "	  	+ 					updatedClient.getExperience() 		+ "," 
+			+ "SET Reason = " 		+ parseForSQLQuery( updatedClient.getReason() )			+ "," 
+			+ "SET Diet = "	  		+ 					updatedClient.getDiet() 			+ "," 
+			+ "SET Med = "	  		+ 					updatedClient.getMedication() 		+ "," 
+			+ "SET Insulin = "	  	+ 					updatedClient.getInsulin() 			+ "," 
+			+ "SET Unctrl = "	  	+ 					updatedClient.getUncontrolled() 	+ "," 
+			+ "SET Occupation = '" 	+ parseForSQLQuery( updatedClient.getOccupation() )		+ "," 
+			+ "SET Sports = " 		+ 					updatedClient.getSports() 			+ "," 
+			+ "SET Sleep = " 		+ parseForSQLQuery( updatedClient.getSleepPattern() )	+ "," 
+			+ "SET Smoking = " 		+ 					updatedClient.getSmoking()			+ "," 
+			+ "SET Alchohol = " 	+ 					updatedClient.getAlcohol()			+ "," 
+			+ "SET Stress = " 		+ 					updatedClient.getStress()			+ "," 
+			+ "SET Appetite = " 	+ 					updatedClient.getAppetite();
 	
 		return insertString;
     }
@@ -1296,10 +1323,11 @@ public class DataBaseAccess
 	
 	public int getClientCount()
 	{
-		if ( !DBService.isTesting() )
-		{
-			return -1;
-		}
+//		if ( !DBService.isTesting() )
+//		{
+//			System.out.println( "TESTING" );
+//			return -1;
+//		}
 		
 		int count = -1;
 		
@@ -1325,10 +1353,11 @@ public class DataBaseAccess
 	
 	public int getSoapCount()
 	{
-		if ( !DBService.isTesting() )
-		{
-			return -1;
-		}
+//		if ( !DBService.isTesting() )
+//		{
+//			System.out.println( "TESTING" );
+//			return -1;
+//		}
 		
 		int count = -1;
 		
@@ -1354,11 +1383,6 @@ public class DataBaseAccess
 	
 	public int getIDCount()
 	{
-		if ( !DBService.isTesting() )
-		{
-			return -1;
-		}
-		
 		int count = -1;
 		
 		sqlCommand = "Select Count(*) From ID;";
@@ -1383,10 +1407,10 @@ public class DataBaseAccess
 	
 	public int getHistCount()
 	{
-		if ( !DBService.isTesting() )
-		{
-			return -1;
-		}
+//		if ( !DBService.isTesting() )
+//		{
+//			return -1;
+//		}
 		
 		int count = -1;
 		
@@ -1413,6 +1437,7 @@ public class DataBaseAccess
 	public void genMockDatabase()
 	{
 		int shouldUpdate = 0;
+		
 		try
         {
 			sqlCommand = "SELECT id FROM ID where key = 1;";
@@ -1455,7 +1480,6 @@ public class DataBaseAccess
 			insertClient( four );
 			insertClient( five );
 			Client test    = new Client( "Georgy Georgerson" );
-			// We are sleeping because the dates need to be unique! One second makes them unique
 			test.addSoap( new Date(), "This was splended! Jolly good show mate!" );
 			test.addSoap( new Date(), "Woohoo!" );
 			test.addSoap( new Date(), "Things are looking ship shape captian!" );
@@ -1479,5 +1503,8 @@ public class DataBaseAccess
 	}
 
 
-
+	public int getCurrentKeyNoUpdate()
+    {
+	    return key;
+    }
 }

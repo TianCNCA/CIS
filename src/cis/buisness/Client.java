@@ -64,7 +64,8 @@ public class Client implements Comparable<Client> {
 		insulin = false;
 		uncontrolled = false;
 
-		key = DBService.getCurrentKey();
+		key = -1;
+		//key = DBService.getCurrentKey();
 	}
 
 	public Client(String name) {
@@ -84,7 +85,8 @@ public class Client implements Comparable<Client> {
 		insulin = false;
 		uncontrolled = false;
 
-		key = DBService.getCurrentKey();
+		key = -1;
+		//key = DBService.getCurrentKey();
 	}
 
 

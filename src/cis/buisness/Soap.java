@@ -15,14 +15,18 @@ public class Soap implements Comparable<Soap>
 	{
 		date = null;
 		info = null;
-		key  = DBService.getCurrentKey();
+		
+		key = -1;
+		//key  = DBService.getCurrentKey();
 	}
 
 	public Soap( Date date, String info )
 	{
 		this.date = date;
 		this.info = info;
-		key = DBService.getCurrentKey();
+		
+		key = -1;
+		//key = DBService.getCurrentKey();
 	}
 
 

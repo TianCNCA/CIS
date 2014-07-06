@@ -35,7 +35,7 @@ public class DBService
 		
 		if ( valid )
 		{
-			currKey = database.getCurrentKey();
+			currKey = database.getCurrentKeyNoUpdate();
 		}
 	}
 
