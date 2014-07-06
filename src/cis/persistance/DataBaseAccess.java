@@ -145,6 +145,7 @@ public class DataBaseAccess
 				// Save the key to the DB
 				sqlCommand 	= "UPDATE ID SET ID = " + key + " WHERE KEY = 0;" ;
 				sqlStatement.executeUpdate( sqlCommand );
+				
 				System.out.println( sqlCommand );
 				sqlStatement.execute( sqlCommand );
 				
