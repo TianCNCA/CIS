@@ -24,6 +24,7 @@ import cis.buisness.DataAccess;
 import cis.buisness.HistoryItem;
 
 public class ClientWindow extends Shell {
+	private AppWindow mainWindow;
 	private DataAccess dataAccess;
 	private Client client;
 
@@ -52,9 +53,10 @@ public class ClientWindow extends Shell {
 	private Text text_12;
 	private Button btnSave;
 
-	public ClientWindow(Display display, DataAccess dataAccess, Client client) {
-		super(display);
+	public ClientWindow(AppWindow parent, DataAccess dataAccess, Client client) {
+		super(parent.getShell());
 		setSize(719, 538);
+		this.mainWindow = parent;
 		this.dataAccess = dataAccess;
 		this.client = client;
 
@@ -385,7 +387,7 @@ public class ClientWindow extends Shell {
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseUp(MouseEvent e) {
-				getShell().dispose();
+				closeWindow();
 			}
 		});
 		btnNewButton.setText("Exit");
@@ -460,10 +462,11 @@ public class ClientWindow extends Shell {
 
 			try {
 				if (opt == 0) {
-					if (dataAccess.insertClient(client) && dataAccess.insertHistory(client.getHistory())) {
+					if (dataAccess.insertClient(client)) {
 						messageBox("Success", "Client added successfully!",
 								SWT.ICON_INFORMATION);
-						getShell().dispose();
+						
+						closeWindow();
 					} else {
 						messageBox("Fail", "Client added unsuccessfully!",
 								SWT.ICON_ERROR);
@@ -472,7 +475,7 @@ public class ClientWindow extends Shell {
 					if (dataAccess.updateClient(client) && dataAccess.updateHistory(client.getHistory())) {
 						messageBox("Success", "Client updated successfully!",
 								SWT.ICON_INFORMATION);
-						getShell().dispose();
+						closeWindow();
 					} else {
 						messageBox("Fail", "Client updated unsuccessfully!",
 								SWT.ICON_ERROR);
@@ -573,6 +576,11 @@ public class ClientWindow extends Shell {
 		msg.setText(text);
 		msg.setMessage(message);
 		msg.open();
+	}
+	
+	private void closeWindow() {
+		mainWindow.refreshTable();
+		getShell().dispose();
 	}
 
 	@Override
