@@ -22,6 +22,7 @@ import cis.buisness.Client;
 import cis.buisness.ClientHistory;
 import cis.buisness.DataAccess;
 import cis.buisness.HistoryItem;
+import org.eclipse.swt.widgets.Combo;
 
 public class ClientWindow extends Shell {
 	private AppWindow mainWindow;
@@ -52,6 +53,10 @@ public class ClientWindow extends Shell {
 	private Text text_11;
 	private Text text_12;
 	private Button btnSave;
+	private Combo combo;
+	private Combo combo_1;
+	private Combo combo_2;
+	private Combo combo_3;
 
 	public ClientWindow(AppWindow parent, DataAccess dataAccess, Client client) {
 		super(parent.getShell());
@@ -369,6 +374,69 @@ public class ClientWindow extends Shell {
 		fd_text_12.right = new FormAttachment(text_11, 0, SWT.RIGHT);
 		text_12.setLayoutData(fd_text_12);
 
+		Label lblNewLabel_4 = new Label(composite_2, SWT.NONE);
+		FormData fd_lblNewLabel_4 = new FormData();
+		fd_lblNewLabel_4.top = new FormAttachment(lblNewLabel_3, 20);
+		fd_lblNewLabel_4.left = new FormAttachment(0, 10);
+		lblNewLabel_4.setLayoutData(fd_lblNewLabel_4);
+		lblNewLabel_4.setText("Please check the most applicable:");
+
+		Label lblSmoking = new Label(composite_2, SWT.NONE);
+		FormData fd_lblSmoking = new FormData();
+		fd_lblSmoking.top = new FormAttachment(lblNewLabel_4, 16);
+		fd_lblSmoking.left = new FormAttachment(0, 45);
+		lblSmoking.setLayoutData(fd_lblSmoking);
+		lblSmoking.setText("Smoking");
+
+		combo = new Combo(composite_2, SWT.NONE);
+		FormData fd_combo = new FormData();
+		fd_combo.top = new FormAttachment(lblSmoking, 0, SWT.TOP);
+		fd_combo.left = new FormAttachment(lblSmoking, 19);
+		combo.setLayoutData(fd_combo);
+		fillCombo(combo, 0);
+		
+		Label lblAlcohol = new Label(composite_2, SWT.NONE);
+		FormData fd_lblAlcohol = new FormData();
+		fd_lblAlcohol.top = new FormAttachment(lblSmoking, 26);
+		fd_lblAlcohol.left = new FormAttachment(lblSmoking, 0, SWT.LEFT);
+		lblAlcohol.setLayoutData(fd_lblAlcohol);
+		lblAlcohol.setText("Alcohol");
+		
+		combo_1 = new Combo(composite_2, SWT.NONE);
+		FormData fd_combo_1 = new FormData();
+		fd_combo_1.bottom = new FormAttachment(lblAlcohol, 0, SWT.BOTTOM);
+		fd_combo_1.right = new FormAttachment(combo, 0, SWT.RIGHT);
+		combo_1.setLayoutData(fd_combo_1);
+		fillCombo(combo_1, 0);
+		
+		Label lblStressLevel = new Label(composite_2, SWT.NONE);
+		FormData fd_lblStressLevel = new FormData();
+		fd_lblStressLevel.top = new FormAttachment(lblAlcohol, 22);
+		fd_lblStressLevel.left = new FormAttachment(lblSmoking, 0, SWT.LEFT);
+		lblStressLevel.setLayoutData(fd_lblStressLevel);
+		lblStressLevel.setText("Stress level");
+		
+		combo_2 = new Combo(composite_2, SWT.NONE);
+		FormData fd_combo_2 = new FormData();
+		fd_combo_2.bottom = new FormAttachment(lblStressLevel, 0, SWT.BOTTOM);
+		fd_combo_2.right = new FormAttachment(combo, 0, SWT.RIGHT);
+		combo_2.setLayoutData(fd_combo_2);
+		fillCombo(combo_2, 0);
+		
+		Label lblHowWouldYou = new Label(composite_2, SWT.NONE);
+		FormData fd_lblHowWouldYou = new FormData();
+		fd_lblHowWouldYou.top = new FormAttachment(lblSmoking, 0, SWT.TOP);
+		fd_lblHowWouldYou.left = new FormAttachment(combo, 64);
+		lblHowWouldYou.setLayoutData(fd_lblHowWouldYou);
+		lblHowWouldYou.setText("How would you rate your appetite?");
+		
+		combo_3 = new Combo(composite_2, SWT.NONE);
+		FormData fd_combo_3 = new FormData();
+		fd_combo_3.bottom = new FormAttachment(combo, 0, SWT.BOTTOM);
+		fd_combo_3.left = new FormAttachment(lblHowWouldYou, 18);
+		combo_3.setLayoutData(fd_combo_3);
+		fillCombo(combo_3, 1);
+
 		btnSave = new Button(this, SWT.NONE);
 		fd_tabFolder.bottom = new FormAttachment(btnSave, -6);
 		FormData fd_btnSave = new FormData();
@@ -451,6 +519,7 @@ public class ClientWindow extends Shell {
 			});
 			getClientInfo();
 			getHistory();
+			getHabits();
 		}
 	}
 
@@ -463,19 +532,25 @@ public class ClientWindow extends Shell {
 			try {
 				if (opt == 0) {
 					if (dataAccess.insertClient(client)) {
-						messageBox("Success", "Client added successfully!",
-								SWT.ICON_INFORMATION);
-						
-						closeWindow();
+						if (dataAccess.insertHistory(client.getHistory())) {
+							messageBox("Success", "Client added successfully!",
+									SWT.ICON_INFORMATION);
+
+							closeWindow();
+						}
+
 					} else {
 						messageBox("Fail", "Client added unsuccessfully!",
 								SWT.ICON_ERROR);
 					}
 				} else {
 					if (dataAccess.updateClient(client)) {
-						messageBox("Success", "Client updated successfully!",
-								SWT.ICON_INFORMATION);
-						closeWindow();
+						if (dataAccess.updateHistory(client.getHistory())) {
+							messageBox("Success",
+									"Client updated successfully!",
+									SWT.ICON_INFORMATION);
+							closeWindow();
+						}
 					} else {
 						messageBox("Fail", "Client updated unsuccessfully!",
 								SWT.ICON_ERROR);
@@ -524,6 +599,10 @@ public class ClientWindow extends Shell {
 		client.setOccupation(text_10.getText());
 		client.setSports(text_11.getText());
 		client.setSleepPattern(text_12.getText());
+		client.setSmoking(combo.getSelectionIndex());
+		client.setAlcohol(combo_1.getSelectionIndex());
+		client.setStress(combo_2.getSelectionIndex());
+		client.setAppetite(combo_3.getSelectionIndex());
 	}
 
 	private void getClientInfo() {
@@ -552,6 +631,16 @@ public class ClientWindow extends Shell {
 		}
 	}
 
+	private void getHabits() {		
+		text_10.setText(client.getOccupation());
+		text_11.setText(client.getSports());
+		text_12.setText(client.getSleepPattern());
+		combo.select(client.getSmoking());
+		combo_1.select(client.getAlcohol());
+		combo_2.select(client.getStress());
+		combo_3.select(client.getAppetite());
+	}
+	
 	private boolean validateTexts() {
 		boolean rc = true;
 
@@ -571,6 +660,17 @@ public class ClientWindow extends Shell {
 
 		return rc;
 	}
+	
+	private void fillCombo(Combo combo, int opt) {
+		if (opt == 0) {
+			combo.add("Low");
+			combo.add("Moderate");
+			combo.add("High");
+		} else {
+			combo.add("Poor");
+			combo.add("Normal");
+		}
+	}
 
 	private void messageBox(String text, String message, int style) {
 		MessageBox msg = new MessageBox(getShell(), style);
@@ -578,7 +678,7 @@ public class ClientWindow extends Shell {
 		msg.setMessage(message);
 		msg.open();
 	}
-	
+
 	private void closeWindow() {
 		mainWindow.refreshTable();
 		getShell().dispose();

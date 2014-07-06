@@ -247,6 +247,7 @@ public class AppWindow extends Shell {
 		
 	}
 	
+	// TODO deal with this later
 	private void clearTable() {
 		table.removeAll();
 	}
