@@ -36,6 +36,8 @@ public class AppWindow extends Shell {
 	private Button btnAddClient;
 	private Button btnEditClient;
 
+	//TODO delete this
+	
 	public AppWindow(Display display, DataAccess dataAccess) {
 		super(display);
 		this.dataAccess = dataAccess;
