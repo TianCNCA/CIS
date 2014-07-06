@@ -55,7 +55,7 @@ public class Client {
 	{
 		setActive( true );
 		this.soapBox = new SoapBox( "NULL" );
-		history = new ClientHistory();
+		history = new ClientHistory( "NULL" );
 
 		physician = false;
 		physioTherapist = false;

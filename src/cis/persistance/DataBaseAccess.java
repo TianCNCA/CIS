@@ -72,6 +72,21 @@ public class DataBaseAccess
 			dbConnection = DriverManager.getConnection( dbLocation, "SA", "" );
 			sqlStatement = dbConnection.createStatement();
 			
+			if ( getIDCount() < 0 )
+			{
+				System.out.println("Recreating ID" );
+				try
+		        {
+					sqlCommand = "Insert into ID values (0,0);";
+			        sqlStatement.execute( sqlCommand );
+		        }
+		        catch ( SQLException e )
+		        {
+		        	initiated = false;
+			        System.out.println( e );
+		        }
+			}
+			
 			try
 	        {
 				sqlCommand = "SELECT * FROM ID;";
@@ -82,6 +97,7 @@ public class DataBaseAccess
 	        	initiated = false;
 		        System.out.println( e );
 	        }
+			
 			
 			try
 	        {
@@ -140,20 +156,24 @@ public class DataBaseAccess
 	{
 		try
         {
-			try
+			if ( key > -1)
 			{
-				// Save the key to the DB
-				sqlCommand 	= "UPDATE ID SET ID = " + key + " WHERE KEY = 0;" ;
-				sqlStatement.executeUpdate( sqlCommand );
+				try
+				{
+					// Save the key to the DB
 				
-				System.out.println( sqlCommand );
-				sqlStatement.execute( sqlCommand );
-				
-				dbSize++;
-			}
-			catch ( SQLException ex )
-			{
-				System.out.println( ex );
+					sqlCommand 	= "UPDATE ID SET ID = " + key + " WHERE KEY = 0;" ;
+					sqlStatement.executeUpdate( sqlCommand );
+					
+					System.out.println( sqlCommand );
+					sqlStatement.execute( sqlCommand );
+					
+					dbSize++;
+				}
+				catch ( SQLException ex )
+				{
+					System.out.println( ex );
+				}
 			}
 			
 			sqlCommand = "shutdown compact";
@@ -1311,6 +1331,35 @@ public class DataBaseAccess
 		int count = -1;
 		
 		sqlCommand = "Select Count(*) From Soaps;";
+		System.out.println( sqlCommand );
+		
+		try
+        {
+			dbResult = sqlStatement.executeQuery( sqlCommand );
+			dbResult.next();
+			count = dbResult.getInt( 1 );
+			System.out.println("Count: " + count );
+        }
+        catch ( SQLException e )
+        {
+            System.out.println( e );
+            e.printStackTrace();
+        }
+		
+		return count;
+	}
+	
+	
+	public int getIDCount()
+	{
+		if ( !DBService.isTesting() )
+		{
+			return -1;
+		}
+		
+		int count = -1;
+		
+		sqlCommand = "Select Count(*) From ID;";
 		System.out.println( sqlCommand );
 		
 		try
