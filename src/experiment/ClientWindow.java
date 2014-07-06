@@ -21,11 +21,11 @@ import org.eclipse.swt.widgets.Text;
 import cis.buisness.Client;
 import cis.buisness.ClientHistory;
 import cis.buisness.DataAccess;
+import cis.buisness.HistoryItem;
 
 public class ClientWindow extends Shell {
 	private DataAccess dataAccess;
 	private Client client;
-	private ClientHistory history;
 
 	private Text text;
 	private Text text_1;
@@ -50,6 +50,7 @@ public class ClientWindow extends Shell {
 	private Text text_10;
 	private Text text_11;
 	private Text text_12;
+	private Button btnSave;
 
 	public ClientWindow(Display display, DataAccess dataAccess, Client client) {
 		super(display);
@@ -366,18 +367,12 @@ public class ClientWindow extends Shell {
 		fd_text_12.right = new FormAttachment(text_11, 0, SWT.RIGHT);
 		text_12.setLayoutData(fd_text_12);
 
-		Button btnSave = new Button(this, SWT.NONE);
+		btnSave = new Button(this, SWT.NONE);
 		fd_tabFolder.bottom = new FormAttachment(btnSave, -6);
 		FormData fd_btnSave = new FormData();
 		fd_btnSave.left = new FormAttachment(0);
 		fd_btnSave.bottom = new FormAttachment(100);
 		btnSave.setLayoutData(fd_btnSave);
-		btnSave.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseUp(MouseEvent e) {
-				saveClient();
-			}
-		});
 		btnSave.setText("Save");
 
 		Button btnNewButton = new Button(this, SWT.NONE);
@@ -437,27 +432,51 @@ public class ClientWindow extends Shell {
 		if (null == this.client) { // add new client window
 			this.client = new Client();
 			setText("Add Client");
+			btnSave.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseUp(MouseEvent e) {
+					saveClient(0);
+				}
+			});
 		} else { // edit client
 			// initialize the texts
 			setText("Edit Client");
+			btnSave.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseUp(MouseEvent e) {
+					saveClient(1);
+				}
+			});
 			getClientInfo();
+			getHistory();
 		}
 	}
 
-	private void saveClient() {
+	private void saveClient(int opt) {
 		if (validateTexts()) {
 			saveClientInfo();
 			saveHistory();
 			saveHabits();
 
 			try {
-				if (dataAccess.insertClient(client)) {
-					messageBox("Success", "Client added successfully!",
-							SWT.ICON_INFORMATION);
-					getShell().dispose();
+				if (opt == 0) {
+					if (dataAccess.insertClient(client) && dataAccess.insertHistory(client.getHistory())) {
+						messageBox("Success", "Client added successfully!",
+								SWT.ICON_INFORMATION);
+						getShell().dispose();
+					} else {
+						messageBox("Fail", "Client added unsuccessfully!",
+								SWT.ICON_ERROR);
+					}
 				} else {
-					messageBox("Fail", "Client added unsuccessfully!",
-							SWT.ICON_ERROR);
+					if (dataAccess.updateClient(client) && dataAccess.updateHistory(client.getHistory())) {
+						messageBox("Success", "Client updated successfully!",
+								SWT.ICON_INFORMATION);
+						getShell().dispose();
+					} else {
+						messageBox("Fail", "Client updated unsuccessfully!",
+								SWT.ICON_ERROR);
+					}
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -492,7 +511,7 @@ public class ClientWindow extends Shell {
 			strs[i] = texts[i].getText();
 		}
 
-		history = new ClientHistory(client.getName(), bools, strs);
+		ClientHistory history = new ClientHistory(client.getName(), bools, strs);
 		client.setHistory(history);
 
 	}
@@ -521,17 +540,14 @@ public class ClientWindow extends Shell {
 	}
 
 	private void getHistory() {
-		Boolean[] bools = new Boolean[17];
-		String[] strs = new String[17];
-		for (int i = 0; i < bools.length; i++) {
-			bools[i] = btns[i].getSelection();
-			strs[i] = texts[i].getText();
+		ClientHistory history = client.getHistory();
+		for (int i = 0; i < btns.length; i++) {
+			HistoryItem item = history.getByIndex(i);
+			btns[i].setSelection(item.getChecked());
+			texts[i].setText(item.getDiscription());
 		}
-
-		history = new ClientHistory(client.getName(), bools, strs);
-		client.setHistory(history);
 	}
-	
+
 	private boolean validateTexts() {
 		boolean rc = true;
 

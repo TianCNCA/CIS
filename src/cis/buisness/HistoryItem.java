@@ -35,6 +35,10 @@ public class HistoryItem
 		return checked;
 	}
 	
+	public String getDiscription() {
+		return discription;
+	}
+
 	public void setDisc( String disc )
 	{
 		if ( disc != null )
