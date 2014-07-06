@@ -64,7 +64,7 @@ public class ClientWindow extends Shell {
 		this.mainWindow = parent;
 		this.dataAccess = dataAccess;
 		this.client = client;
-		
+
 		// TODO need a better coding
 
 		setLayout(new FormLayout());
@@ -394,42 +394,42 @@ public class ClientWindow extends Shell {
 		fd_combo.left = new FormAttachment(lblSmoking, 19);
 		combo.setLayoutData(fd_combo);
 		fillCombo(combo, 0);
-		
+
 		Label lblAlcohol = new Label(composite_2, SWT.NONE);
 		FormData fd_lblAlcohol = new FormData();
 		fd_lblAlcohol.top = new FormAttachment(lblSmoking, 26);
 		fd_lblAlcohol.left = new FormAttachment(lblSmoking, 0, SWT.LEFT);
 		lblAlcohol.setLayoutData(fd_lblAlcohol);
 		lblAlcohol.setText("Alcohol");
-		
+
 		combo_1 = new Combo(composite_2, SWT.NONE);
 		FormData fd_combo_1 = new FormData();
 		fd_combo_1.bottom = new FormAttachment(lblAlcohol, 0, SWT.BOTTOM);
 		fd_combo_1.right = new FormAttachment(combo, 0, SWT.RIGHT);
 		combo_1.setLayoutData(fd_combo_1);
 		fillCombo(combo_1, 0);
-		
+
 		Label lblStressLevel = new Label(composite_2, SWT.NONE);
 		FormData fd_lblStressLevel = new FormData();
 		fd_lblStressLevel.top = new FormAttachment(lblAlcohol, 22);
 		fd_lblStressLevel.left = new FormAttachment(lblSmoking, 0, SWT.LEFT);
 		lblStressLevel.setLayoutData(fd_lblStressLevel);
 		lblStressLevel.setText("Stress level");
-		
+
 		combo_2 = new Combo(composite_2, SWT.NONE);
 		FormData fd_combo_2 = new FormData();
 		fd_combo_2.bottom = new FormAttachment(lblStressLevel, 0, SWT.BOTTOM);
 		fd_combo_2.right = new FormAttachment(combo, 0, SWT.RIGHT);
 		combo_2.setLayoutData(fd_combo_2);
 		fillCombo(combo_2, 0);
-		
+
 		Label lblHowWouldYou = new Label(composite_2, SWT.NONE);
 		FormData fd_lblHowWouldYou = new FormData();
 		fd_lblHowWouldYou.top = new FormAttachment(lblSmoking, 0, SWT.TOP);
 		fd_lblHowWouldYou.left = new FormAttachment(combo, 64);
 		lblHowWouldYou.setLayoutData(fd_lblHowWouldYou);
 		lblHowWouldYou.setText("How would you rate your appetite?");
-		
+
 		combo_3 = new Combo(composite_2, SWT.NONE);
 		FormData fd_combo_3 = new FormData();
 		fd_combo_3.bottom = new FormAttachment(combo, 0, SWT.BOTTOM);
@@ -532,12 +532,11 @@ public class ClientWindow extends Shell {
 			try {
 				if (opt == 0) {
 					if (dataAccess.insertClient(client)) {
-						if (dataAccess.insertHistory(client.getHistory())) {
-							messageBox("Success", "Client added successfully!",
-									SWT.ICON_INFORMATION);
 
-							closeWindow();
-						}
+						messageBox("Success", "Client added successfully!",
+								SWT.ICON_INFORMATION);
+
+						closeWindow();
 
 					} else {
 						messageBox("Fail", "Client added unsuccessfully!",
@@ -545,12 +544,11 @@ public class ClientWindow extends Shell {
 					}
 				} else {
 					if (dataAccess.updateClient(client)) {
-						if (dataAccess.updateHistory(client.getHistory())) {
-							messageBox("Success",
-									"Client updated successfully!",
-									SWT.ICON_INFORMATION);
-							closeWindow();
-						}
+
+						messageBox("Success", "Client updated successfully!",
+								SWT.ICON_INFORMATION);
+						closeWindow();
+
 					} else {
 						messageBox("Fail", "Client updated unsuccessfully!",
 								SWT.ICON_ERROR);
@@ -590,7 +588,7 @@ public class ClientWindow extends Shell {
 		}
 
 		ClientHistory history = new ClientHistory(client.getName(), bools, strs);
-		history.setKey( client.getHistory().getKey() );
+		history.setKey(client.getHistory().getKey());
 		client.setHistory(history);
 
 	}
@@ -631,7 +629,7 @@ public class ClientWindow extends Shell {
 		}
 	}
 
-	private void getHabits() {		
+	private void getHabits() {
 		text_10.setText(client.getOccupation());
 		text_11.setText(client.getSports());
 		text_12.setText(client.getSleepPattern());
@@ -640,7 +638,7 @@ public class ClientWindow extends Shell {
 		combo_2.select(client.getStress());
 		combo_3.select(client.getAppetite());
 	}
-	
+
 	private boolean validateTexts() {
 		boolean rc = true;
 
@@ -660,7 +658,7 @@ public class ClientWindow extends Shell {
 
 		return rc;
 	}
-	
+
 	private void fillCombo(Combo combo, int opt) {
 		if (opt == 0) {
 			combo.add("Low");
