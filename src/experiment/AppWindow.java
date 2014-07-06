@@ -124,9 +124,7 @@ public class AppWindow extends Shell {
 		text.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if (e.keyCode == SWT.CR) {
 					searchClient();
-				}
 			}
 		});
 		FormData fd_text = new FormData();
@@ -161,7 +159,6 @@ public class AppWindow extends Shell {
 		fd_btnClear.right = new FormAttachment(table, 0, SWT.RIGHT);
 		btnClear.setLayoutData(fd_btnClear);
 		btnClear.setText("Clear");
-
 	}
 
 	public void refreshTable() {
@@ -214,23 +211,15 @@ public class AppWindow extends Shell {
 		
 		for ( Client client : clients )
 		{
-			if ( client.getName().contains( partialText ) )
+			String clientName = client.getName().toLowerCase();
+			String searchText = partialText.toLowerCase();
+			if ( clientName.contains( searchText ) )
 			{
 				searchList.add( client );
 			}
 		}
 	
-		fillTable(table, searchList);
-		
-		//Client client = dataAccess.readClient(text.getText());
-		
-//		if (null != client) {
-//			final TableItem item = new TableItem(table, SWT.NONE);
-//			item.setText(client.getName());
-//		} else {
-//			messageBox("Search", "Sorry, client " + text.getText() + " doesn't exist.", SWT.ICON_INFORMATION);
-//		}
-		
+		fillTable(table, searchList);	
 	}
 	
 	private void messageBox(String text, String message, int style) {
