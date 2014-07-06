@@ -72,7 +72,7 @@ public class DataBaseAccess
 			dbConnection = DriverManager.getConnection( dbLocation, "SA", "" );
 			sqlStatement = dbConnection.createStatement();
 			
-			if ( getIDCount() < 0 )
+			if ( getIDCount() <= 0 )
 			{
 				System.out.println("Recreating ID" );
 				try
@@ -269,9 +269,11 @@ public class DataBaseAccess
 	------------------------------------------------------*/
 	public Boolean updateClient( Client updatedClient )
 	{
-		Boolean didUpdate = false;
-		String  updateString, where;
-		int 	result;
+		Boolean 		didUpdate = false;
+		String  		updateString, where;
+		SoapBox 		soaps = updatedClient.getSoaps();
+		ClientHistory 	history = updatedClient.getHistory();
+		int 			result;
 		
 		if ( updatedClient.getName().equals( "" ) || updatedClient.getName() == null )
 		{
@@ -289,7 +291,8 @@ public class DataBaseAccess
 			
 			if ( result == 1 )
 			{
-				didUpdate = true;
+				didUpdate = updateSoap( soaps );
+				didUpdate = updateHistory( history );
 			}
 			
         }
@@ -297,9 +300,6 @@ public class DataBaseAccess
         {
 	        System.out.println( e );
         }
-		
-		updateSoap( updatedClient.getSoaps() );
-		updateHistory( updatedClient.getHistory() );
 		
 		return didUpdate;
 	}
@@ -576,6 +576,12 @@ public class DataBaseAccess
 		for ( int i = 0; i < soapBox.numSoaps(); i++ )
 		{
 			Soap soap 		= soapBox.getSoapByIndex( i );
+			
+			if ( soap.getKey() < 0 )
+			{
+				soap.setKey( DBService.getCurrentKey() );
+			}
+			
 			insertString 	= buildSoapString( clientName, soap );					 
 			sqlCommand 		= "INSERT into SOAPS " + "VALUES (" + insertString + ")";
 			System.out.println( sqlCommand );
@@ -640,7 +646,7 @@ public class DataBaseAccess
 				if ( tempSoap != null )
 				{
 					updateString = buildSoapUpdateString( tempSoap );
-					where 		 = "WHERE ID = " + tempSoap.getKey();
+					where 		 = "WHERE id = " + tempSoap.getKey();
 					sqlCommand 	 = "UPDATE SOAPS " + updateString + " " + where + ";";
 					System.out.println(sqlCommand);
 					result 		 = sqlStatement.executeUpdate( sqlCommand );
@@ -815,6 +821,8 @@ public class DataBaseAccess
 			System.out.println("Error Reading History, Key Mismatch!");
 			history = new ClientHistory( clientName );
 		}
+		
+		System.out.println("History key: " + key1);
 	    
 	    return history;
     }
@@ -884,10 +892,12 @@ public class DataBaseAccess
 			return false;
 		}
 		
+		System.out.println("History key1: " + updateHistory.getKey() );
+		
 		try
         {
 			updateString = buildHistBoolUpdateString( updateHistory );
-			where 		 = "WHERE ID = " + updateHistory.getKey();
+			where 		 = "WHERE key = " + updateHistory.getKey();
 			sqlCommand 	 = "UPDATE HistoryBool " + updateString + " " + where + ";";
 			System.out.println(sqlCommand);
 			result 		 = sqlStatement.executeUpdate( sqlCommand );
@@ -908,7 +918,7 @@ public class DataBaseAccess
 			try
 	        {
 				updateString = buildHistDiscUpdateString( updateHistory );
-				where 		 = "WHERE ID = " + updateHistory.getKey();
+				where 		 = "WHERE key = " + updateHistory.getKey();
 				sqlCommand 	 = "UPDATE HistoryDisc " + updateString + " " + where + ";";
 				System.out.println(sqlCommand);
 				result 		 = sqlStatement.executeUpdate( sqlCommand );
@@ -1023,56 +1033,31 @@ public class DataBaseAccess
     {
 		String insertString = 
 		      "SET DOB = " 			+ parseForSQLQuery( updatedClient.getDOB().toString() ) + ","
-		    + "SET Age = "			+ 					updatedClient.getAge() 				+ ","
-			+ "SET HomePhone = " 	+ parseForSQLQuery( updatedClient.getHomePhone() )		+ ","
-		    + "SET WorkPhone = " 	+ parseForSQLQuery( updatedClient.getWorkPhone() )		+ ","
-			+ "SET Address = " 		+ parseForSQLQuery( updatedClient.getAddress() )		+ "," 
-			+ "SET City = " 		+ parseForSQLQuery( updatedClient.getCity() )			+ "," 
-			+ "SET PRovince = " 	+ parseForSQLQuery( updatedClient.getProvince() )		+ "," 
-			+ "SET PostalCode = " 	+ parseForSQLQuery( updatedClient.getPostCode() )		+ "," 
-			+ "SET Physician = "	+ 					updatedClient.getPhysician() 		+ "," 
-			+ "SET Physther = "	  	+ 					updatedClient.getPhysioTherapist()  + "," 
-			+ "SET Chiro = " 	  	+ 					updatedClient.getChiropractor() 	+ "," 
-			+ "SET PrevExp = "	  	+ 					updatedClient.getExperience() 		+ "," 
-			+ "SET Reason = " 		+ parseForSQLQuery( updatedClient.getReason() )			+ "," 
-			+ "SET Diet = "	  		+ 					updatedClient.getDiet() 			+ "," 
-			+ "SET Med = "	  		+ 					updatedClient.getMedication() 		+ "," 
-			+ "SET Insulin = "	  	+ 					updatedClient.getInsulin() 			+ "," 
-			+ "SET Unctrl = "	  	+ 					updatedClient.getUncontrolled() 	+ "," 
-			+ "SET Occupation = '" 	+ parseForSQLQuery( updatedClient.getOccupation() )		+ "," 
-			+ "SET Sports = " 		+ 					updatedClient.getSports() 			+ "," 
-			+ "SET Sleep = " 		+ parseForSQLQuery( updatedClient.getSleepPattern() )	+ "," 
-			+ "SET Smoking = " 		+ 					updatedClient.getSmoking()			+ "," 
-			+ "SET Alchohol = " 	+ 					updatedClient.getAlcohol()			+ "," 
-			+ "SET Stress = " 		+ 					updatedClient.getStress()			+ "," 
-			+ "SET Appetite = " 	+ 					updatedClient.getAppetite();
+		    + "Age = "			+ 					updatedClient.getAge() 				+ ","
+			+ "HomePhone = " 	+ parseForSQLQuery( updatedClient.getHomePhone() )		+ ","
+		    + "WorkPhone = " 	+ parseForSQLQuery( updatedClient.getWorkPhone() )		+ ","
+			+ "Address = " 		+ parseForSQLQuery( updatedClient.getAddress() )		+ "," 
+			+ "City = " 		+ parseForSQLQuery( updatedClient.getCity() )			+ "," 
+			+ "Province = " 	+ parseForSQLQuery( updatedClient.getProvince() )		+ "," 
+			+ "PostalCode = " 	+ parseForSQLQuery( updatedClient.getPostCode() )		+ "," 
+			+ "Physichian = "	+ 					updatedClient.getPhysician() 		+ "," 
+			+ "Physther = "	  	+ 					updatedClient.getPhysioTherapist()  + "," 
+			+ "Chiro = " 	  	+ 					updatedClient.getChiropractor() 	+ "," 
+			+ "PrevExp = "	  	+ 					updatedClient.getExperience() 		+ "," 
+			+ "Reason = " 		+ parseForSQLQuery( updatedClient.getReason() )			+ "," 
+			+ "Diet = "	  		+ 					updatedClient.getDiet() 			+ "," 
+			+ "Med = "	  		+ 					updatedClient.getMedication() 		+ "," 
+			+ "Insulin = "	  	+ 					updatedClient.getInsulin() 			+ "," 
+			+ "Unctrl = "	  	+ 					updatedClient.getUncontrolled() 	+ "," 
+			+ "Occupation = " 	+ parseForSQLQuery( updatedClient.getOccupation() )		+ "," 
+			+ "Sports = " 		+ parseForSQLQuery( updatedClient.getSports() )			+ "," 
+			+ "Sleep = " 		+ parseForSQLQuery( updatedClient.getSleepPattern() )	+ "," 
+			+ "Smoking = " 		+ 					updatedClient.getSmoking()			+ "," 
+			+ "Alcohol = " 		+ 					updatedClient.getAlcohol()			+ "," 
+			+ "Stress = " 		+ 					updatedClient.getStress()			+ "," 
+			+ "Appetite = " 	+ 					updatedClient.getAppetite();
 	
 		return insertString;
-    }
-	
-	
-	private String buildHistDiscUpdateString( ClientHistory updateHistory )
-    {
-		String insertString = 
-			        "Set Heart = " 		+ parseForSQLQuery( updateHistory.getHeart().getDisc() )		+ ","
-			      + "Set Tingl = " 		+ parseForSQLQuery( updateHistory.getTingling().getDisc() ) 	+ ","
-			      + "Set Blood = " 		+ parseForSQLQuery( updateHistory.getBlood().getDisc() )		+ ","
-			      + "Set Breath = "		+ parseForSQLQuery( updateHistory.getBreath().getDisc() )		+ ","
-			      + "Set Diabetes = " 	+ parseForSQLQuery( updateHistory.getDiabetes().getDisc() ) 	+ ","
-			      + "Set Faint = " 		+ parseForSQLQuery( updateHistory.getFaint().getDisc() )		+ ","
-			      + "Set Headaches = "  + parseForSQLQuery( updateHistory.getHeadaches().getDisc() ) 	+ ","
-			      + "Set Contact = "    + parseForSQLQuery( updateHistory.getContactLense().getDisc() ) + ","
-			      + "Set Shoes = " 		+ parseForSQLQuery( updateHistory.getShoes().getDisc() )		+ ","
-			      + "Set Varicose = "	+ parseForSQLQuery( updateHistory.getVaricose().getDisc() ) 	+ ","
-			      + "Set Arthritis = " 	+ parseForSQLQuery( updateHistory.getArthritis().getDisc() ) 	+ ","
-			      + "Set Cancer = " 	+ parseForSQLQuery( updateHistory.getCancer().getDisc() )		+ ","
-			      + "Set Diarrhea = " 	+ parseForSQLQuery( updateHistory.getDiarrhea().getDisc() ) 	+ ","
-			      + "Set Meds = " 		+ parseForSQLQuery( updateHistory.getMeds().getDisc() ) 		+ ","
-			      + "Set Coristone = " 	+ parseForSQLQuery( updateHistory.getCortisone().getDisc() ) 	+ ","
-			      + "Set Skin = " 		+ parseForSQLQuery( updateHistory.getSkin().getDisc() ) 		+ ","
-			      + "Set Other = " 		+ parseForSQLQuery( updateHistory.getOther().getDisc() ) 		+ ";";
-		
-			return insertString;
     }
 	
 	
@@ -1092,7 +1077,7 @@ public class DataBaseAccess
 	{
 		String updateString = 
 					  "Set Date = " + parseForSQLQuery( soap.getDate().toString() ) + ","
-					+ "Set Disc = " + parseForSQLQuery( soap.getInfo() );
+					+ "Disc = " + parseForSQLQuery( soap.getInfo() );
 
 		return updateString;
 	}
@@ -1113,6 +1098,31 @@ public class DataBaseAccess
 	    insertString += history.getByIndex( i ).getChecked();
 	    
 	    return insertString;
+    }
+	
+	
+	private String buildHistDiscUpdateString( ClientHistory updateHistory )
+    {
+		String insertString = 
+			        "Set Heart = " 	+ parseForSQLQuery( updateHistory.getHeart().getDisc() )		+ ","
+			      + "Tingl = " 		+ parseForSQLQuery( updateHistory.getTingling().getDisc() ) 	+ ","
+			      + "Blood = " 		+ parseForSQLQuery( updateHistory.getBlood().getDisc() )		+ ","
+			      + "Breath = "		+ parseForSQLQuery( updateHistory.getBreath().getDisc() )		+ ","
+			      + "Diabetes = " 	+ parseForSQLQuery( updateHistory.getDiabetes().getDisc() ) 	+ ","
+			      + "Faint = " 		+ parseForSQLQuery( updateHistory.getFaint().getDisc() )		+ ","
+			      + "Headaches = "  + parseForSQLQuery( updateHistory.getHeadaches().getDisc() ) 	+ ","
+			      + "Contact = "    + parseForSQLQuery( updateHistory.getContactLense().getDisc() ) + ","
+			      + "Shoes = " 		+ parseForSQLQuery( updateHistory.getShoes().getDisc() )		+ ","
+			      + "Varicose = "	+ parseForSQLQuery( updateHistory.getVaricose().getDisc() ) 	+ ","
+			      + "Arthritis = " 	+ parseForSQLQuery( updateHistory.getArthritis().getDisc() ) 	+ ","
+			      + "Cancer = " 	+ parseForSQLQuery( updateHistory.getCancer().getDisc() )		+ ","
+			      + "Diarrhea = " 	+ parseForSQLQuery( updateHistory.getDiarrhea().getDisc() ) 	+ ","
+			      + "Meds = " 		+ parseForSQLQuery( updateHistory.getMeds().getDisc() ) 		+ ","
+			      + "Coritsone = " 	+ parseForSQLQuery( updateHistory.getCortisone().getDisc() ) 	+ ","
+			      + "Skin = " 		+ parseForSQLQuery( updateHistory.getSkin().getDisc() ) 		+ ","
+			      + "Other = " 		+ parseForSQLQuery( updateHistory.getOther().getDisc() );
+		
+			return insertString;
     }
 	
 	
@@ -1142,22 +1152,22 @@ public class DataBaseAccess
     {
 		String insertString = 
 			        "Set Heart = " 		+ updateHistory.getHeart().getChecked() 		+ ","
-			      + "Set Tingl = " 		+ updateHistory.getTingling().getChecked() 		+ ","
-			      + "Set Blood = " 		+ updateHistory.getBlood().getChecked() 		+ ","
-			      + "Set Breath = "		+ updateHistory.getBreath().getChecked() 		+ ","
-			      + "Set Diabetes = " 	+ updateHistory.getDiabetes().getChecked() 		+ ","
-			      + "Set Faint = " 		+ updateHistory.getFaint().getChecked() 		+ ","
-			      + "Set Headaches = "  + updateHistory.getHeadaches().getChecked() 	+ ","
-			      + "Set Contact = "    + updateHistory.getContactLense().getChecked() 	+ ","
-			      + "Set Shoes = " 		+ updateHistory.getShoes().getChecked() 		+ ","
-			      + "Set Varicose = "	+ updateHistory.getVaricose().getChecked() 		+ ","
-			      + "Set Arthritis = " 	+ updateHistory.getArthritis().getChecked() 	+ ","
-			      + "Set Cancer = " 	+ updateHistory.getCancer().getChecked() 		+ ","
-			      + "Set Diarrhea = " 	+ updateHistory.getDiarrhea().getChecked() 		+ ","
-			      + "Set Meds = " 		+ updateHistory.getMeds().getChecked() 			+ ","
-			      + "Set Coristone = " 	+ updateHistory.getCortisone().getChecked() 	+ ","
-			      + "Set Skin = " 		+ updateHistory.getSkin().getChecked() 			+ ","
-			      + "Set Other = " 		+ updateHistory.getOther().getChecked() 		+ ";";
+			      + "Tingl = " 		+ updateHistory.getTingling().getChecked() 		+ ","
+			      + "Blood = " 		+ updateHistory.getBlood().getChecked() 		+ ","
+			      + "Breath = "		+ updateHistory.getBreath().getChecked() 		+ ","
+			      + "Diabetes = " 	+ updateHistory.getDiabetes().getChecked() 		+ ","
+			      + "Faint = " 		+ updateHistory.getFaint().getChecked() 		+ ","
+			      + "Headaches = "  + updateHistory.getHeadaches().getChecked() 	+ ","
+			      + "Contact = "    + updateHistory.getContactLense().getChecked() 	+ ","
+			      + "Shoes = " 		+ updateHistory.getShoes().getChecked() 		+ ","
+			      + "Varicose = "	+ updateHistory.getVaricose().getChecked() 		+ ","
+			      + "Arthritis = " 	+ updateHistory.getArthritis().getChecked() 	+ ","
+			      + "Cancer = " 	+ updateHistory.getCancer().getChecked() 		+ ","
+			      + "Diarrhea = " 	+ updateHistory.getDiarrhea().getChecked() 		+ ","
+			      + "Meds = " 		+ updateHistory.getMeds().getChecked() 			+ ","
+			      + "Coritsone = " 	+ updateHistory.getCortisone().getChecked() 	+ ","
+			      + "Skin = " 		+ updateHistory.getSkin().getChecked() 			+ ","
+			      + "Other = " 		+ updateHistory.getOther().getChecked();
 		
 			return insertString;
     }

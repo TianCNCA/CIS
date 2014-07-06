@@ -59,7 +59,9 @@ public class ClientWindow extends Shell {
 		this.mainWindow = parent;
 		this.dataAccess = dataAccess;
 		this.client = client;
-
+		System.out.println("Passed ClientID: " + client.getKey() );
+		System.out.println("Passed HistID: " + client.getHistory().getKey() );
+		
 		// TODO need a better coding
 
 		setLayout(new FormLayout());
@@ -472,7 +474,7 @@ public class ClientWindow extends Shell {
 								SWT.ICON_ERROR);
 					}
 				} else {
-					if (dataAccess.updateClient(client) && dataAccess.updateHistory(client.getHistory())) {
+					if (dataAccess.updateClient(client)) {
 						messageBox("Success", "Client updated successfully!",
 								SWT.ICON_INFORMATION);
 						closeWindow();
@@ -515,6 +517,7 @@ public class ClientWindow extends Shell {
 		}
 
 		ClientHistory history = new ClientHistory(client.getName(), bools, strs);
+		history.setKey( client.getHistory().getKey() );
 		client.setHistory(history);
 
 	}
