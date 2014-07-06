@@ -76,7 +76,8 @@ public class AppWindow extends Shell {
 		TableColumn tblclmnName = new TableColumn(table, SWT.NONE);
 		tblclmnName.setWidth(217);
 		tblclmnName.setText("Name");
-		fillTable(table);
+		ArrayList<Client> clients = dataAccess.getAllClients();
+		fillTable(table, clients);
 
 		btnAddClient = new Button(this, SWT.NONE);
 		btnAddClient.addMouseListener(new MouseAdapter() {
@@ -165,7 +166,8 @@ public class AppWindow extends Shell {
 
 	public void refreshTable() {
 		clearTable();
-		fillTable(table);
+		ArrayList<Client> clients = dataAccess.getAllClients();
+		fillTable(table, clients);
 		btnEditClient.setEnabled(false);
 		
 	}
@@ -175,8 +177,8 @@ public class AppWindow extends Shell {
 		
 	}
 	
-	private void fillTable(Table table) {
-		ArrayList<Client> clients = dataAccess.getAllClients();
+	private void fillTable(Table table, ArrayList<Client> clients) {
+		//ArrayList<Client> clients = dataAccess.getAllClients();
 		final TableColumn[] columns = table.getColumns();
 
 		for (int i = 0; i < clients.size(); i++) {
@@ -206,14 +208,28 @@ public class AppWindow extends Shell {
 	
 	private void searchClient() {
 		clearTable();
-		Client client = dataAccess.readClient(text.getText());
+		String partialText = text.getText();
+		ArrayList<Client> clients = dataAccess.getAllClients();
+		ArrayList<Client> searchList = new ArrayList<Client>();
 		
-		if (null != client) {
-			final TableItem item = new TableItem(table, SWT.NONE);
-			item.setText(client.getName());
-		} else {
-			messageBox("Search", "Sorry, client " + text.getText() + " doesn't exist.", SWT.ICON_INFORMATION);
+		for ( Client client : clients )
+		{
+			if ( client.getName().contains( partialText ) )
+			{
+				searchList.add( client );
+			}
 		}
+	
+		fillTable(table, searchList);
+		
+		//Client client = dataAccess.readClient(text.getText());
+		
+//		if (null != client) {
+//			final TableItem item = new TableItem(table, SWT.NONE);
+//			item.setText(client.getName());
+//		} else {
+//			messageBox("Search", "Sorry, client " + text.getText() + " doesn't exist.", SWT.ICON_INFORMATION);
+//		}
 		
 	}
 	
