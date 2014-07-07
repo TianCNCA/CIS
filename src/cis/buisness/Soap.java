@@ -40,8 +40,8 @@ public class Soap implements Comparable<Soap>
 	@Override
 	public int compareTo( Soap other )
 	{
-		//return this.date.compareTo( other.getDate() );
-		return 1;
+		return this.date.compareTo( other.getDate() );
+		//return 1;
 	}
 
 

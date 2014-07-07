@@ -252,32 +252,19 @@ public class AppWindow extends Shell {
 		final TableColumn[] columns = soapTable.getColumns();
 		Collections.sort( soaps );
 
-		for (int i = 0; i < soaps.size(); i++) {
+		for (int i = 0; i < soaps.size(); i++) 
+		{
 			final TableItem item = new TableItem(soapTable, SWT.NONE);
-			// item.setText(soaps.get(i).getDate().toString()); TODO remove next line
-			// soaps should include date and info in the tables
-			item.setText(soaps.get(i).getInfo());
+			item.setText( new String[] { soaps.get( i ).getDate().toString(), soaps.get(i).getInfo() } );
 		}
 		
 		for (int i = 0; i < columns.length; i++)
+		{
 			columns[i].pack();
-
-		//TODO fillDates(soaps);
-	}
-	
-	private void fillDates(ArrayList<Soap> soaps){
-		final TableColumn[] columns = table.getColumns();
-		Collections.sort( soaps );
-
-		for (int i = 0; i < soaps.size(); i++) {
-			final TableItem item = new TableItem(table, SWT.NONE);
-			item.setText(soaps.get(i).getInfo());
 		}
-		
-		for (int i = 0; i < columns.length; i++)
-			columns[i].pack();
 
 	}
+
 	
 	private void select(TableItem selected){
 		selected_client = dataAccess.readClient(selected.getText());
