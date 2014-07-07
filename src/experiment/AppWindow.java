@@ -33,6 +33,7 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.hsqldb.Tokens;
 
 public class AppWindow extends Shell {
 	private DataAccess dataAccess;
@@ -64,7 +65,7 @@ public class AppWindow extends Shell {
 		
 		soapTable = new Table(this, SWT.BORDER | SWT.FULL_SELECTION);
 		FormData fd_soapTable = new FormData();
-		fd_soapTable.right = new FormAttachment(100, -70);
+		fd_soapTable.right = new FormAttachment(100, -10);
 		soapTable.setLayoutData(fd_soapTable);
 		soapTable.setHeaderVisible(true);
 		soapTable.setLinesVisible(true);
@@ -84,21 +85,22 @@ public class AppWindow extends Shell {
 		tblclmnDate.setText("Date");
 		
 		tblclmnSoap = new TableColumn(soapTable, SWT.NONE);
-		tblclmnSoap.setWidth(180);
+		tblclmnSoap.setWidth(241);
 		tblclmnSoap.setText("Soap");
 		
 		lblClientName = new Label(this, SWT.NONE);
-		fd_soapTable.top = new FormAttachment(lblClientName, 6);
+		fd_soapTable.top = new FormAttachment(0, 127);
 		fd_soapTable.left = new FormAttachment(0, 463);
 		FormData fd_lblClientName = new FormData();
-		fd_lblClientName.right = new FormAttachment(soapTable, 0, SWT.RIGHT);
-		fd_lblClientName.top = new FormAttachment(0, 68);
-		fd_lblClientName.bottom = new FormAttachment(100, -376);
+		fd_lblClientName.bottom = new FormAttachment(soapTable, -6);
+		fd_lblClientName.left = new FormAttachment(soapTable, 0, SWT.LEFT);
+		fd_lblClientName.right = new FormAttachment(100, -70);
+		fd_lblClientName.top = new FormAttachment(0, 100);
 		lblClientName.setLayoutData(fd_lblClientName);
 		
 		table = new Table(this, SWT.BORDER | SWT.FULL_SELECTION);
-		fd_lblClientName.left = new FormAttachment(0, 463);
 		FormData fd_table = new FormData();
+		fd_table.right = new FormAttachment(soapTable, -85);
 		fd_table.left = new FormAttachment(0, 78);
 		table.setLayoutData(fd_table);
 		table.setHeaderVisible(true);
@@ -125,7 +127,7 @@ public class AppWindow extends Shell {
 		fillSoaps();
 
 		btnAddClient = new Button(this, SWT.NONE);
-		fd_table.bottom = new FormAttachment(100, -53);
+		fd_table.bottom = new FormAttachment(btnAddClient, -6);
 		btnAddClient.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseUp(MouseEvent e) {
@@ -133,7 +135,7 @@ public class AppWindow extends Shell {
 			}
 		});
 		FormData fd_btnAddClient = new FormData();
-		fd_btnAddClient.top = new FormAttachment(table, 6);
+		fd_btnAddClient.bottom = new FormAttachment(100, -10);
 		btnAddClient.setLayoutData(fd_btnAddClient);
 		btnAddClient.setText("Add Client");
 		
@@ -147,12 +149,12 @@ public class AppWindow extends Shell {
 			}
 		});
 		FormData fd_btnEditClient = new FormData();
-		fd_btnEditClient.top = new FormAttachment(table, 6);
-		fd_btnEditClient.right = new FormAttachment(table, 0, SWT.RIGHT);
+		fd_btnEditClient.top = new FormAttachment(btnAddClient, 0, SWT.TOP);
 		btnEditClient.setLayoutData(fd_btnEditClient);
 		btnEditClient.setText("Edit Client");
 		
 		Button btnExit = new Button(this, SWT.NONE);
+		fd_soapTable.bottom = new FormAttachment(btnExit, -6);
 		btnExit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseUp(MouseEvent e) {
@@ -160,9 +162,8 @@ public class AppWindow extends Shell {
 			}
 		});
 		FormData fd_btnExit = new FormData();
+		fd_btnExit.right = new FormAttachment(100, -10);
 		fd_btnExit.top = new FormAttachment(btnAddClient, 0, SWT.TOP);
-		fd_btnExit.right = new FormAttachment(100, -55);
-		fd_btnExit.left = new FormAttachment(100, -123);
 		btnExit.setLayoutData(fd_btnExit);
 		btnExit.setText("Exit");
 		
@@ -174,13 +175,13 @@ public class AppWindow extends Shell {
 			}
 		});
 		FormData fd_text = new FormData();
-		fd_text.top = new FormAttachment(0, 65);
-		fd_text.left = new FormAttachment(table, 0, SWT.LEFT);
+		fd_text.top = new FormAttachment(0, 96);
+		fd_text.left = new FormAttachment(0, 78);
 		text.setLayoutData(fd_text);
 		
 		btnSearch = new Button(this, SWT.NONE);
-		fd_table.top = new FormAttachment(btnSearch, 5);
-		fd_text.right = new FormAttachment(btnSearch, -6);
+		fd_table.top = new FormAttachment(btnSearch, 8);
+		fd_text.right = new FormAttachment(100, -517);
 		btnSearch.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseUp(MouseEvent e) {
@@ -188,13 +189,12 @@ public class AppWindow extends Shell {
 			}
 		});
 		FormData fd_btnSearch = new FormData();
-		fd_btnSearch.top = new FormAttachment(0, 63);
+		fd_btnSearch.top = new FormAttachment(0, 94);
+		fd_btnSearch.left = new FormAttachment(text, 6);
 		btnSearch.setLayoutData(fd_btnSearch);
 		btnSearch.setText("Search");
 		
 		btnClear = new Button(this, SWT.NONE);
-		fd_btnSearch.right = new FormAttachment(btnClear, -6);
-		fd_table.right = new FormAttachment(btnClear, 0, SWT.RIGHT);
 		btnClear.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseUp(MouseEvent e) {
@@ -203,8 +203,8 @@ public class AppWindow extends Shell {
 			}
 		});
 		FormData fd_btnClear = new FormData();
-		fd_btnClear.top = new FormAttachment(0, 63);
-		fd_btnClear.right = new FormAttachment(lblClientName, -85);
+		fd_btnClear.top = new FormAttachment(0, 94);
+		fd_btnClear.right = new FormAttachment(table, 0, SWT.RIGHT);
 		fd_btnClear.left = new FormAttachment(0, 320);
 		btnClear.setLayoutData(fd_btnClear);
 		btnClear.setText("Clear");
@@ -216,10 +216,11 @@ public class AppWindow extends Shell {
 		lblClientInformationSystem.setBounds(0, 0, 580, 196);
 		
 		Button btnAddSoap = new Button(this, SWT.NONE);
-		fd_soapTable.bottom = new FormAttachment(btnAddSoap, -6);
+		fd_btnEditClient.right = new FormAttachment(btnAddSoap, -85);
+		fd_btnExit.left = new FormAttachment(btnAddSoap, 174);
 		FormData fd_btnAddSoap = new FormData();
-		fd_btnAddSoap.top = new FormAttachment(0, 349);
-		fd_btnAddSoap.right = new FormAttachment(soapTable, 0, SWT.RIGHT);
+		fd_btnAddSoap.left = new FormAttachment(0, 463);
+		fd_btnAddSoap.top = new FormAttachment(btnAddClient, 0, SWT.TOP);
 		btnAddSoap.setLayoutData(fd_btnAddSoap);
 		btnAddSoap.setText("Add Soap");
 	}
@@ -255,7 +256,22 @@ public class AppWindow extends Shell {
 		for (int i = 0; i < soaps.size(); i++) 
 		{
 			final TableItem item = new TableItem(soapTable, SWT.NONE);
-			item.setText( new String[] { soaps.get( i ).getDate().toString(), soaps.get(i).getInfo() } );
+			String parsedDateString = "";
+			
+			String tokens[] = soaps.get( i ).getDate().toString().split( "\\s+" );
+			
+//			for ( int j = 0; j < tokens.length; j++ )
+//            {
+//	            System.out.println("TOKENS:" + tokens[j]);
+//            }
+			
+			if ( tokens.length > 0 )
+			{
+				parsedDateString = tokens[0] + " " + tokens[1] + " " + tokens[2];
+			}
+			
+			
+			item.setText( new String[] { parsedDateString, soaps.get(i).getInfo() } );
 		}
 		
 		for (int i = 0; i < columns.length; i++)
