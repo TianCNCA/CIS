@@ -244,11 +244,9 @@ public class AppWindow extends Shell {
 	private void fillSoaps()
 	{
 		clearSoapTable();
-		
 		lblClientName.setText(selected_client.getName());
 		
 		SoapBox soapbox = selected_client.getSoaps();
-		
 		ArrayList<Soap> soaps = soapbox.getSoaps();
 		final TableColumn[] columns = soapTable.getColumns();
 		Collections.sort( soaps );
@@ -257,20 +255,13 @@ public class AppWindow extends Shell {
 		{
 			final TableItem item = new TableItem(soapTable, SWT.NONE);
 			String parsedDateString = "";
-			
 			String tokens[] = soaps.get( i ).getDate().toString().split( "\\s+" );
-			
-//			for ( int j = 0; j < tokens.length; j++ )
-//            {
-//	            System.out.println("TOKENS:" + tokens[j]);
-//            }
 			
 			if ( tokens.length > 0 )
 			{
 				parsedDateString = tokens[0] + " " + tokens[1] + " " + tokens[2];
 			}
-			
-			
+
 			item.setText( new String[] { parsedDateString, soaps.get(i).getInfo() } );
 		}
 		
