@@ -134,8 +134,8 @@ public class AppWindow extends Shell {
 			}
 		});
 		FormData fd_btnAddClient = new FormData();
-		fd_btnAddClient.top = new FormAttachment(table, 6);
 		fd_btnAddClient.left = new FormAttachment(0, 162);
+		fd_btnAddClient.top = new FormAttachment(table, 6);
 		btnAddClient.setLayoutData(fd_btnAddClient);
 		btnAddClient.setText("Add Client");
 		
@@ -149,8 +149,9 @@ public class AppWindow extends Shell {
 			}
 		});
 		FormData fd_btnEditClient = new FormData();
-		fd_btnEditClient.left = new FormAttachment(0, 236);
-		fd_btnEditClient.top = new FormAttachment(0, 445);
+		fd_btnEditClient.top = new FormAttachment(table, 6);
+		fd_btnEditClient.left = new FormAttachment(btnAddClient, 174);
+		fd_btnEditClient.right = new FormAttachment(table, 0, SWT.RIGHT);
 		btnEditClient.setLayoutData(fd_btnEditClient);
 		btnEditClient.setText("Edit Client");
 		
@@ -218,7 +219,6 @@ public class AppWindow extends Shell {
 		lblClientInformationSystem.setBounds(0, 0, 580, 196);
 		
 		Button btnAddSoap = new Button(this, SWT.NONE);
-		fd_btnEditClient.right = new FormAttachment(btnAddSoap, -20);
 		fd_btnExit.left = new FormAttachment(btnAddSoap, 307);
 		FormData fd_btnAddSoap = new FormData();
 		fd_btnAddSoap.top = new FormAttachment(soapTable, 6);
