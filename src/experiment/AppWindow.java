@@ -209,19 +209,19 @@ public class AppWindow extends Shell {
 		btnClear.setLayoutData(fd_btnClear);
 		btnClear.setText("Clear");
 		
-				Label lblClientInformationSystem = new Label(this, SWT.NONE);
-				lblClientInformationSystem.setLayoutData(new FormData());
-				lblClientInformationSystem.setImage(new Image(null, "images/logo.png"));
-				lblClientInformationSystem.setAlignment(SWT.CENTER);
-				lblClientInformationSystem.setBounds(0, 0, 580, 196);
-				
-				Button btnAddSoap = new Button(this, SWT.NONE);
-				fd_soapTable.bottom = new FormAttachment(btnAddSoap, -6);
-				FormData fd_btnAddSoap = new FormData();
-				fd_btnAddSoap.top = new FormAttachment(0, 349);
-				fd_btnAddSoap.right = new FormAttachment(soapTable, 0, SWT.RIGHT);
-				btnAddSoap.setLayoutData(fd_btnAddSoap);
-				btnAddSoap.setText("Add Soap");
+		Label lblClientInformationSystem = new Label(this, SWT.NONE);
+		lblClientInformationSystem.setLayoutData(new FormData());
+		lblClientInformationSystem.setImage(new Image(null, "images/logo.png"));
+		lblClientInformationSystem.setAlignment(SWT.CENTER);
+		lblClientInformationSystem.setBounds(0, 0, 580, 196);
+		
+		Button btnAddSoap = new Button(this, SWT.NONE);
+		fd_soapTable.bottom = new FormAttachment(btnAddSoap, -6);
+		FormData fd_btnAddSoap = new FormData();
+		fd_btnAddSoap.top = new FormAttachment(0, 349);
+		fd_btnAddSoap.right = new FormAttachment(soapTable, 0, SWT.RIGHT);
+		btnAddSoap.setLayoutData(fd_btnAddSoap);
+		btnAddSoap.setText("Add Soap");
 	}
 
 	public void refreshTable() {
@@ -233,20 +233,27 @@ public class AppWindow extends Shell {
 	}
 	
 	private void clearTable() {
-		table.removeAll();;
+		table.removeAll();
+	}
+	
+	private void clearSoapTable(){
+		soapTable.removeAll();
 	}
 
-	private void fillSoaps(){
+	private void fillSoaps()
+	{
+		clearSoapTable();
+		
 		lblClientName.setText(selected_client.getName());
 		
 		SoapBox soapbox = selected_client.getSoaps();
 		
 		ArrayList<Soap> soaps = soapbox.getSoaps();
-		final TableColumn[] columns = table.getColumns();
+		final TableColumn[] columns = soapTable.getColumns();
 		Collections.sort( soaps );
 
 		for (int i = 0; i < soaps.size(); i++) {
-			final TableItem item = new TableItem(table, SWT.NONE);
+			final TableItem item = new TableItem(soapTable, SWT.NONE);
 			// item.setText(soaps.get(i).getDate().toString()); TODO remove next line
 			// soaps should include date and info in the tables
 			item.setText(soaps.get(i).getInfo());
@@ -308,7 +315,7 @@ public class AppWindow extends Shell {
 	private void searchClient() {
 		clearTable();
 		String partialText = text.getText();
-		System.out.println("Chars:" + partialText);
+		//System.out.println("Chars:" + partialText);
 		ArrayList<Client> clients = dataAccess.getAllClients();
 		ArrayList<Client> searchList = new ArrayList<Client>();
 		
