@@ -28,6 +28,7 @@ import cis.buisness.Client;
 import cis.buisness.DataAccess;
 import cis.buisness.Soap;
 import cis.buisness.SoapBox;
+import cis.presentation.SoapWindow;
 
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.graphics.Point;
@@ -223,6 +224,13 @@ public class AppWindow extends Shell {
 		lblClientInformationSystem.setBounds(0, 0, 580, 196);
 		
 		Button btnAddSoap = new Button(this, SWT.NONE);
+		btnAddSoap.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(MouseEvent arg0) {
+				SoapWindow window = new SoapWindow(selected_client.getName());
+				window.open();
+			}
+		});
 		FormData fd_btnAddSoap = new FormData();
 		fd_btnAddSoap.right = new FormAttachment(lblClientName, 74);
 		fd_btnAddSoap.left = new FormAttachment(btnEditClient, 20);

@@ -16,6 +16,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TableItem;
 
 import cis.buisness.Client;
+import cis.buisness.DataAccess;
 import cis.buisness.Soap;
 
 import org.eclipse.swt.events.MouseAdapter;
@@ -24,10 +25,11 @@ import org.eclipse.swt.events.MouseEvent;
 public class SoapBoxWindow extends Shell {
 	private Table table;
 	private Client theClient;
+	DataAccess dataAccess;
 	
-	public SoapBoxWindow(Client client) {
-		this.theClient = client;
-		open();
+	public SoapBoxWindow(String clientName) {
+		dataAccess = new DataAccess();
+		this.theClient = dataAccess.readClient(clientName);
 	}
 	
 	public void open(){
@@ -41,7 +43,7 @@ public class SoapBoxWindow extends Shell {
 		btnClose.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseUp(MouseEvent arg0) {
-				dispose();
+				getShell().dispose();
 			}
 		});
 		FormData fd_btnClose = new FormData();
@@ -101,9 +103,7 @@ public class SoapBoxWindow extends Shell {
 		btnAdd.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseUp(MouseEvent arg0) {
-				Soap newSoap = new Soap();
-				theClient.addSoap(newSoap);
-				SoapWindow window = new SoapWindow(theClient.getName(), newSoap);
+				SoapWindow window = new SoapWindow(theClient.getName());
 				window.open();
 			}
 		});
