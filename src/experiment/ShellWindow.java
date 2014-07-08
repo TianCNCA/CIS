@@ -4,8 +4,11 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableItem;
 
 public class ShellWindow extends Shell {
+	private Table table;
 
 	/**
 	 * Launch the application.
@@ -34,9 +37,14 @@ public class ShellWindow extends Shell {
 	public ShellWindow(Display display) {
 		super(display, SWT.SHELL_TRIM);
 		
-		List list = new List(this, SWT.BORDER);
-		list.setBounds(21, 25, 151, 206);
-		list.add("wwwaaa");
+		table = new Table(this, SWT.BORDER | SWT.FULL_SELECTION);
+		table.setBounds(10, 28, 140, 170);
+		table.setHeaderVisible(true);
+		table.setLinesVisible(true);
+		
+		TableItem tableItem = new TableItem(table, SWT.NONE);
+		tableItem.setText("New TableItem");
+		
 		createContents();
 	}
 

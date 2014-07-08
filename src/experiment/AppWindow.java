@@ -50,8 +50,6 @@ public class AppWindow extends Shell {
 	private Table soapTable;
 	private TableColumn tblclmnDate;
 	private TableColumn tblclmnSoap;
-
-	//TODO delete this
 	
 	public AppWindow(Display display, DataAccess dataAccess) {
 		super(display);
@@ -244,6 +242,7 @@ public class AppWindow extends Shell {
 		
 	}
 	
+	// TODO deal with this later
 	private void clearTable() {
 		table.removeAll();
 	}
