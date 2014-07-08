@@ -65,6 +65,7 @@ public class AppWindow extends Shell {
 		
 		soapTable = new Table(this, SWT.BORDER | SWT.FULL_SELECTION);
 		FormData fd_soapTable = new FormData();
+		fd_soapTable.top = new FormAttachment(text, 127);
 		fd_soapTable.right = new FormAttachment(100, -10);
 		soapTable.setLayoutData(fd_soapTable);
 		soapTable.setHeaderVisible(true);
@@ -89,12 +90,8 @@ public class AppWindow extends Shell {
 		tblclmnSoap.setText("Soap");
 		
 		lblClientName = new Label(this, SWT.NONE);
-		fd_soapTable.top = new FormAttachment(lblClientName, 6);
 		FormData fd_lblClientName = new FormData();
-		fd_lblClientName.bottom = new FormAttachment(100, -359);
-		fd_lblClientName.left = new FormAttachment(soapTable, 0, SWT.LEFT);
-		fd_lblClientName.right = new FormAttachment(100, -91);
-		fd_lblClientName.top = new FormAttachment(0, 100);
+		fd_lblClientName.bottom = new FormAttachment(soapTable, -6);
 		lblClientName.setLayoutData(fd_lblClientName);
 		
 		table = new Table(this, SWT.BORDER | SWT.FULL_SELECTION);
@@ -165,12 +162,12 @@ public class AppWindow extends Shell {
 		});
 		FormData fd_btnExit = new FormData();
 		fd_btnExit.top = new FormAttachment(soapTable, 6);
-		fd_btnExit.left = new FormAttachment(soapTable, -74);
-		fd_btnExit.right = new FormAttachment(soapTable, 0, SWT.RIGHT);
+		fd_btnExit.right = new FormAttachment(100, -10);
 		btnExit.setLayoutData(fd_btnExit);
 		btnExit.setText("Exit");
 		
 		text = new Text(this, SWT.BORDER);
+		fd_lblClientName.top = new FormAttachment(text, 0, SWT.TOP);
 		text.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -183,6 +180,7 @@ public class AppWindow extends Shell {
 		text.setLayoutData(fd_text);
 		
 		btnSearch = new Button(this, SWT.NONE);
+		fd_lblClientName.right = new FormAttachment(btnSearch, 494);
 		fd_table.top = new FormAttachment(btnSearch, 7);
 		fd_text.right = new FormAttachment(btnSearch, -6);
 		btnSearch.addMouseListener(new MouseAdapter() {
@@ -198,6 +196,7 @@ public class AppWindow extends Shell {
 		btnSearch.setText("Search");
 		
 		btnClear = new Button(this, SWT.NONE);
+		fd_lblClientName.left = new FormAttachment(btnClear, 20);
 		fd_soapTable.left = new FormAttachment(0, 330);
 		btnClear.addMouseListener(new MouseAdapter() {
 			@Override
@@ -207,7 +206,7 @@ public class AppWindow extends Shell {
 			}
 		});
 		FormData fd_btnClear = new FormData();
-		fd_btnClear.right = new FormAttachment(lblClientName, -21);
+		fd_btnClear.right = new FormAttachment(table, 0, SWT.RIGHT);
 		fd_btnClear.left = new FormAttachment(btnSearch, 6);
 		fd_btnClear.top = new FormAttachment(0, 95);
 		btnClear.setLayoutData(fd_btnClear);
@@ -220,10 +219,11 @@ public class AppWindow extends Shell {
 		lblClientInformationSystem.setBounds(0, 0, 580, 196);
 		
 		Button btnAddSoap = new Button(this, SWT.NONE);
+		fd_btnExit.left = new FormAttachment(btnAddSoap, 290);
 		FormData fd_btnAddSoap = new FormData();
-		fd_btnAddSoap.right = new FormAttachment(soapTable, 74);
+		fd_btnAddSoap.right = new FormAttachment(100, -374);
+		fd_btnAddSoap.left = new FormAttachment(btnEditClient, 20);
 		fd_btnAddSoap.top = new FormAttachment(btnAddClient, 0, SWT.TOP);
-		fd_btnAddSoap.left = new FormAttachment(soapTable, 0, SWT.LEFT);
 		btnAddSoap.setLayoutData(fd_btnAddSoap);
 		btnAddSoap.setText("Add Soap");
 	}
