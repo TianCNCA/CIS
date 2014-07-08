@@ -58,6 +58,8 @@ public class ClientWindow extends Shell {
 	private Combo combo_2;
 	private Combo combo_3;
 
+	
+	// TODO delete this
 	public ClientWindow(AppWindow parent, DataAccess dataAccess, Client client) {
 		super(parent.getShell());
 		setSize(719, 538);
