@@ -43,7 +43,7 @@ public class AppWindow extends Shell {
 	private Button btnAddClient;
 	private Button btnEditClient;
 	private Text text;
-	Label lblClientName;
+	private Label lblClientName;
 	private Button btnSearch;
 	private Button btnClear;
 	private Table soapTable;
@@ -175,7 +175,7 @@ public class AppWindow extends Shell {
 		fd_lblClientName.top = new FormAttachment(text, 0, SWT.TOP);
 		text.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyPressed(KeyEvent e) {
+			public void keyReleased(KeyEvent e) {
 					searchClient();
 			}
 		});
@@ -324,7 +324,7 @@ public class AppWindow extends Shell {
 	private void searchClient() {
 		clearTable();
 		String partialText = text.getText();
-		//System.out.println("Chars:" + partialText);
+		System.out.println("Chars:" + partialText);
 		ArrayList<Client> clients = dataAccess.getAllClients();
 		ArrayList<Client> searchList = new ArrayList<Client>();
 		
