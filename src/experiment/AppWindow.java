@@ -161,8 +161,9 @@ public class AppWindow extends Shell {
 			}
 		});
 		FormData fd_btnExit = new FormData();
-		fd_btnExit.top = new FormAttachment(soapTable, 6);
-		fd_btnExit.right = new FormAttachment(100, -10);
+		fd_btnExit.top = new FormAttachment(btnAddClient, 0, SWT.TOP);
+		fd_btnExit.left = new FormAttachment(soapTable, -74);
+		fd_btnExit.right = new FormAttachment(soapTable, 0, SWT.RIGHT);
 		btnExit.setLayoutData(fd_btnExit);
 		btnExit.setText("Exit");
 		
@@ -219,9 +220,8 @@ public class AppWindow extends Shell {
 		lblClientInformationSystem.setBounds(0, 0, 580, 196);
 		
 		Button btnAddSoap = new Button(this, SWT.NONE);
-		fd_btnExit.left = new FormAttachment(btnAddSoap, 290);
 		FormData fd_btnAddSoap = new FormData();
-		fd_btnAddSoap.right = new FormAttachment(100, -374);
+		fd_btnAddSoap.right = new FormAttachment(lblClientName, 74);
 		fd_btnAddSoap.left = new FormAttachment(btnEditClient, 20);
 		fd_btnAddSoap.top = new FormAttachment(btnAddClient, 0, SWT.TOP);
 		btnAddSoap.setLayoutData(fd_btnAddSoap);
