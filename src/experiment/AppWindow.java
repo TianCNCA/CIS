@@ -33,7 +33,6 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.hsqldb.Tokens;
 
 public class AppWindow extends Shell {
 	private DataAccess dataAccess;
@@ -119,8 +118,12 @@ public class AppWindow extends Shell {
 		tblclmnName.setText("Name");
 		ArrayList<Client> clients = dataAccess.getAllClients();
 		fillTable(table, clients);
-		selected_client = clients.get(0);
-		fillSoaps();
+		
+		if ( clients.size() > 0 )
+		{
+			selected_client = clients.get(0);
+			fillSoaps();
+		}
 
 		btnAddClient = new Button(this, SWT.NONE);
 		fd_table.bottom = new FormAttachment(100, -41);
