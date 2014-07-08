@@ -85,13 +85,13 @@ public class AppWindow extends Shell {
 		tblclmnDate.setText("Date");
 		
 		tblclmnSoap = new TableColumn(soapTable, SWT.NONE);
-		tblclmnSoap.setWidth(241);
+		tblclmnSoap.setWidth(318);
 		tblclmnSoap.setText("Soap");
 		
 		lblClientName = new Label(this, SWT.NONE);
-		fd_soapTable.top = new FormAttachment(0, 127);
+		fd_soapTable.top = new FormAttachment(lblClientName, 6);
 		FormData fd_lblClientName = new FormData();
-		fd_lblClientName.bottom = new FormAttachment(soapTable, -6);
+		fd_lblClientName.bottom = new FormAttachment(100, -359);
 		fd_lblClientName.left = new FormAttachment(soapTable, 0, SWT.LEFT);
 		fd_lblClientName.right = new FormAttachment(100, -91);
 		fd_lblClientName.top = new FormAttachment(0, 100);
@@ -156,7 +156,7 @@ public class AppWindow extends Shell {
 		btnEditClient.setText("Edit Client");
 		
 		Button btnExit = new Button(this, SWT.NONE);
-		fd_soapTable.bottom = new FormAttachment(btnExit, -6);
+		fd_soapTable.bottom = new FormAttachment(100, -41);
 		btnExit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseUp(MouseEvent e) {
@@ -164,8 +164,9 @@ public class AppWindow extends Shell {
 			}
 		});
 		FormData fd_btnExit = new FormData();
-		fd_btnExit.right = new FormAttachment(100, -10);
-		fd_btnExit.top = new FormAttachment(btnAddClient, 0, SWT.TOP);
+		fd_btnExit.top = new FormAttachment(soapTable, 6);
+		fd_btnExit.left = new FormAttachment(soapTable, -74);
+		fd_btnExit.right = new FormAttachment(soapTable, 0, SWT.RIGHT);
 		btnExit.setLayoutData(fd_btnExit);
 		btnExit.setText("Exit");
 		
@@ -219,11 +220,10 @@ public class AppWindow extends Shell {
 		lblClientInformationSystem.setBounds(0, 0, 580, 196);
 		
 		Button btnAddSoap = new Button(this, SWT.NONE);
-		fd_btnExit.left = new FormAttachment(btnAddSoap, 290);
 		FormData fd_btnAddSoap = new FormData();
+		fd_btnAddSoap.right = new FormAttachment(soapTable, 74);
 		fd_btnAddSoap.top = new FormAttachment(btnAddClient, 0, SWT.TOP);
 		fd_btnAddSoap.left = new FormAttachment(soapTable, 0, SWT.LEFT);
-		fd_btnAddSoap.right = new FormAttachment(100, -374);
 		btnAddSoap.setLayoutData(fd_btnAddSoap);
 		btnAddSoap.setText("Add Soap");
 	}
