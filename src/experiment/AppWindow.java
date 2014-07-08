@@ -34,6 +34,7 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.hsqldb.Tokens;
 
 public class AppWindow extends Shell {
 	private DataAccess dataAccess;
@@ -43,7 +44,7 @@ public class AppWindow extends Shell {
 	private Button btnAddClient;
 	private Button btnEditClient;
 	private Text text;
-	private Label lblClientName;
+	Label lblClientName;
 	private Button btnSearch;
 	private Button btnClear;
 	private Table soapTable;
@@ -119,12 +120,8 @@ public class AppWindow extends Shell {
 		tblclmnName.setText("Name");
 		ArrayList<Client> clients = dataAccess.getAllClients();
 		fillTable(table, clients);
-		
-		if ( clients.size() > 0 )
-		{
-			selected_client = clients.get(0);
-			fillSoaps();
-		}
+		selected_client = clients.get(0);
+		fillSoaps();
 
 		btnAddClient = new Button(this, SWT.NONE);
 		fd_table.bottom = new FormAttachment(100, -41);
@@ -175,7 +172,7 @@ public class AppWindow extends Shell {
 		fd_lblClientName.top = new FormAttachment(text, 0, SWT.TOP);
 		text.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyReleased(KeyEvent e) {
+			public void keyPressed(KeyEvent e) {
 					searchClient();
 			}
 		});
@@ -324,7 +321,7 @@ public class AppWindow extends Shell {
 	private void searchClient() {
 		clearTable();
 		String partialText = text.getText();
-		System.out.println("Chars:" + partialText);
+		//System.out.println("Chars:" + partialText);
 		ArrayList<Client> clients = dataAccess.getAllClients();
 		ArrayList<Client> searchList = new ArrayList<Client>();
 		
