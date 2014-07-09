@@ -2,10 +2,14 @@ package experiment;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.graphics.Image;
@@ -13,6 +17,7 @@ import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
@@ -28,7 +33,6 @@ import cis.buisness.Client;
 import cis.buisness.DataAccess;
 import cis.buisness.Soap;
 import cis.buisness.SoapBox;
-import cis.presentation.SoapWindow;
 
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.graphics.Point;
@@ -43,6 +47,7 @@ public class AppWindow extends Shell {
 	private Client selected_client;
 	private Button btnAddClient;
 	private Button btnEditClient;
+	private Button btnSave;
 	private Text text;
 	Label lblClientName;
 	private Button btnSearch;
@@ -50,6 +55,7 @@ public class AppWindow extends Shell {
 	private Table soapTable;
 	private TableColumn tblclmnDate;
 	private TableColumn tblclmnSoap;
+	private TableEditor editor;
 	
 	public AppWindow(Display display, DataAccess dataAccess) {
 		super(display);
@@ -60,7 +66,6 @@ public class AppWindow extends Shell {
 		setSize(794, 518);
 		setLayout(new FormLayout());
 		setBackgroundImage( new Image( null, "images/bg.png") );
-
 		
 		soapTable = new Table(this, SWT.BORDER | SWT.FULL_SELECTION);
 		FormData fd_soapTable = new FormData();
@@ -70,17 +75,41 @@ public class AppWindow extends Shell {
 		soapTable.setHeaderVisible(true);
 		soapTable.setLinesVisible(true);
 		
-		tblclmnDate = new TableColumn(soapTable, SWT.NONE);
-		soapTable.addListener(SWT.Selection, new Listener() {
-			
-			@Override
-			public void handleEvent(Event event) {
-		        TableItem[] selection = table.getSelection();
-		        selected = selection[0];
-		        //TODO
-		        System.out.println("Selection={" + selected + "}");
-			}
-		});
+	    editor = new TableEditor(soapTable);
+	    // The editor must have the same size as the cell and must
+	    // not be any smaller than 50 pixels.
+	    editor.grabHorizontal = true;
+	    editor.minimumWidth = 50;
+	    editor.layout();
+
+	    final int EDITABLECOLUMN = 1;
+	    soapTable.addSelectionListener(new SelectionAdapter() {
+	        public void widgetSelected(SelectionEvent e) {
+	          
+				btnSave.setEnabled(true);
+		        Control oldEditor = editor.getEditor();
+		        if (oldEditor != null)
+		          oldEditor.dispose();
+
+		          TableItem item = (TableItem) e.item;
+		        item.setText(new Date().toString());
+		        // The control that will be the editor must be a child of the
+		        // Table
+		        Text newEditor = new Text(soapTable, SWT.NONE);
+		          newEditor.setText(item.getText(EDITABLECOLUMN));
+		        newEditor.addModifyListener(new ModifyListener() {
+		          public void modifyText(ModifyEvent me) {
+		            Text text = (Text) editor.getEditor();
+		            editor.getItem().setText(1, text.getText());
+		          }
+		        });
+		        newEditor.selectAll();
+		        newEditor.setFocus();
+		        editor.setEditor(newEditor, item, 1);
+	        }
+	      });
+	    
+	    tblclmnDate = new TableColumn(soapTable, SWT.NONE);
 		tblclmnDate.setWidth(115);
 		tblclmnDate.setText("Date");
 		
@@ -101,9 +130,9 @@ public class AppWindow extends Shell {
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
 		table.addListener(SWT.Selection, new Listener() {
-			
 			@Override
 			public void handleEvent(Event event) {
+				removeEditor();
 				btnEditClient.setEnabled(true);
 		        TableItem[] selection = table.getSelection();
 		        selected = selection[0];
@@ -126,6 +155,7 @@ public class AppWindow extends Shell {
 		btnAddClient.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseUp(MouseEvent e) {
+				removeEditor();
 				addClient();
 			}
 		});
@@ -141,6 +171,7 @@ public class AppWindow extends Shell {
 		btnEditClient.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseUp(MouseEvent e) {
+				removeEditor();
 				editClient();
 			}
 		});
@@ -156,6 +187,7 @@ public class AppWindow extends Shell {
 		btnExit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseUp(MouseEvent e) {
+				removeEditor();
 				getShell().dispose();
 			}
 		});
@@ -171,6 +203,7 @@ public class AppWindow extends Shell {
 		text.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
+				removeEditor();
 					searchClient();
 			}
 		});
@@ -186,6 +219,7 @@ public class AppWindow extends Shell {
 		btnSearch.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseUp(MouseEvent e) {
+				removeEditor();
 				searchClient();
 			}
 		});
@@ -201,6 +235,7 @@ public class AppWindow extends Shell {
 		btnClear.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseUp(MouseEvent e) {
+				removeEditor();
 				refreshTable();
 				text.setText( "" );
 			}
@@ -217,13 +252,41 @@ public class AppWindow extends Shell {
 		lblClientInformationSystem.setImage(new Image(null, "images/logo.png"));
 		lblClientInformationSystem.setAlignment(SWT.CENTER);
 		lblClientInformationSystem.setBounds(0, 0, 580, 196);
+
+		btnSave = new Button(this, SWT.NONE);
+		btnSave.setEnabled(false);
+		btnSave.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(MouseEvent arg0) {
+				removeEditor();
+				updateSoapBox();
+				//TODO delete all the old soaps and replace them with the new ones.
+			}
+		});
 		
 		Button btnAddSoap = new Button(this, SWT.NONE);
 		btnAddSoap.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseUp(MouseEvent arg0) {
-				SoapWindow window = new SoapWindow(selected_client.getName());
-				window.open();
+				btnSave.setEnabled(true);
+		        Control oldEditor = editor.getEditor();
+		        if (oldEditor != null)
+		          oldEditor.dispose();
+
+		        TableItem item = new TableItem(soapTable, SWT.NONE);
+		        item.setText(new Date().toString());
+		        // The control that will be the editor must be a child of the
+		        // Table
+		        Text newEditor = new Text(soapTable, SWT.NONE);
+		        newEditor.addModifyListener(new ModifyListener() {
+		          public void modifyText(ModifyEvent me) {
+		            Text text = (Text) editor.getEditor();
+		            editor.getItem().setText(1, text.getText());
+		          }
+		        });
+		        newEditor.selectAll();
+		        newEditor.setFocus();
+		        editor.setEditor(newEditor, item, 1);
 			}
 		});
 		FormData fd_btnAddSoap = new FormData();
@@ -232,6 +295,37 @@ public class AppWindow extends Shell {
 		fd_btnAddSoap.top = new FormAttachment(btnAddClient, 0, SWT.TOP);
 		btnAddSoap.setLayoutData(fd_btnAddSoap);
 		btnAddSoap.setText("Add Soap");
+
+		FormData fd_btnSave = new FormData();
+		fd_btnSave.right = new FormAttachment(btnAddSoap, 69, SWT.RIGHT);
+		fd_btnSave.top = new FormAttachment(soapTable, 6);
+		fd_btnSave.left = new FormAttachment(btnAddSoap, 6);
+		btnSave.setLayoutData(fd_btnSave);
+		btnSave.setText("Save");
+
+		addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(MouseEvent arg0) {
+				removeEditor();
+			}
+		});
+	}
+
+	@SuppressWarnings("deprecation")
+	protected void updateSoapBox() {
+		int count = soapTable.getItemCount();
+		SoapBox soaps = new SoapBox(selected_client.getName());
+		
+		for(int i=0; i<count; i++){
+			soaps.add(new Date(soapTable.getItem(i).getText(0)), soapTable.getItem(i).getText(1));
+		}
+		dataAccess.updateSoap(soaps);
+	}
+
+	protected void removeEditor() {
+			btnSave.setEnabled(false);
+		if(editor.getEditor()!=null)
+		editor.getEditor().dispose();
 	}
 
 	public void refreshTable() {

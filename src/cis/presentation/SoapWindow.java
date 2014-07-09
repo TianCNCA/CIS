@@ -6,6 +6,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.SWT;
 
+import cis.buisness.Client;
 import cis.buisness.DataAccess;
 import cis.buisness.Soap;
 
@@ -17,19 +18,16 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 
 public class SoapWindow extends Shell {
-	private String clientName;
-	DataAccess dataAccess;
+	private Client client;
 	private Text text;
 
-	public SoapWindow(String clientName) {
-		this.clientName = clientName;
+	public SoapWindow(Client client) {
+		this.client = client;
 	}
 	
 	@SuppressWarnings("deprecation")
 	public void open(){
 		setText("Soap");
-		
-		dataAccess = new DataAccess();
 		
 		Button btnCancel = new Button(this, SWT.NONE);
 		btnCancel.setBounds(268, 226, 75, 25);
@@ -43,7 +41,7 @@ public class SoapWindow extends Shell {
 		
 		Label lblNewLabel = new Label(this, SWT.NONE);
 		lblNewLabel.setBounds(10, 10, 333, 30);
-		lblNewLabel.setText(clientName);
+		lblNewLabel.setText(client.getName());
 
 		final DateTime dateTime = new DateTime(this, SWT.BORDER);
 		
@@ -63,7 +61,7 @@ public class SoapWindow extends Shell {
 				Date theDate = new Date(dateTime.toString());
 				String info = text.getText();
 				Soap newSoap = new Soap(theDate, info);
-				dataAccess.insertSoap(newSoap, clientName);
+				client.addSoap(newSoap);
 				dispose();
 			}
 		});

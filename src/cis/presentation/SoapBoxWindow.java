@@ -30,6 +30,7 @@ public class SoapBoxWindow extends Shell {
 	public SoapBoxWindow(String clientName) {
 		dataAccess = new DataAccess();
 		this.theClient = dataAccess.readClient(clientName);
+		open();
 	}
 	
 	public void open(){
@@ -103,7 +104,7 @@ public class SoapBoxWindow extends Shell {
 		btnAdd.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseUp(MouseEvent arg0) {
-				SoapWindow window = new SoapWindow(theClient.getName());
+				SoapWindow window = new SoapWindow(theClient);
 				window.open();
 			}
 		});
