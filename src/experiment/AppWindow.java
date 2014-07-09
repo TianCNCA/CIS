@@ -309,13 +309,17 @@ public class AppWindow extends Shell {
 		int count = soapTable.getItemCount();
 		SoapBox soaps = new SoapBox(selected_client.getName());
 		
-		for(int i=0; i<count; i++){
-			soaps.add(new Date(soapTable.getItem(i).getText(0)), soapTable.getItem(i).getText(1));
-		}
 		if(selected_client.getSoaps().isEmpty())
+		{
 			dataAccess.insertSoapBox(soaps);
-		//else
-		//	dataAccess.updateSoap( soaps );
+		}
+		else
+		{
+			for ( Soap soap : soaps.getSoaps() )
+			{
+				dataAccess.updateSoap( soap );
+			}
+		}
 	}
 
 	protected void removeEditor() {
