@@ -45,11 +45,9 @@ public class SoapBox
 	{
 		this.clientName = clientName;
 	}
-
-
-	public Soap last()
-	{
-		return visits.get( visits.size() - 1 );
+	
+	public boolean isEmpty(){
+		return(visits.size()==0);
 	}
 
 
