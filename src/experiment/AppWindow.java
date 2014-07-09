@@ -81,7 +81,6 @@ public class AppWindow extends Shell {
 	    // not be any smaller than 50 pixels.
 	    editor.grabHorizontal = true;
 	    editor.minimumWidth = 50;
-	    editor.layout();
 
 	    final int EDITABLECOLUMN = 1;
 	    soapTable.addSelectionListener(new SelectionAdapter() {
@@ -148,8 +147,6 @@ public class AppWindow extends Shell {
 		tblclmnName.setText("Name");
 		ArrayList<Client> clients = dataAccess.getAllClients();
 		fillTable(table, clients);
-		selected_client = clients.get(0);
-		fillSoaps();
 
 		btnAddClient = new Button(this, SWT.NONE);
 		fd_table.bottom = new FormAttachment(100, -41);
@@ -203,7 +200,7 @@ public class AppWindow extends Shell {
 		fd_lblClientName.top = new FormAttachment(text, 0, SWT.TOP);
 		text.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyPressed(KeyEvent e) {
+			public void keyReleased(KeyEvent e) {
 				removeEditor();
 					searchClient();
 			}
