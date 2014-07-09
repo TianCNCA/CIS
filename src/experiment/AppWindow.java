@@ -1,5 +1,9 @@
 package experiment;
 
+import java.text.DateFormat;
+import java.text.FieldPosition;
+import java.text.ParseException;
+import java.text.ParsePosition;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -309,7 +313,13 @@ public class AppWindow extends Shell {
 		int count = soapTable.getItemCount();
 		SoapBox soaps = new SoapBox(selected_client.getName());
 		
-		if(selected_client.getSoaps().isEmpty())
+		for( int i = 0; i < count; i++ )
+		{			
+			Soap soap = new Soap( new Date( soapTable.getItem(i).getText(0) ), soapTable.getItem(i).getText(1) );
+			soaps.add( soap );
+		}
+		
+		if ( selected_client.getSoaps().isEmpty() )
 		{
 			dataAccess.insertSoapBox(soaps);
 		}
@@ -321,6 +331,7 @@ public class AppWindow extends Shell {
 			}
 		}
 	}
+	
 
 	protected void removeEditor() {
 		btnSave.setEnabled(false);
@@ -359,15 +370,15 @@ public class AppWindow extends Shell {
 		for (int i = 0; i < soaps.size(); i++) 
 		{
 			final TableItem item = new TableItem(soapTable, SWT.NONE);
-			String parsedDateString = "";
-			String tokens[] = soaps.get( i ).getDate().toString().split( "\\s+" );
-			
-			if ( tokens.length > 0 )
-			{
-				parsedDateString = tokens[0] + " " + tokens[1] + " " + tokens[2];
-			}
-
-			item.setText( new String[] { parsedDateString, soaps.get(i).getInfo() } );
+//			String parsedDateString = "";
+//			String tokens[] = soaps.get( i ).getDate().toString().split( "\\s+" );
+//			
+//			if ( tokens.length > 0 )
+//			{
+//				parsedDateString = tokens[0] + " " + tokens[1] + " " + tokens[2];
+//			}
+			String date = soaps.get( i ).getDate().toString();
+			item.setText( new String[] { date, soaps.get(i).getInfo() } );
 		}
 		
 		for (int i = 0; i < columns.length; i++)
