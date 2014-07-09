@@ -281,6 +281,13 @@ public class DataBaseAccess
 			return false;
 		}
 		
+		if ( updatedClient.getKey() < 0 )
+		{
+			System.out.println( "Error in ClientID on update" );
+			assert( false );
+			return false;
+		}
+		
 		try
         {
 			updateString = buildClientUpdateString( updatedClient );
@@ -291,7 +298,8 @@ public class DataBaseAccess
 			
 			if ( result == 1 )
 			{
-				didUpdate = updateSoap( soaps );
+				// We don't update the soap box here because that is a seperate entity from the 
+				// main update, it wouldn't make any sense
 				didUpdate = updateHistory( history );
 			}
 			
@@ -565,7 +573,7 @@ public class DataBaseAccess
 	{
 		Boolean didInsert = false;
 		String  insertString;
-		// We use soapBox because the name is going to be the same everytime!
+		// We use soapBox because the name is going to be the same every time!
 		String 	clientName = soapBox.getClientName();
 		
 		if ( clientName.equals( "" ) || clientName == null )
@@ -575,27 +583,8 @@ public class DataBaseAccess
 		
 		for ( int i = 0; i < soapBox.numSoaps(); i++ )
 		{
-			Soap soap 		= soapBox.getSoapByIndex( i );
-			
-			if ( soap.getKey() < 0 )
-			{
-				soap.setKey( DBService.getCurrentKey() );
-			}
-			
-			insertString 	= buildSoapString( clientName, soap );					 
-			sqlCommand 		= "INSERT into SOAPS " + "VALUES (" + insertString + ")";
-			System.out.println( sqlCommand );
-			
-			try
-            {
-	            didInsert = sqlStatement.execute( sqlCommand );
-	            key++;
-            }
-            catch ( SQLException e )
-            {
-	            System.out.println( e );
-	            e.printStackTrace();
-            }
+			Soap soap = soapBox.getSoapByIndex( i );
+			insertSoap( soap, clientName );
 		}
 
 		return didInsert;
@@ -623,38 +612,32 @@ public class DataBaseAccess
 	 * PURPOSE:			This method will find a soap object already in the system,
 	 * 					and replace/update it with the new information
 	------------------------------------------------------*/
-	public Boolean updateSoap( SoapBox updatedSoap )
+	public Boolean updateSoap( Soap updatedSoap )
 	{
 		Boolean didUpdate = false;
-		String  updateString, where, clientName;
+		String  updateString, where;
 		int 	result;
 		
-		clientName = updatedSoap.getClientName();
-		
-		if ( clientName.equals( "" ) || clientName == null )
+		if ( updatedSoap.getKey() < 0 )
 		{
-			System.out.println("Invalid Soap Update");
+			System.out.println( "Error in SoapID on update" );
+			assert( false );
 			return false;
 		}
 		
 		try
         {
-			for ( int i = 0; i < updatedSoap.numSoaps(); i++ )
+			if ( updatedSoap != null )
 			{
-				Soap tempSoap = updatedSoap.getSoapByIndex( i );
+				updateString = buildSoapUpdateString( updatedSoap );
+				where 		 = "WHERE id = " + updatedSoap.getKey();
+				sqlCommand 	 = "UPDATE SOAPS " + updateString + " " + where + ";";
+				System.out.println( sqlCommand );
+				result 		 = sqlStatement.executeUpdate( sqlCommand );
 				
-				if ( tempSoap != null )
+				if ( result == 1 )
 				{
-					updateString = buildSoapUpdateString( tempSoap );
-					where 		 = "WHERE id = " + tempSoap.getKey();
-					sqlCommand 	 = "UPDATE SOAPS " + updateString + " " + where + ";";
-					System.out.println(sqlCommand);
-					result 		 = sqlStatement.executeUpdate( sqlCommand );
-					
-					if ( result == 1 )
-					{
-						didUpdate = true;
-					}
+					didUpdate = true;
 				}
 			}
 			
@@ -892,6 +875,13 @@ public class DataBaseAccess
 			return false;
 		}
 		
+		if ( updateHistory.getKey() < 0 )
+		{
+			System.out.println( "Error in HistoryID on update" );
+			assert( false );
+			return false;
+		}
+		
 		System.out.println("History key1: " + updateHistory.getKey() );
 		
 		try
@@ -1032,7 +1022,7 @@ public class DataBaseAccess
 	private String buildClientUpdateString( Client updatedClient )
     {
 		String insertString = 
-		      "SET DOB = " 			+ parseForSQLQuery( updatedClient.getDOB().toString() ) + ","
+		      "SET DOB = " 		+ parseForSQLQuery( updatedClient.getDOB().toString() ) + ","
 		    + "Age = "			+ 					updatedClient.getAge() 				+ ","
 			+ "HomePhone = " 	+ parseForSQLQuery( updatedClient.getHomePhone() )		+ ","
 		    + "WorkPhone = " 	+ parseForSQLQuery( updatedClient.getWorkPhone() )		+ ","

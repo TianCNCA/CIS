@@ -334,6 +334,29 @@ public final class DataBaseAccessTest extends TestCase
 	}
 	
 	
+	public void testUpdateSoap()
+	{
+		database.dbResetForTesting();
+		System.out.println( "Test Update Soap\n" );
+		Client test   	= new Client( "George Patterson" );
+		test.addSoap( "A soap" );
+		test.addSoap( "Another soap ");
+		
+		database.insertClient( test );
+		
+		database.insertSoap( new Soap( new Date(), "weee" ), "George Patterson" );
+		
+		Client update = database.readClient( "George Patterson" );
+		ArrayList<Soap> testsoap = update.getSoaps().getSoaps();
+		
+		System.out.println( testsoap.toString() );
+		
+		assertEquals( 3, testsoap.size() );
+		Boolean lastSoapMadeIt = testsoap.get( 2 ).getInfo().contains( "weee" );
+		assertTrue( lastSoapMadeIt );
+	}
+	
+	
 	public void testInsertHist()
 	{
 		System.out.println( "Insert Hist\n" );
