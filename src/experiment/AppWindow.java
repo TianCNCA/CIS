@@ -48,6 +48,7 @@ public class AppWindow extends Shell {
 	private Button btnAddClient;
 	private Button btnEditClient;
 	private Button btnSave;
+	private Button btnAddSoap;
 	private Text text;
 	Label lblClientName;
 	private Button btnSearch;
@@ -92,7 +93,6 @@ public class AppWindow extends Shell {
 		          oldEditor.dispose();
 
 		          TableItem item = (TableItem) e.item;
-		        item.setText(new Date().toString());
 		        // The control that will be the editor must be a child of the
 		        // Table
 		        Text newEditor = new Text(soapTable, SWT.NONE);
@@ -133,6 +133,7 @@ public class AppWindow extends Shell {
 			@Override
 			public void handleEvent(Event event) {
 				removeEditor();
+				btnAddSoap.setEnabled(true);
 				btnEditClient.setEnabled(true);
 		        TableItem[] selection = table.getSelection();
 		        selected = selection[0];
@@ -264,7 +265,8 @@ public class AppWindow extends Shell {
 			}
 		});
 		
-		Button btnAddSoap = new Button(this, SWT.NONE);
+		btnAddSoap = new Button(this, SWT.NONE);
+		btnAddSoap.setEnabled(false);
 		btnAddSoap.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseUp(MouseEvent arg0) {
@@ -303,12 +305,6 @@ public class AppWindow extends Shell {
 		btnSave.setLayoutData(fd_btnSave);
 		btnSave.setText("Save");
 
-		addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseUp(MouseEvent arg0) {
-				removeEditor();
-			}
-		});
 	}
 
 	@SuppressWarnings("deprecation")
@@ -326,7 +322,7 @@ public class AppWindow extends Shell {
 	}
 
 	protected void removeEditor() {
-			btnSave.setEnabled(false);
+		btnSave.setEnabled(false);
 		if(editor.getEditor()!=null)
 		editor.getEditor().dispose();
 	}
