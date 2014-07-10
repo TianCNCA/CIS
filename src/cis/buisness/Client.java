@@ -98,6 +98,12 @@ public class Client implements Comparable<Client> {
 			this.key = key;
 		}
 	}
+	
+	
+	public void genKey()
+	{
+		key = UUID.randomUUID();
+	}
 
 	public UUID getKey() {
 		return key;

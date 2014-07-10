@@ -58,7 +58,7 @@ public class DataAccess
 	}
 
 
-	public SoapBox readSoaps( String clientName )
+	public SoapBox readSoaps( Client clientName )
 	{
 		return database.readSoaps( clientName );
 	}
@@ -99,7 +99,7 @@ public class DataAccess
 		return database.insertHistory( history );
 	}
 	
-	public ClientHistory readHistory( String clientName )
+	public ClientHistory readHistory( UUID clientName )
 	{
 		return database.readHistory( clientName );
 	}

@@ -78,4 +78,10 @@ public class Soap implements Comparable<Soap>
 	{
 		return key;
 	}
+	
+	
+	public void genKey()
+	{
+		key = UUID.randomUUID();
+	}
 }

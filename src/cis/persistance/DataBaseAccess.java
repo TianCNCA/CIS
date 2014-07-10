@@ -370,8 +370,104 @@ public class DataBaseAccess
 			SoapBox 		soap;
 			ClientHistory 	history;
 			
-			soap 	= readSoaps( clientName );
-			history = readHistory( clientName );
+			soap 	= readSoaps( newClient );
+			history = readHistory( newClient.getKey() );
+			
+			newClient.setSoaps( soap );
+			newClient.setHistory( history );
+		}
+
+		return newClient;
+	}
+	
+	
+	/*------------------------------------------------------
+	 * METHOD:			readClient
+	 *
+	 * PURPOSE:			This method will find a client object already in the system,
+	 * 					(hopefully) and return it to us. Returns null if nothing found
+	------------------------------------------------------*/
+	public Client readClient( UUID clientKey )
+	{
+		Client 	newClient = null;
+		String 	name, address, city, province, postalCode, 
+			   	reason, occupation, sports, sleep, DOB,
+			   	homePhone, workPhone;
+		int 	smoking, alcohol, stress, appetite, age;
+		UUID key;
+		
+		if ( clientKey == null )
+		{
+			return null;
+		}
+		
+		try
+        {
+			System.out.println("Client ID: " + clientKey );
+			sqlCommand 	= "SELECT * FROM CLIENTS WHERE ID = '" + clientKey.toString() + "';";
+	        dbResult 	= sqlStatement.executeQuery( sqlCommand );
+        }
+        catch ( SQLException e )
+        {
+	        System.out.println( e );
+        }
+		
+		try
+        {
+	        while( dbResult.next() )
+	        {
+	        	name 		= dbResult.getString( "Name" );
+	        	address 	= dbResult.getString( "Address" );
+	        	city 		= dbResult.getString( "City" );
+	        	province 	= dbResult.getString( "Province" );
+	        	postalCode	= dbResult.getString( "PostalCode" );
+	        	DOB 		= dbResult.getString( "DOB" );
+	        	reason 		= dbResult.getString( "Reason" );
+	        	occupation 	= dbResult.getString( "Occupation" );
+	        	sports 		= dbResult.getString( "Sports" );
+	        	sleep 		= dbResult.getString( "Sleep" );
+	        	homePhone 	= dbResult.getString( "Homephone" );
+	        	workPhone 	= dbResult.getString( "Workphone" );
+	        	age 		= dbResult.getInt( "Age" );
+	        	smoking 	= dbResult.getInt( "Smoking" );
+	        	alcohol 	= dbResult.getInt( "Alcohol" );
+	        	stress 		= dbResult.getInt( "Stress" );
+	        	appetite 	= dbResult.getInt( "Appetite" );
+	        	key 		= UUID.fromString( dbResult.getString( "ID" ) );
+	        	
+	        	newClient 	= new Client( name );
+	        	
+	        	newClient.setAddress( address );
+	        	newClient.setDOB( DOB );
+	        	newClient.setCity( city );
+	        	newClient.setProvince( province );
+	        	newClient.setPostCode( postalCode );
+	        	newClient.setReason( reason );
+	        	newClient.setOccupation( occupation );
+	        	newClient.setSports( sports );
+	        	newClient.setSleepPattern( sleep );
+	        	newClient.setAge( age );
+	        	newClient.setHomePhone( homePhone );
+	        	newClient.setWorkPhone( workPhone );
+	        	newClient.setSmoking( smoking );
+	        	newClient.setAlcohol( alcohol );
+	        	newClient.setStress( stress );
+	        	newClient.setAppetite( appetite );
+	        	newClient.setKey( key );
+	        }
+        }
+        catch ( SQLException e )
+        {
+        	System.out.println( e );
+        }
+		
+		if ( newClient != null )
+		{
+			SoapBox 		soap;
+			ClientHistory 	history;
+			
+			soap 	= readSoaps( newClient );
+			history = readHistory( newClient.getKey() );
 			
 			newClient.setSoaps( soap );
 			newClient.setHistory( history );
@@ -444,17 +540,25 @@ public class DataBaseAccess
 	 * 					for the appropriate soaps. Returns a whole list of them
 	------------------------------------------------------*/
 	@SuppressWarnings( "deprecation" )
-    public SoapBox readSoaps( String clientName )
+    public SoapBox readSoaps( Client client )
 	{
-		SoapBox soap = new SoapBox( clientName );
+		//Client  client = readClient( clientID );
+		
+		if ( client == null )
+		{
+			return null;
+		}
+		
 		String 	date, disc;
+		String  clientName = client.getName();
+		SoapBox soap = new SoapBox( clientName );
 		UUID 	key;
 		
 		clientName = parseForSQLValid( clientName );
 		
 		try
         {
-			sqlCommand 	= "SELECT * FROM SOAPS WHERE Name = '" + clientName + "';";
+			sqlCommand 	= "SELECT * FROM SOAPS WHERE ID = '" + client.getKey().toString() + "';";
 	        dbResult 	= sqlStatement.executeQuery( sqlCommand );
         }
         catch ( SQLException e )
@@ -665,9 +769,17 @@ public class DataBaseAccess
 	}
 	
 	
-	public ClientHistory readHistory( String clientName )
+	public ClientHistory readHistory( UUID clientID )
     {
-		ClientHistory history = new ClientHistory( clientName );
+		Client client = readClient( clientID );
+		
+		if ( client == null )
+		{
+			return null;
+		}
+		
+		String 			clientName 	= client.getName();
+		ClientHistory 	history 	= new ClientHistory( clientName );
 		
 		Boolean b_heart = false;
 		Boolean b_tingle = false;
@@ -716,7 +828,7 @@ public class DataBaseAccess
 		
 		try
         {
-			sqlCommand 	= "SELECT * FROM HISTORYBOOL WHERE Name = '" + clientName + "';";
+			sqlCommand 	= "SELECT * FROM HISTORYBOOL WHERE KEY = '" + clientID + "';";
 	        dbResult 	= sqlStatement.executeQuery( sqlCommand );
         }
         catch ( SQLException e )
@@ -755,7 +867,7 @@ public class DataBaseAccess
 		
 		try
         {
-			sqlCommand 	= "SELECT * FROM HISTORYDISC WHERE Name = '" + clientName + "';";
+			sqlCommand 	= "SELECT * FROM HISTORYDISC WHERE KEY = '" + clientID + "';";
 	        dbResult 	= sqlStatement.executeQuery( sqlCommand );
         }
         catch ( SQLException e )
@@ -1324,19 +1436,6 @@ public class DataBaseAccess
 		clearClientTable();
 		clearSoapTable();
 		clearHistTable();
-		
-		sqlCommand = "Delete from ID;";
-		
-		try
-        {
-            sqlStatement.execute( sqlCommand );
-            key = 0;
-        }
-        catch ( SQLException e )
-        {
-            System.out.println( e );
-            e.printStackTrace();
-        }
 	}
 	
 	

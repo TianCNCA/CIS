@@ -85,6 +85,11 @@ public class ClientHistory
 		}
 	}
 	
+	public void genKey()
+	{
+		key = UUID.randomUUID();
+	}
+	
 	public String getName()
 	{
 		return clientName;
