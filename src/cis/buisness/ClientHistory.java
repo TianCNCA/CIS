@@ -1,13 +1,15 @@
 package cis.buisness;
 
 
+import java.util.UUID;
+
 import app.DBService;
 import cis.buisness.HistoryItem;
 
 public class ClientHistory
 {
 	private String  		clientName;
-	private int 			key;
+	private UUID 			key;
 	private HistoryItem[] 	items;
 	
 	// Attributes
@@ -18,7 +20,7 @@ public class ClientHistory
 	{
 		this.clientName = null;
 		items 			= new HistoryItem[17];
-		key  			= -1;
+		key  			= null;
 		
 		for ( int i = 0; i < items.length; i++ )
 		{
@@ -29,7 +31,7 @@ public class ClientHistory
 	public ClientHistory( String clientName )
 	{
 		this.clientName = clientName;
-		key  			= -1;
+		key  			= null;
 		items 			= new HistoryItem[17];
 		
 		for ( int i = 0; i < items.length; i++ )
@@ -47,7 +49,7 @@ public class ClientHistory
 		assert(  disc.length == items.length );
 		
 		this.clientName = clientName;
-		key  			= -1;
+		key  			= null;
 		items 			= new HistoryItem[17];
 		
 		for ( int i = 0; i < items.length; i++ )
@@ -70,14 +72,14 @@ public class ClientHistory
 	}
 	
 	
-	public int getKey()
+	public UUID getKey()
 	{
 		return key;
 	}
 	
-	public void setKey( int key )
+	public void setKey( UUID key )
 	{
-		if ( key > -1 )
+		if ( key != null )
 		{
 			this.key = key;
 		}

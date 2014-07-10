@@ -3,6 +3,7 @@ package cis.buisness;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import app.DBService;
 
@@ -39,12 +40,12 @@ public class Client implements Comparable<Client> {
 	private String sports;
 	private String sleepPattern;
 
-	private int smoking;
-	private int alcohol;
-	private int stress;
-	private int appetite;
-	private int key;
-	private int age;
+	private int  smoking;
+	private int  alcohol;
+	private int  stress;
+	private int  appetite;
+	private UUID key;
+	private int  age;
 
 
 
@@ -64,8 +65,7 @@ public class Client implements Comparable<Client> {
 		insulin = false;
 		uncontrolled = false;
 
-		key = -1;
-		//key = DBService.getCurrentKey();
+		key = null;
 	}
 
 	public Client(String name) {
@@ -85,8 +85,7 @@ public class Client implements Comparable<Client> {
 		insulin = false;
 		uncontrolled = false;
 
-		key = -1;
-		//key = DBService.getCurrentKey();
+		key = null;
 	}
 
 
@@ -94,13 +93,13 @@ public class Client implements Comparable<Client> {
 		this.active = active;
 	}
 
-	public void setKey(int key) {
-		if (key > -1) {
+	public void setKey(UUID key) {
+		if (key != null) {
 			this.key = key;
 		}
 	}
 
-	public int getKey() {
+	public UUID getKey() {
 		return key;
 	}
 

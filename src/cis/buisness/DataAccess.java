@@ -1,6 +1,7 @@
 package cis.buisness;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import app.DBService;
 import cis.persistance.DataBaseAccess;
@@ -63,7 +64,7 @@ public class DataAccess
 	}
 	
 	
-	public Soap readSoap( int id )
+	public Soap readSoap( UUID id )
 	{
 		return database.readSoap( id );
 	}
