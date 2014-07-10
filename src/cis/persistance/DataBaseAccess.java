@@ -490,7 +490,6 @@ public class DataBaseAccess
     public SoapBox readSoaps( String clientName )
 	{
 		SoapBox soap = new SoapBox( clientName );
-		Client 	newClient = null;
 		String 	date, disc;
 		int 	key;
 		
@@ -527,6 +526,53 @@ public class DataBaseAccess
         }
 		
 		return soap;
+	}
+	
+	
+	/*------------------------------------------------------
+	 * METHOD:			readSoap
+	 *
+	 * PURPOSE:			This method will take a client name String, and search
+	 * 					for the appropriate soaps. Returns a whole list of them
+	------------------------------------------------------*/
+	@SuppressWarnings( "deprecation" )
+    public Soap readSoap( int id )
+	{
+		Soap 	newSoap = null;
+		String 	date, disc;
+		int 	key;
+		
+		try
+        {
+			sqlCommand 	= "SELECT * FROM SOAPS WHERE Id = '" + id + "';";
+	        dbResult 	= sqlStatement.executeQuery( sqlCommand );
+        }
+        catch ( SQLException e )
+        {
+	        System.out.println( e );
+        }
+		
+		try
+        {
+	        while( dbResult.next() )
+	        {
+	        	Soap tempSoap = new Soap();
+	        	key = dbResult.getInt( "Id" );
+	        	date = dbResult.getString( "Date" );
+	        	disc = dbResult.getString( "Disc" );
+	        	tempSoap.setDate( new Date( date ) );
+	        	tempSoap.setInfo( disc );
+	        	tempSoap.setKey( key );
+	        	
+	        	newSoap = tempSoap;
+	        }
+        }
+        catch ( SQLException e )
+        {
+        	System.out.println( e );
+        }
+		
+		return newSoap;
 	}
 	
 	
@@ -584,7 +630,13 @@ public class DataBaseAccess
 		for ( int i = 0; i < soapBox.numSoaps(); i++ )
 		{
 			Soap soap = soapBox.getSoapByIndex( i );
-			insertSoap( soap, clientName );
+			Soap alreadyIn = readSoap( soap.getKey() );
+			
+			// Since we are doing lots of updates, don't try to insert everything
+			if ( alreadyIn == null )
+			{
+				insertSoap( soap, clientName );
+			}
 		}
 
 		return didInsert;

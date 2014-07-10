@@ -61,6 +61,12 @@ public class DataAccess
 	{
 		return database.readSoaps( clientName );
 	}
+	
+	
+	public Soap readSoap( int id )
+	{
+		return database.readSoap( id );
+	}
 
 
 	public Boolean insertSoapBox( SoapBox soap )

@@ -53,7 +53,14 @@ public class SoapBox
 
 	public Soap getSoapByIndex( int i )
 	{
-		return visits.get( i );
+		if ( visits.size() > 0 && i < visits.size() )
+		{
+			return visits.get( i );
+		}
+		else
+		{
+			return null;
+		}
 	}
 
 

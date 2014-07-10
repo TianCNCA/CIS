@@ -311,21 +311,39 @@ public class AppWindow extends Shell {
 	@SuppressWarnings("deprecation")
 	protected void updateSoapBox() {
 		int count = soapTable.getItemCount();
-		SoapBox soaps = new SoapBox(selected_client.getName());
+		//SoapBox soaps = new SoapBox(selected_client.getName());
+		SoapBox soaps = dataAccess.readSoaps( selected_client.getName() );
+		SoapBox newSoaps = new SoapBox(selected_client.getName());
+		Boolean update = false;
+		Boolean insert = false;
 		
 		for( int i = 0; i < count; i++ )
 		{			
-			Soap soap = new Soap( new Date( soapTable.getItem(i).getText(0) ), soapTable.getItem(i).getText(1) );
-			soaps.add( soap );
+			Soap soap = soaps.getSoapByIndex( i );
+			
+			if ( soap != null )
+			{
+				update = true;
+				soap.setInfo( soapTable.getItem(i).getText(1) );
+			}
+			else
+			{
+				insert = true;
+				soap = new Soap( new Date( soapTable.getItem(i).getText(0) ), soapTable.getItem(i).getText(1) );
+			}
+			
+			newSoaps.add( soap );
 		}
 		
-		if ( selected_client.getSoaps().isEmpty() )
+		if ( insert )
 		{
-			dataAccess.insertSoapBox(soaps);
+			dataAccess.insertSoapBox(newSoaps);
+			return;
 		}
-		else
+		
+		if ( update )
 		{
-			for ( Soap soap : soaps.getSoaps() )
+			for ( Soap soap : newSoaps.getSoaps() )
 			{
 				dataAccess.updateSoap( soap );
 			}
