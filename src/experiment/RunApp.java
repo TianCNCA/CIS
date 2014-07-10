@@ -20,7 +20,6 @@ public class RunApp {
 		}
 		
 		DataAccess dataAccess = new DataAccess();
-		
 
 		// open the main window
 		try {
