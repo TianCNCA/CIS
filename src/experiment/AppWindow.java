@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 
+import javax.swing.ImageIcon;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.KeyAdapter;
@@ -427,6 +429,9 @@ public class AppWindow extends Shell {
 	private void addClient() {
 		Shell clientWindow = new ClientWindow(this, dataAccess,
 				null);
+		
+		Image icon = new Image( null, "images/icon.ico" );
+		clientWindow.setImage( icon );
 		clientWindow.open();
 		clientWindow.layout();
 	}
@@ -434,6 +439,8 @@ public class AppWindow extends Shell {
 	private void editClient() {
 		Shell clientWindow = new ClientWindow(this, dataAccess,
 				dataAccess.readClient(selected.getText()));
+		Image icon = new Image( null, "images/icon.ico" );
+		clientWindow.setImage( icon );
 		clientWindow.open();
 		clientWindow.layout();
 		

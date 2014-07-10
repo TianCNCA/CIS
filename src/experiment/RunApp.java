@@ -1,5 +1,6 @@
 package experiment;
 
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
@@ -17,7 +18,7 @@ public class RunApp {
 			service.shutDownDB();
 			System.exit(0);
 		}
-		service.genClients();
+		
 		DataAccess dataAccess = new DataAccess();
 		
 
@@ -25,6 +26,9 @@ public class RunApp {
 		try {
 			Display display = Display.getDefault();
 			Shell appWindow = new AppWindow(display, dataAccess);
+			
+			Image icon = new Image( display, "images/icon.ico" );
+			appWindow.setImage( icon );
 			appWindow.open();
 			appWindow.layout();
 

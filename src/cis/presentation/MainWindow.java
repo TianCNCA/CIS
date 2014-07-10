@@ -47,7 +47,7 @@ public class MainWindow extends Shell
 				System.exit( 0 );
 			}
 			
-			service.genClients();
+			//service.genClients();
 			
 			Display display = Display.getDefault();
 			MainWindow shell = new MainWindow(display);

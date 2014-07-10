@@ -535,8 +535,8 @@ public class ClientWindow extends Shell {
 				if (opt == 0) {
 					if (dataAccess.insertClient(client)) {
 
-						messageBox("Success", "Client added successfully!",
-								SWT.ICON_INFORMATION);
+						//messageBox("Success", "Client added successfully!",
+						//		SWT.ICON_INFORMATION);
 
 						closeWindow();
 
@@ -547,12 +547,12 @@ public class ClientWindow extends Shell {
 				} else {
 					if (dataAccess.updateClient(client)) {
 
-						messageBox("Success", "Client updated successfully!",
-								SWT.ICON_INFORMATION);
+						//messageBox("Success", "Client updated successfully!",
+						//		SWT.ICON_INFORMATION);
 						closeWindow();
 
 					} else {
-						messageBox("Fail", "Client updated unsuccessfully!",
+						messageBox("Fail", "Client not updated!",
 								SWT.ICON_ERROR);
 					}
 				}
@@ -649,13 +649,21 @@ public class ClientWindow extends Shell {
 			messageBox("No Client Name",
 					"Sorry, client name must not be empty.", SWT.ICON_ERROR);
 		}
+		
+		Client checkClient = dataAccess.readClient( text.getText() );
+		if ( checkClient != null )
+		{
+			rc = false;
+			messageBox("Duplicate Client",
+					"Sorry, a client with this name already exists.", SWT.ICON_ERROR);
+		}
 
 		try {
 			Integer.parseInt(text_5.getText());
 		} catch (NumberFormatException e) {
 			rc = false;
 			messageBox("Age is not correct",
-					"Sorry, age must not be an integer.", SWT.ICON_ERROR);
+					"Sorry, age must be a number.", SWT.ICON_ERROR);
 		}
 
 		return rc;
