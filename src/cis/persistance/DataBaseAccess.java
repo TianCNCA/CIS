@@ -1079,7 +1079,8 @@ public class DataBaseAccess
 	private String buildClientUpdateString( Client updatedClient )
     {
 		String insertString = 
-		      "SET DOB = " 		+ parseForSQLQuery( updatedClient.getDOB().toString() ) + ","
+			  "SET Name = " 	+ parseForSQLQuery( updatedClient.getName() ) 			+ ","
+		    + "DOB = " 			+ parseForSQLQuery( updatedClient.getDOB().toString() ) + ","
 		    + "Age = "			+ 					updatedClient.getAge() 				+ ","
 			+ "HomePhone = " 	+ parseForSQLQuery( updatedClient.getHomePhone() )		+ ","
 		    + "WorkPhone = " 	+ parseForSQLQuery( updatedClient.getWorkPhone() )		+ ","
@@ -1367,7 +1368,7 @@ public class DataBaseAccess
 		clearSoapTable();
 		clearHistTable();
 		
-		sqlCommand = "Update ID Set ID = 0 Where Key = 0;";
+		sqlCommand = "Delete from ID;";
 		
 		try
         {
