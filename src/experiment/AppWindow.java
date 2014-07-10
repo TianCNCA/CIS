@@ -389,13 +389,6 @@ public class AppWindow extends Shell {
 		for (int i = 0; i < soaps.size(); i++) 
 		{
 			final TableItem item = new TableItem(soapTable, SWT.NONE);
-//			String parsedDateString = "";
-//			String tokens[] = soaps.get( i ).getDate().toString().split( "\\s+" );
-//			
-//			if ( tokens.length > 0 )
-//			{
-//				parsedDateString = tokens[0] + " " + tokens[1] + " " + tokens[2];
-//			}
 			String date = soaps.get( i ).getDate().toString();
 			item.setText( new String[] { date, soaps.get(i).getInfo() } );
 		}
