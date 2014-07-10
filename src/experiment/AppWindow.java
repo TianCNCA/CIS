@@ -262,7 +262,6 @@ public class AppWindow extends Shell {
 			public void mouseUp(MouseEvent arg0) {
 				removeEditor();
 				updateSoapBox();
-				//TODO delete all the old soaps and replace them with the new ones.
 			}
 		});
 		
@@ -347,6 +346,7 @@ public class AppWindow extends Shell {
 			{
 				dataAccess.updateSoap( soap );
 			}
+			dataAccess.insertSoapBox(soaps);
 		}
 	}
 	
@@ -365,7 +365,6 @@ public class AppWindow extends Shell {
 		
 	}
 	
-	// TODO deal with this later
 	private void clearTable() {
 		table.removeAll();
 	}

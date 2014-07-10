@@ -650,11 +650,16 @@ public class DataBaseAccess
 	------------------------------------------------------*/
 	public Boolean deleteSoap( Soap soap )
 	{
-		Boolean didDelete = false;
-		
-		assert( false );
-
-		return didDelete;
+		int result = 1;
+		String where 		 = "WHERE id = " + soap.getKey();
+		sqlCommand 	 = "DELETE FROM SOAPS "  + where + ";";
+		System.out.println( sqlCommand );
+		try{
+		result 		 = sqlStatement.executeUpdate( sqlCommand );
+		} catch(SQLException e){
+			System.out.println(e.getMessage());
+		}
+		return result == 0;
 	}
 
 
