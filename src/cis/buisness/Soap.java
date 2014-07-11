@@ -8,25 +8,21 @@ public class Soap implements Comparable<Soap>
 {
 	private Date    date;
 	private String  info;
-	private int 	key;
+	private UUID 	key;
 
 
 	public Soap()
 	{
 		date = null;
 		info = null;
-		
-		key = -1;
-		//key  = DBService.getCurrentKey();
+		key  = null;
 	}
 
 	public Soap( Date date, String info )
 	{
 		this.date = date;
 		this.info = info;
-		
-		key = -1;
-		//key = DBService.getCurrentKey();
+		key  = null;
 	}
 
 
@@ -69,17 +65,23 @@ public class Soap implements Comparable<Soap>
 	}
 	
 	
-	public void setKey( int key )
+	public void setKey( UUID key )
 	{
-		if ( key > -1 )
+		if ( key != null )
 		{
 			this.key = key;
 		}
 	}
 	
 	
-	public int getKey()
+	public UUID getKey()
 	{
 		return key;
+	}
+	
+	
+	public void genKey()
+	{
+		key = UUID.randomUUID();
 	}
 }

@@ -1,5 +1,7 @@
 package app;
 
+import java.util.UUID;
+
 import cis.persistance.DataBaseAccess;
 
 /*------------------------------------------------------
@@ -80,9 +82,8 @@ public class DBService
 	}
 	
 	
-	public static int getCurrentKey()
+	public static UUID getCurrentKey()
 	{
-		currKey = database.getCurrentKey();
-		return currKey;
+		return UUID.randomUUID();
 	}
 }

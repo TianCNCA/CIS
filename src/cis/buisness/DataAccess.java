@@ -1,6 +1,7 @@
 package cis.buisness;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import app.DBService;
 import cis.persistance.DataBaseAccess;
@@ -57,13 +58,13 @@ public class DataAccess
 	}
 
 
-	public SoapBox readSoaps( String clientName )
+	public SoapBox readSoaps( UUID clientID )
 	{
-		return database.readSoaps( clientName );
+		return database.readSoaps( clientID );
 	}
 	
 	
-	public Soap readSoap( int id )
+	public Soap readSoap( UUID id )
 	{
 		return database.readSoap( id );
 	}
@@ -75,7 +76,7 @@ public class DataAccess
 	}
 	
 	
-	public Boolean insertSoap( Soap soap, String clientName )
+	public Boolean insertSoap( Soap soap, UUID clientName )
 	{
 		return database.insertSoap( soap, clientName );
 	}
@@ -98,7 +99,7 @@ public class DataAccess
 		return database.insertHistory( history );
 	}
 	
-	public ClientHistory readHistory( String clientName )
+	public ClientHistory readHistory( UUID clientName )
 	{
 		return database.readHistory( clientName );
 	}

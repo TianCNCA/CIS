@@ -5,20 +5,20 @@ import java.util.*;
 public class SoapBox
 {
 	private ArrayList<Soap> visits;
-	private String clientName;
+	private UUID clientID;
 
 
-	public SoapBox( String clientName )
+	public SoapBox( UUID clientID )
 	{
 		visits = new ArrayList<Soap>();
-		this.clientName = clientName;
+		this.clientID = clientID;
 	}
 
 
 	public SoapBox()
 	{
 		visits = new ArrayList<Soap>();
-		clientName = null;
+		clientID = null;
 	}
 
 
@@ -35,15 +35,15 @@ public class SoapBox
 	}
 
 
-	public String getClientName()
+	public UUID getClientID()
 	{
-		return clientName;
+		return clientID;
 	}
 
 
-	public void setClientName( String clientName )
+	public void setClientID( UUID clientID )
 	{
-		this.clientName = clientName;
+		this.clientID = clientID;
 	}
 	
 	public boolean isEmpty(){

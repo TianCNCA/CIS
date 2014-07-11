@@ -1,13 +1,15 @@
 package cis.buisness;
 
 
+import java.util.UUID;
+
 import app.DBService;
 import cis.buisness.HistoryItem;
 
 public class ClientHistory
 {
-	private String  		clientName;
-	private int 			key;
+	private UUID  			clientID;
+	private UUID 			key;
 	private HistoryItem[] 	items;
 	
 	// Attributes
@@ -16,9 +18,9 @@ public class ClientHistory
 	
 	public ClientHistory()
 	{
-		this.clientName = null;
+		this.clientID = null;
 		items 			= new HistoryItem[17];
-		key  			= -1;
+		key  			= null;
 		
 		for ( int i = 0; i < items.length; i++ )
 		{
@@ -26,10 +28,10 @@ public class ClientHistory
 		}
 	}
 	
-	public ClientHistory( String clientName )
+	public ClientHistory( UUID clientID )
 	{
-		this.clientName = clientName;
-		key  			= -1;
+		this.clientID = clientID;
+		key  			= null;
 		items 			= new HistoryItem[17];
 		
 		for ( int i = 0; i < items.length; i++ )
@@ -41,13 +43,13 @@ public class ClientHistory
 	
 	// This constructor builds the items from an array of bools and strings. Really handy
 	// since we know the order we are going in.
-	public ClientHistory( String clientName, Boolean[] check, String[] disc )
+	public ClientHistory( UUID clientID, Boolean[] check, String[] disc )
 	{
 		assert( check.length == items.length );
 		assert(  disc.length == items.length );
 		
-		this.clientName = clientName;
-		key  			= -1;
+		this.clientID = clientID;
+		key  			= null;
 		items 			= new HistoryItem[17];
 		
 		for ( int i = 0; i < items.length; i++ )
@@ -70,27 +72,32 @@ public class ClientHistory
 	}
 	
 	
-	public int getKey()
+	public UUID getKey()
 	{
 		return key;
 	}
 	
-	public void setKey( int key )
+	public void setKey( UUID key )
 	{
-		if ( key > -1 )
+		if ( key != null )
 		{
 			this.key = key;
 		}
 	}
 	
-	public String getName()
+	public void genKey()
 	{
-		return clientName;
+		key = DBService.getCurrentKey();
 	}
 	
-	public void setName( String clientName )
+	public UUID getClientID()
 	{
-		this.clientName = clientName;
+		return clientID;
+	}
+	
+	public void setClientID( UUID clientID )
+	{
+		this.clientID = clientID;
 	}
 	
 	public int length()

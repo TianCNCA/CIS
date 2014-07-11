@@ -589,7 +589,7 @@ public class ClientWindow extends Shell {
 			strs[i] = texts[i].getText();
 		}
 
-		ClientHistory history = new ClientHistory(client.getName(), bools, strs);
+		ClientHistory history = new ClientHistory(client.getKey(), bools, strs);
 		history.setKey(client.getHistory().getKey());
 		client.setHistory(history);
 
@@ -648,14 +648,6 @@ public class ClientWindow extends Shell {
 			rc = false;
 			messageBox("No Client Name",
 					"Sorry, client name must not be empty.", SWT.ICON_ERROR);
-		}
-		
-		Client checkClient = dataAccess.readClient( text.getText() );
-		if ( checkClient != null )
-		{
-			rc = false;
-			messageBox("Duplicate Client",
-					"Sorry, a client with this name already exists.", SWT.ICON_ERROR);
 		}
 
 		try {

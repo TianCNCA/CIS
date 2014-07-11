@@ -2,6 +2,7 @@ package cis.persistance;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.UUID;
 import java.sql.SQLException;
 import java.sql.SQLRecoverableException;
 import java.sql.Statement;
@@ -72,59 +73,14 @@ public class DataBaseAccess
 			dbConnection = DriverManager.getConnection( dbLocation, "SA", "" );
 			sqlStatement = dbConnection.createStatement();
 			
-			if ( getIDCount() <= 0 )
-			{
-				System.out.println("Recreating ID" );
-				try
-		        {
-					sqlCommand = "Insert into ID values (0,0);";
-			        sqlStatement.execute( sqlCommand );
-			        sqlCommand = "Insert into ID values (1,0);";
-			        sqlStatement.execute( sqlCommand );
-		        }
-		        catch ( SQLException e )
-		        {
-		        	initiated = false;
-			        System.out.println( e );
-		        }
-			}
-			
-			try
-	        {
-				sqlCommand = "SELECT id FROM ID where key = 0;";
-		        dbResult = sqlStatement.executeQuery( sqlCommand );
-	        }
-	        catch ( SQLException e )
-	        {
-	        	initiated = false;
-		        System.out.println( e );
-	        }
-			
-			
-			try
-	        {
-		        while( dbResult.next() )
-		        {
-		        	key	= dbResult.getInt( "ID" );
-		        	
-		        	// we made it this far! We need ID to be set.
-		        	if ( key > -1 )
-		        	{
-		        		initiated = true;
-		        	}
-		        }
-	        }
-	        catch ( SQLException e )
-	        {
-	        	initiated = false;
-	        	System.out.println( e );
-	        }
 		}
 		catch ( Exception ex )
 		{
 			initiated = false;
 			System.out.println( ex );
 		}
+		
+		initiated = true;
 		
 		return initiated;
 	}
@@ -158,25 +114,6 @@ public class DataBaseAccess
 	{
 		try
         {
-			if ( key > -1)
-			{
-				try
-				{
-					// Save the key to the DB
-					sqlCommand 	= "UPDATE ID SET ID = " + key + " WHERE KEY = 0;" ;
-					sqlStatement.executeUpdate( sqlCommand );
-					
-					System.out.println( sqlCommand );
-					sqlStatement.execute( sqlCommand );
-					
-					dbSize++;
-				}
-				catch ( SQLException ex )
-				{
-					System.out.println( ex );
-				}
-			}
-			
 			sqlCommand = "shutdown compact";
 	        dbResult = sqlStatement.executeQuery( sqlCommand );
 	        dbConnection.close();
@@ -207,7 +144,7 @@ public class DataBaseAccess
 			return false;
 		}
 		
-		if ( client.getKey() < 0 )
+		if ( client.getKey() == null )
 		{
 			client.setKey( DBService.getCurrentKey() );
 		}
@@ -219,7 +156,8 @@ public class DataBaseAccess
 			System.out.println( sqlCommand );
 			didInsert = sqlStatement.execute( sqlCommand );
 			
-			key++;			
+			System.out.println( didInsert );
+					
 			dbSize++;
 			
 			didInsert = true;
@@ -229,7 +167,7 @@ public class DataBaseAccess
 			System.out.println( ex );
 		}
 		
-		if ( didInsert )
+		if ( true )
 		{
 			// Now insert the soaps from the client
 			insertSoapBox( client.getSoaps() );
@@ -281,7 +219,7 @@ public class DataBaseAccess
 			return false;
 		}
 		
-		if ( updatedClient.getKey() < 0 )
+		if ( updatedClient.getKey() == null )
 		{
 			System.out.println( "Error in ClientID on update" );
 			assert( false );
@@ -340,7 +278,8 @@ public class DataBaseAccess
 		String 	name, address, city, province, postalCode, 
 			   	reason, occupation, sports, sleep, DOB,
 			   	homePhone, workPhone;
-		int 	smoking, alcohol, stress, appetite, key, age;
+		int 	smoking, alcohol, stress, appetite, age;
+		UUID key;
 		
 		clientName = parseForSQLValid( clientName );
 		
@@ -380,7 +319,7 @@ public class DataBaseAccess
 	        	alcohol 	= dbResult.getInt( "Alcohol" );
 	        	stress 		= dbResult.getInt( "Stress" );
 	        	appetite 	= dbResult.getInt( "Appetite" );
-	        	key 		= dbResult.getInt( "ID" );
+	        	key 		= UUID.fromString( dbResult.getString( "ID" ) );
 	        	
 	        	newClient 	= new Client( name );
 	        	
@@ -413,8 +352,104 @@ public class DataBaseAccess
 			SoapBox 		soap;
 			ClientHistory 	history;
 			
-			soap 	= readSoaps( clientName );
-			history = readHistory( clientName );
+			soap 	= readSoaps( newClient.getKey() );
+			history = readHistory( newClient.getKey() );
+			
+			newClient.setSoaps( soap );
+			newClient.setHistory( history );
+		}
+
+		return newClient;
+	}
+	
+	
+	/*------------------------------------------------------
+	 * METHOD:			readClient
+	 *
+	 * PURPOSE:			This method will find a client object already in the system,
+	 * 					(hopefully) and return it to us. Returns null if nothing found
+	------------------------------------------------------*/
+	public Client readClient( UUID clientKey )
+	{
+		Client 	newClient = null;
+		String 	name, address, city, province, postalCode, 
+			   	reason, occupation, sports, sleep, DOB,
+			   	homePhone, workPhone;
+		int 	smoking, alcohol, stress, appetite, age;
+		UUID key;
+		
+		if ( clientKey == null )
+		{
+			return null;
+		}
+		
+		try
+        {
+			System.out.println("Client ID: " + clientKey );
+			sqlCommand 	= "SELECT * FROM CLIENTS WHERE ID = '" + clientKey.toString() + "';";
+	        dbResult 	= sqlStatement.executeQuery( sqlCommand );
+        }
+        catch ( SQLException e )
+        {
+	        System.out.println( e );
+        }
+		
+		try
+        {
+	        while( dbResult.next() )
+	        {
+	        	name 		= dbResult.getString( "Name" );
+	        	address 	= dbResult.getString( "Address" );
+	        	city 		= dbResult.getString( "City" );
+	        	province 	= dbResult.getString( "Province" );
+	        	postalCode	= dbResult.getString( "PostalCode" );
+	        	DOB 		= dbResult.getString( "DOB" );
+	        	reason 		= dbResult.getString( "Reason" );
+	        	occupation 	= dbResult.getString( "Occupation" );
+	        	sports 		= dbResult.getString( "Sports" );
+	        	sleep 		= dbResult.getString( "Sleep" );
+	        	homePhone 	= dbResult.getString( "Homephone" );
+	        	workPhone 	= dbResult.getString( "Workphone" );
+	        	age 		= dbResult.getInt( "Age" );
+	        	smoking 	= dbResult.getInt( "Smoking" );
+	        	alcohol 	= dbResult.getInt( "Alcohol" );
+	        	stress 		= dbResult.getInt( "Stress" );
+	        	appetite 	= dbResult.getInt( "Appetite" );
+	        	key 		= UUID.fromString( dbResult.getString( "ID" ) );
+	        	
+	        	newClient 	= new Client( name );
+	        	
+	        	newClient.setAddress( address );
+	        	newClient.setDOB( DOB );
+	        	newClient.setCity( city );
+	        	newClient.setProvince( province );
+	        	newClient.setPostCode( postalCode );
+	        	newClient.setReason( reason );
+	        	newClient.setOccupation( occupation );
+	        	newClient.setSports( sports );
+	        	newClient.setSleepPattern( sleep );
+	        	newClient.setAge( age );
+	        	newClient.setHomePhone( homePhone );
+	        	newClient.setWorkPhone( workPhone );
+	        	newClient.setSmoking( smoking );
+	        	newClient.setAlcohol( alcohol );
+	        	newClient.setStress( stress );
+	        	newClient.setAppetite( appetite );
+	        	newClient.setKey( key );
+	        }
+        }
+        catch ( SQLException e )
+        {
+        	System.out.println( e );
+        }
+		
+		if ( newClient != null )
+		{
+			SoapBox 		soap;
+			ClientHistory 	history;
+			
+			soap 	= readSoaps( newClient.getKey() );
+			history = readHistory( newClient.getKey() );
 			
 			newClient.setSoaps( soap );
 			newClient.setHistory( history );
@@ -446,6 +481,7 @@ public class DataBaseAccess
 	{
 		Client 				client;
 		String 				name, address, city;
+		UUID 				key;
 		ArrayList<Client> 	allClients = new ArrayList<Client>();
 		
 		try
@@ -465,6 +501,7 @@ public class DataBaseAccess
 	        	name 	= dbResult.getString( "Name" );
 	        	address = dbResult.getString( "Address" );
 	        	city 	= dbResult.getString( "City" );
+	        	key 	= UUID.fromString( dbResult.getString( "ID" ) );
 	        	client 	= new Client( name );
 	        	client.setAddress( address );
 	        	client.setCity( city );
@@ -487,17 +524,20 @@ public class DataBaseAccess
 	 * 					for the appropriate soaps. Returns a whole list of them
 	------------------------------------------------------*/
 	@SuppressWarnings( "deprecation" )
-    public SoapBox readSoaps( String clientName )
+    public SoapBox readSoaps( UUID clientID )
 	{
-		SoapBox soap = new SoapBox( clientName );
-		String 	date, disc;
-		int 	key;
+		if ( clientID == null )
+		{
+			return null;
+		}
 		
-		clientName = parseForSQLValid( clientName );
+		String 	date, disc;
+		SoapBox soap = new SoapBox( clientID );
+		UUID 	key;
 		
 		try
         {
-			sqlCommand 	= "SELECT * FROM SOAPS WHERE Name = '" + clientName + "';";
+			sqlCommand 	= "SELECT * FROM SOAPS WHERE CLIENTID = '" + clientID.toString() + "';";
 	        dbResult 	= sqlStatement.executeQuery( sqlCommand );
         }
         catch ( SQLException e )
@@ -510,7 +550,7 @@ public class DataBaseAccess
 	        while( dbResult.next() )
 	        {
 	        	Soap tempSoap = new Soap();
-	        	key = dbResult.getInt( "Id" );
+	        	key = UUID.fromString( dbResult.getString( "Id" ) );
 	        	date = dbResult.getString( "Date" );
 	        	disc = dbResult.getString( "Disc" );
 	        	tempSoap.setDate( new Date( date ) );
@@ -536,11 +576,11 @@ public class DataBaseAccess
 	 * 					for the appropriate soaps. Returns a whole list of them
 	------------------------------------------------------*/
 	@SuppressWarnings( "deprecation" )
-    public Soap readSoap( int id )
+    public Soap readSoap( UUID id )
 	{
 		Soap 	newSoap = null;
 		String 	date, disc;
-		int 	key;
+		UUID 	key;
 		
 		try
         {
@@ -557,7 +597,7 @@ public class DataBaseAccess
 	        while( dbResult.next() )
 	        {
 	        	Soap tempSoap = new Soap();
-	        	key = dbResult.getInt( "Id" );
+	        	key = UUID.fromString( dbResult.getString( "Id" ) );
 	        	date = dbResult.getString( "Date" );
 	        	disc = dbResult.getString( "Disc" );
 	        	tempSoap.setDate( new Date( date ) );
@@ -576,17 +616,17 @@ public class DataBaseAccess
 	}
 	
 	
-	public Boolean insertSoap( Soap soap, String clientName )
+	public Boolean insertSoap( Soap soap, UUID clientName )
     {
 		Boolean didInsert = false;
 		String  insertString;
 		
-		if ( clientName.equals( "" ) || clientName == null )
+		if ( clientName == null )
 		{
 			return false;
 		}
 		
-		if ( soap.getKey() < 0 )
+		if ( soap.getKey() == null )
 		{
 			soap.setKey( DBService.getCurrentKey() );
 		}
@@ -620,9 +660,9 @@ public class DataBaseAccess
 		Boolean didInsert = false;
 		String  insertString;
 		// We use soapBox because the name is going to be the same every time!
-		String 	clientName = soapBox.getClientName();
+		UUID 	clientID = soapBox.getClientID();
 		
-		if ( clientName.equals( "" ) || clientName == null )
+		if ( clientID == null )
 		{
 			return false;
 		}
@@ -635,7 +675,7 @@ public class DataBaseAccess
 			// Since we are doing lots of updates, don't try to insert everything
 			if ( alreadyIn == null )
 			{
-				insertSoap( soap, clientName );
+				insertSoap( soap, clientID );
 			}
 		}
 
@@ -675,7 +715,7 @@ public class DataBaseAccess
 		String  updateString, where;
 		int 	result;
 		
-		if ( updatedSoap.getKey() < 0 )
+		if ( updatedSoap.getKey() == null )
 		{
 			System.out.println( "Error in SoapID on update" );
 			assert( false );
@@ -687,7 +727,7 @@ public class DataBaseAccess
 			if ( updatedSoap != null )
 			{
 				updateString = buildSoapUpdateString( updatedSoap );
-				where 		 = "WHERE id = " + updatedSoap.getKey();
+				where 		 = "WHERE id = " + parseForSQLQuery( updatedSoap.getKey().toString() );
 				sqlCommand 	 = "UPDATE SOAPS " + updateString + " " + where + ";";
 				System.out.println( sqlCommand );
 				result 		 = sqlStatement.executeUpdate( sqlCommand );
@@ -708,10 +748,14 @@ public class DataBaseAccess
 	}
 	
 	
-	public ClientHistory readHistory( String clientName )
-    {
-		ClientHistory history = new ClientHistory( clientName );
+	public ClientHistory readHistory( UUID clientID )
+    {		
+		if ( clientID == null )
+		{
+			return null;
+		}
 		
+		ClientHistory 	history = new ClientHistory( clientID );
 		Boolean b_heart = false;
 		Boolean b_tingle = false;
 		Boolean b_blood = false;
@@ -746,20 +790,17 @@ public class DataBaseAccess
 		String 	str_cort = "";
 		String 	str_skin = "";
 		String 	str_other = "";
-		int 	key1 = -1; 
-		int 	key2 = -1;
+		String 	key1 = ""; 
+		String 	key2 = "";
 		
-		
-		clientName = parseForSQLValid( clientName );
-		
-		if ( clientName.equals( "" ) || clientName == null )
+		if ( clientID == null )
 		{
 			return null;
 		}
 		
 		try
         {
-			sqlCommand 	= "SELECT * FROM HISTORYBOOL WHERE Name = '" + clientName + "';";
+			sqlCommand 	= "SELECT * FROM HISTORYBOOL WHERE CLIENTID = '" + clientID + "';";
 	        dbResult 	= sqlStatement.executeQuery( sqlCommand );
         }
         catch ( SQLException e )
@@ -788,7 +829,7 @@ public class DataBaseAccess
 	        	b_cort 		= dbResult.getBoolean( "Coritsone" );
 	        	b_skin 		= dbResult.getBoolean( "Skin" );
 	        	b_other 	= dbResult.getBoolean( "Other" );
-	        	key1 		= dbResult.getInt( "Key" );
+	        	key1 		= dbResult.getString( "Key" );
 	        }
         }
         catch ( SQLException e )
@@ -798,7 +839,7 @@ public class DataBaseAccess
 		
 		try
         {
-			sqlCommand 	= "SELECT * FROM HISTORYDISC WHERE Name = '" + clientName + "';";
+			sqlCommand 	= "SELECT * FROM HISTORYDISC WHERE CLIENTID = '" + clientID + "';";
 	        dbResult 	= sqlStatement.executeQuery( sqlCommand );
         }
         catch ( SQLException e )
@@ -827,7 +868,7 @@ public class DataBaseAccess
 		    	str_cort 	= dbResult.getString( "Coritsone" );
 		    	str_skin 	= dbResult.getString( "Skin" );
 		    	str_other	= dbResult.getString( "Other" );
-		    	key2 		= dbResult.getInt( "Key" );
+		    	key2 		= dbResult.getString( "Key" );
 	        }
         }
 		catch ( SQLException e )
@@ -835,7 +876,9 @@ public class DataBaseAccess
         	System.out.println( e );
         }
 		
-		if ( key1 == key2 && key1 != -1 && key2 != -1 )
+		System.out.println("Key1: " + key1 );
+		System.out.println("Key2: " + key2 );
+		if ( key1.equals( key2 ) )
 		{
 	        history.setHeart( b_heart, str_heart );
 	    	history.setTingling( b_tingle, str_tingle );
@@ -854,12 +897,12 @@ public class DataBaseAccess
 	    	history.setCortisone( b_cort, str_cort );
 	    	history.setSkin( b_skin, str_skin );
 	    	history.setOther( b_other, str_other );
-	    	history.setKey( key1 );
+	    	history.setKey( UUID.fromString( key1 ) );
 		}
 		else
 		{
 			System.out.println("Error Reading History, Key Mismatch!");
-			history = new ClientHistory( clientName );
+			history = new ClientHistory( clientID );
 		}
 		
 		System.out.println("History key: " + key1);
@@ -872,17 +915,19 @@ public class DataBaseAccess
     {
 		Boolean didInsert = false;
 		String  insertStringBool, insertStringDisc;
-		String clientName = history.getName();
+		UUID 	clientID = history.getClientID();
 		
-		if ( clientName.equals( "" ) || clientName == null )
+		if ( clientID == null )
 		{
 			return false;
 		}
 		
-		if ( history.getKey() < 0 )
+		if ( history.getKey() == null )
 		{
 			history.setKey( DBService.getCurrentKey() );
 		}
+		
+		System.out.println("History key set to: " + history.getKey() );
 		
 		insertStringBool = buildBoolHistString( history );			 
 		sqlCommand 		= "INSERT into HISTORYBOOL " + "VALUES (" + insertStringBool + ");";
@@ -921,18 +966,19 @@ public class DataBaseAccess
 	public Boolean updateHistory( ClientHistory updateHistory )
     {
 		Boolean didUpdate = false;
-		String  updateString, where, clientName;
+		String  updateString, where;
 		int 	result;
+		UUID 	clientID;
 		
-		clientName = updateHistory.getName();
+		clientID = updateHistory.getClientID();
 		
-		if ( clientName.equals( "" ) || clientName == null )
+		if ( clientID == null )
 		{
 			System.out.println("Invalid History Update");
 			return false;
 		}
 		
-		if ( updateHistory.getKey() < 0 )
+		if ( updateHistory.getKey() == null )
 		{
 			System.out.println( "Error in HistoryID on update" );
 			assert( false );
@@ -1045,7 +1091,7 @@ public class DataBaseAccess
 	private String buildClientString( Client client )
 	{
 		String insertString = 
-				  client.getKey()								+ ","
+				  parseForSQLQuery( client.getKey().toString() )+ ","
 				+ parseForSQLQuery( client.getName() )	 		+ "," 
 				+ parseForSQLQuery( client.getDOB() ) 			+ ","
 			    +  					client.getAge()				+ ","
@@ -1109,11 +1155,11 @@ public class DataBaseAccess
     }
 	
 	
-	private String buildSoapString( String clientName, Soap soap )
+	private String buildSoapString( UUID clientName, Soap soap )
 	{
 		String insertString = 
-				 	  soap.getKey()									+ ","
-				 	+ parseForSQLQuery( clientName )				+ ","
+					  parseForSQLQuery( soap.getKey().toString() )	+ ","
+				 	+ parseForSQLQuery( clientName.toString() )		+ ","
 					+ parseForSQLQuery( soap.getDate().toString() )	+ ","
 					+ parseForSQLQuery( soap.getInfo() );
 
@@ -1133,8 +1179,8 @@ public class DataBaseAccess
 	
 	private String buildBoolHistString( ClientHistory history )
     {
-	    String 	insertString = history.getKey() + "," + 
-	    		parseForSQLQuery( history.getName() ) + ",";
+	    String 	insertString = parseForSQLQuery( history.getKey().toString() ) + "," + 
+	    		parseForSQLQuery( history.getClientID().toString() ) + ",";
 	    int 	i;
 	    
 	    for ( i = 0; i < history.length() - 1; i++ )
@@ -1176,8 +1222,8 @@ public class DataBaseAccess
 	
 	private String buildDiscHistString( ClientHistory history )
     {
-	    String 		insertString = history.getKey() + "," + 
-	    			parseForSQLQuery( history.getName() ) + ",";
+	    String 		insertString = parseForSQLQuery( history.getKey().toString() ) + "," + 
+	    			parseForSQLQuery( history.getClientID().toString() ) + ",";
 	    HistoryItem item;
 	    int 		i;
 	    
@@ -1367,19 +1413,6 @@ public class DataBaseAccess
 		clearClientTable();
 		clearSoapTable();
 		clearHistTable();
-		
-		sqlCommand = "Delete from ID;";
-		
-		try
-        {
-            sqlStatement.execute( sqlCommand );
-            key = 0;
-        }
-        catch ( SQLException e )
-        {
-            System.out.println( e );
-            e.printStackTrace();
-        }
 	}
 	
 	
@@ -1514,8 +1547,9 @@ public class DataBaseAccess
 			Client two = new Client( "George Curious" );
 			Client three = new Client( "Fred Freddy" );
 			Client four = new Client( "Patty Rick" );
+			four.genKey();
 			Client five = new Client( "Travis Almighty" );
-			ClientHistory history = new ClientHistory( "Pat Ricky" );
+			ClientHistory history = new ClientHistory( four.getKey() );
 			history.setByIndex( true, "Everything in ship shape", 2 );
 			one.setHistory( history );
 			two.setDOB( new Date().toString() );

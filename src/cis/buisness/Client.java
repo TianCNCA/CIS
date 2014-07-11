@@ -3,6 +3,7 @@ package cis.buisness;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import app.DBService;
 
@@ -39,20 +40,20 @@ public class Client implements Comparable<Client> {
 	private String sports;
 	private String sleepPattern;
 
-	private int smoking;
-	private int alcohol;
-	private int stress;
-	private int appetite;
-	private int key;
-	private int age;
+	private int  smoking;
+	private int  alcohol;
+	private int  stress;
+	private int  appetite;
+	private UUID key;
+	private int  age;
 
 
 
 	public Client()
 	{
 		setActive( true );
-		this.soapBox = new SoapBox( "NULL" );
-		history = new ClientHistory( "NULL" );
+		this.soapBox = new SoapBox();
+		history = new ClientHistory();
 
 		physician = false;
 		physioTherapist = false;
@@ -64,16 +65,15 @@ public class Client implements Comparable<Client> {
 		insulin = false;
 		uncontrolled = false;
 
-		key = -1;
-		//key = DBService.getCurrentKey();
+		key = null;
 	}
 
 	public Client(String name) {
 		this.name = name;
 
 		setActive( true );
-		this.soapBox = new SoapBox( this.name );
-		history = new ClientHistory( this.name );
+		this.soapBox = new SoapBox( this.key );
+		history = new ClientHistory( this.key );
 
 		physician = false;
 		physioTherapist = false;
@@ -85,8 +85,7 @@ public class Client implements Comparable<Client> {
 		insulin = false;
 		uncontrolled = false;
 
-		key = -1;
-		//key = DBService.getCurrentKey();
+		key = null;
 	}
 
 
@@ -94,13 +93,24 @@ public class Client implements Comparable<Client> {
 		this.active = active;
 	}
 
-	public void setKey(int key) {
-		if (key > -1) {
+	public void setKey(UUID key) {
+		if (key != null) 
+		{
 			this.key = key;
+			soapBox.setClientID( key );
+			history.setClientID( key );
 		}
 	}
+	
+	
+	public void genKey()
+	{
+		key = UUID.randomUUID();
+		soapBox.setClientID( key );
+		history.setClientID( key );
+	}
 
-	public int getKey() {
+	public UUID getKey() {
 		return key;
 	}
 
@@ -120,7 +130,7 @@ public class Client implements Comparable<Client> {
 	public void setHistory( ClientHistory history )
 	{
 		this.history = history;
-		history.setName( name );
+		history.setClientID( key );
 	}
 	
 	
@@ -150,7 +160,7 @@ public class Client implements Comparable<Client> {
 	public void setSoaps( SoapBox soapBox )
 	{
 		this.soapBox = soapBox;
-		soapBox.setClientName( name );
+		soapBox.setClientID( key );
 	}
 
 	public void setName(String name) {
