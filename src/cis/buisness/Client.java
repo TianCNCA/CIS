@@ -52,8 +52,8 @@ public class Client implements Comparable<Client> {
 	public Client()
 	{
 		setActive( true );
-		this.soapBox = new SoapBox( "NULL" );
-		history = new ClientHistory( "NULL" );
+		this.soapBox = new SoapBox();
+		history = new ClientHistory();
 
 		physician = false;
 		physioTherapist = false;
@@ -72,8 +72,8 @@ public class Client implements Comparable<Client> {
 		this.name = name;
 
 		setActive( true );
-		this.soapBox = new SoapBox( this.name );
-		history = new ClientHistory( this.name );
+		this.soapBox = new SoapBox( this.key );
+		history = new ClientHistory( this.key );
 
 		physician = false;
 		physioTherapist = false;
@@ -125,7 +125,7 @@ public class Client implements Comparable<Client> {
 	public void setHistory( ClientHistory history )
 	{
 		this.history = history;
-		history.setName( name );
+		history.setClientID( key );
 	}
 	
 	
@@ -155,7 +155,7 @@ public class Client implements Comparable<Client> {
 	public void setSoaps( SoapBox soapBox )
 	{
 		this.soapBox = soapBox;
-		soapBox.setClientName( name );
+		soapBox.setClientID( key );
 	}
 
 	public void setName(String name) {

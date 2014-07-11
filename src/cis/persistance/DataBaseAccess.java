@@ -370,7 +370,7 @@ public class DataBaseAccess
 			SoapBox 		soap;
 			ClientHistory 	history;
 			
-			soap 	= readSoaps( newClient );
+			soap 	= readSoaps( newClient.getKey() );
 			history = readHistory( newClient.getKey() );
 			
 			newClient.setSoaps( soap );
@@ -466,7 +466,7 @@ public class DataBaseAccess
 			SoapBox 		soap;
 			ClientHistory 	history;
 			
-			soap 	= readSoaps( newClient );
+			soap 	= readSoaps( newClient.getKey() );
 			history = readHistory( newClient.getKey() );
 			
 			newClient.setSoaps( soap );
@@ -499,6 +499,7 @@ public class DataBaseAccess
 	{
 		Client 				client;
 		String 				name, address, city;
+		UUID 				key;
 		ArrayList<Client> 	allClients = new ArrayList<Client>();
 		
 		try
@@ -518,6 +519,7 @@ public class DataBaseAccess
 	        	name 	= dbResult.getString( "Name" );
 	        	address = dbResult.getString( "Address" );
 	        	city 	= dbResult.getString( "City" );
+	        	key 	= UUID.fromString( dbResult.getString( "ID" ) );
 	        	client 	= new Client( name );
 	        	client.setAddress( address );
 	        	client.setCity( city );
@@ -540,25 +542,20 @@ public class DataBaseAccess
 	 * 					for the appropriate soaps. Returns a whole list of them
 	------------------------------------------------------*/
 	@SuppressWarnings( "deprecation" )
-    public SoapBox readSoaps( Client client )
+    public SoapBox readSoaps( UUID clientID )
 	{
-		//Client  client = readClient( clientID );
-		
-		if ( client == null )
+		if ( clientID == null )
 		{
 			return null;
 		}
 		
 		String 	date, disc;
-		String  clientName = client.getName();
-		SoapBox soap = new SoapBox( clientName );
+		SoapBox soap = new SoapBox( clientID );
 		UUID 	key;
-		
-		clientName = parseForSQLValid( clientName );
 		
 		try
         {
-			sqlCommand 	= "SELECT * FROM SOAPS WHERE ID = '" + client.getKey().toString() + "';";
+			sqlCommand 	= "SELECT * FROM SOAPS WHERE CLIENTID = '" + clientID.toString() + "';";
 	        dbResult 	= sqlStatement.executeQuery( sqlCommand );
         }
         catch ( SQLException e )
@@ -637,12 +634,12 @@ public class DataBaseAccess
 	}
 	
 	
-	public Boolean insertSoap( Soap soap, String clientName )
+	public Boolean insertSoap( Soap soap, UUID clientName )
     {
 		Boolean didInsert = false;
 		String  insertString;
 		
-		if ( clientName.equals( "" ) || clientName == null )
+		if ( clientName == null )
 		{
 			return false;
 		}
@@ -681,9 +678,9 @@ public class DataBaseAccess
 		Boolean didInsert = false;
 		String  insertString;
 		// We use soapBox because the name is going to be the same every time!
-		String 	clientName = soapBox.getClientName();
+		UUID 	clientID = soapBox.getClientID();
 		
-		if ( clientName.equals( "" ) || clientName == null )
+		if ( clientID == null )
 		{
 			return false;
 		}
@@ -696,7 +693,7 @@ public class DataBaseAccess
 			// Since we are doing lots of updates, don't try to insert everything
 			if ( alreadyIn == null )
 			{
-				insertSoap( soap, clientName );
+				insertSoap( soap, clientID );
 			}
 		}
 
@@ -748,7 +745,7 @@ public class DataBaseAccess
 			if ( updatedSoap != null )
 			{
 				updateString = buildSoapUpdateString( updatedSoap );
-				where 		 = "WHERE id = " + updatedSoap.getKey();
+				where 		 = "WHERE id = " + parseForSQLQuery( updatedSoap.getKey().toString() );
 				sqlCommand 	 = "UPDATE SOAPS " + updateString + " " + where + ";";
 				System.out.println( sqlCommand );
 				result 		 = sqlStatement.executeUpdate( sqlCommand );
@@ -770,16 +767,13 @@ public class DataBaseAccess
 	
 	
 	public ClientHistory readHistory( UUID clientID )
-    {
-		Client client = readClient( clientID );
-		
-		if ( client == null )
+    {		
+		if ( clientID == null )
 		{
 			return null;
 		}
 		
-		String 			clientName 	= client.getName();
-		ClientHistory 	history 	= new ClientHistory( clientName );
+		ClientHistory 	history 	= new ClientHistory( clientID );
 		
 		Boolean b_heart = false;
 		Boolean b_tingle = false;
@@ -818,10 +812,7 @@ public class DataBaseAccess
 		String 	key1 = "-2"; 
 		String 	key2 = "-1";
 		
-		
-		clientName = parseForSQLValid( clientName );
-		
-		if ( clientName.equals( "" ) || clientName == null )
+		if ( clientID == null )
 		{
 			return null;
 		}
@@ -928,7 +919,7 @@ public class DataBaseAccess
 		else
 		{
 			System.out.println("Error Reading History, Key Mismatch!");
-			history = new ClientHistory( clientName );
+			history = new ClientHistory( clientID );
 		}
 		
 		System.out.println("History key: " + key1);
@@ -941,9 +932,9 @@ public class DataBaseAccess
     {
 		Boolean didInsert = false;
 		String  insertStringBool, insertStringDisc;
-		String clientName = history.getName();
+		UUID clientName = history.getKey();
 		
-		if ( clientName.equals( "" ) || clientName == null )
+		if ( clientName == null )
 		{
 			return false;
 		}
@@ -990,12 +981,13 @@ public class DataBaseAccess
 	public Boolean updateHistory( ClientHistory updateHistory )
     {
 		Boolean didUpdate = false;
-		String  updateString, where, clientName;
+		String  updateString, where;
 		int 	result;
+		UUID 	clientID;
 		
-		clientName = updateHistory.getName();
+		clientID = updateHistory.getClientID();
 		
-		if ( clientName.equals( "" ) || clientName == null )
+		if ( clientID == null )
 		{
 			System.out.println("Invalid History Update");
 			return false;
@@ -1178,11 +1170,11 @@ public class DataBaseAccess
     }
 	
 	
-	private String buildSoapString( String clientName, Soap soap )
+	private String buildSoapString( UUID clientName, Soap soap )
 	{
 		String insertString = 
 					  parseForSQLQuery( soap.getKey().toString() )	+ ","
-				 	+ parseForSQLQuery( clientName )				+ ","
+				 	+ parseForSQLQuery( clientName.toString() )		+ ","
 					+ parseForSQLQuery( soap.getDate().toString() )	+ ","
 					+ parseForSQLQuery( soap.getInfo() );
 
@@ -1203,7 +1195,7 @@ public class DataBaseAccess
 	private String buildBoolHistString( ClientHistory history )
     {
 	    String 	insertString = parseForSQLQuery( history.getKey().toString() ) + "," + 
-	    		parseForSQLQuery( history.getName() ) + ",";
+	    		parseForSQLQuery( history.getClientID().toString() ) + ",";
 	    int 	i;
 	    
 	    for ( i = 0; i < history.length() - 1; i++ )
@@ -1246,7 +1238,7 @@ public class DataBaseAccess
 	private String buildDiscHistString( ClientHistory history )
     {
 	    String 		insertString = parseForSQLQuery( history.getKey().toString() ) + "," + 
-	    			parseForSQLQuery( history.getName() ) + ",";
+	    			parseForSQLQuery( history.getClientID().toString() ) + ",";
 	    HistoryItem item;
 	    int 		i;
 	    
@@ -1570,8 +1562,9 @@ public class DataBaseAccess
 			Client two = new Client( "George Curious" );
 			Client three = new Client( "Fred Freddy" );
 			Client four = new Client( "Patty Rick" );
+			four.genKey();
 			Client five = new Client( "Travis Almighty" );
-			ClientHistory history = new ClientHistory( "Pat Ricky" );
+			ClientHistory history = new ClientHistory( four.getKey() );
 			history.setByIndex( true, "Everything in ship shape", 2 );
 			one.setHistory( history );
 			two.setDOB( new Date().toString() );

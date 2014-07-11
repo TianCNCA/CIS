@@ -8,7 +8,7 @@ import cis.buisness.HistoryItem;
 
 public class ClientHistory
 {
-	private String  		clientName;
+	private UUID  		clientID;
 	private UUID 			key;
 	private HistoryItem[] 	items;
 	
@@ -18,7 +18,7 @@ public class ClientHistory
 	
 	public ClientHistory()
 	{
-		this.clientName = null;
+		this.clientID = null;
 		items 			= new HistoryItem[17];
 		key  			= null;
 		
@@ -28,9 +28,9 @@ public class ClientHistory
 		}
 	}
 	
-	public ClientHistory( String clientName )
+	public ClientHistory( UUID clientID )
 	{
-		this.clientName = clientName;
+		this.clientID = clientID;
 		key  			= null;
 		items 			= new HistoryItem[17];
 		
@@ -43,12 +43,12 @@ public class ClientHistory
 	
 	// This constructor builds the items from an array of bools and strings. Really handy
 	// since we know the order we are going in.
-	public ClientHistory( String clientName, Boolean[] check, String[] disc )
+	public ClientHistory( UUID clientID, Boolean[] check, String[] disc )
 	{
 		assert( check.length == items.length );
 		assert(  disc.length == items.length );
 		
-		this.clientName = clientName;
+		this.clientID = clientID;
 		key  			= null;
 		items 			= new HistoryItem[17];
 		
@@ -90,14 +90,14 @@ public class ClientHistory
 		key = UUID.randomUUID();
 	}
 	
-	public String getName()
+	public UUID getClientID()
 	{
-		return clientName;
+		return clientID;
 	}
 	
-	public void setName( String clientName )
+	public void setClientID( UUID clientID )
 	{
-		this.clientName = clientName;
+		this.clientID = clientID;
 	}
 	
 	public int length()

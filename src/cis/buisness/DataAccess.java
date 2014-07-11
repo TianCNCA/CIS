@@ -58,9 +58,9 @@ public class DataAccess
 	}
 
 
-	public SoapBox readSoaps( Client clientName )
+	public SoapBox readSoaps( UUID clientID )
 	{
-		return database.readSoaps( clientName );
+		return database.readSoaps( clientID );
 	}
 	
 	
@@ -76,7 +76,7 @@ public class DataAccess
 	}
 	
 	
-	public Boolean insertSoap( Soap soap, String clientName )
+	public Boolean insertSoap( Soap soap, UUID clientName )
 	{
 		return database.insertSoap( soap, clientName );
 	}

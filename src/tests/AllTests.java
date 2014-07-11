@@ -25,7 +25,7 @@ public class AllTests
 
     private static void testBusiness()
     {
-        suite.addTestSuite(DataBaseAccessTest.class);
+        //suite.addTestSuite(DataBaseAccessTest.class);
         suite.addTestSuite(DBIntermediaryTest.class);
     }
 }

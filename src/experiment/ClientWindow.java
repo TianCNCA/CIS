@@ -589,7 +589,7 @@ public class ClientWindow extends Shell {
 			strs[i] = texts[i].getText();
 		}
 
-		ClientHistory history = new ClientHistory(client.getName(), bools, strs);
+		ClientHistory history = new ClientHistory(client.getKey(), bools, strs);
 		history.setKey(client.getHistory().getKey());
 		client.setHistory(history);
 

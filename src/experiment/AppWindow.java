@@ -314,8 +314,8 @@ public class AppWindow extends Shell {
 		int count = soapTable.getItemCount();
 		//SoapBox soaps = new SoapBox(selected_client.getName());
 		System.out.println( "ID" + selected_client.getKey().toString() );
-		SoapBox soaps = dataAccess.readSoaps( selected_client );
-		SoapBox newSoaps = new SoapBox(selected_client.getName());
+		SoapBox soaps = dataAccess.readSoaps( selected_client.getKey() );
+		SoapBox newSoaps = new SoapBox(selected_client.getKey());
 		Boolean update = false;
 		Boolean insert = false;
 		
