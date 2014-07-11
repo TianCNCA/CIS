@@ -1501,30 +1501,6 @@ public class DataBaseAccess
 	{
 		int shouldUpdate = 0;
 		
-		try
-        {
-			sqlCommand = "SELECT id FROM ID where key = 1;";
-	        dbResult = sqlStatement.executeQuery( sqlCommand );
-        }
-        catch ( SQLException e )
-        {
-	        System.out.println( e );
-        }
-		
-		
-		try
-        {
-	        while( dbResult.next() )
-	        {
-	        	shouldUpdate	= dbResult.getInt( "ID" );
-	        }
-        }
-		catch ( SQLException e )
-		{
-			System.out.println( e );
-			e.printStackTrace();
-		}
-		
 		if ( shouldUpdate == 0 )
 		{
 		
