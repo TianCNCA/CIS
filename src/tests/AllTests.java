@@ -1,6 +1,6 @@
 package tests;
 
-import tests.objectTests.ClientTest;
+import tests.objectTests.*;
 import tests.buisnessTests.*;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -20,7 +20,8 @@ public class AllTests
     private static void testObjects()
     {
         suite.addTestSuite(ClientTest.class);
-
+        suite.addTestSuite(SoapBoxTest.class);
+        suite.addTestSuite(SoapTest.class);
     }
 
     private static void testBusiness()
