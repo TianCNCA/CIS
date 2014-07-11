@@ -21,6 +21,12 @@ public class DataAccess
 		return database.getAllClients();
 	}
 
+	
+	public Client readClient( UUID id )
+	{
+		return database.readClient( id );
+	}
+	
 
 	public Client readClient( String name )
 	{
@@ -28,9 +34,9 @@ public class DataAccess
 	}
 
 
-	public Client readClient( Client name )
+	public Client readClient( Client client )
 	{
-		return database.readClient( name );
+		return database.readClient( client );
 	}
 
 
@@ -49,12 +55,6 @@ public class DataAccess
 	public Boolean updateClient( Client updatedClient )
 	{
 		return database.updateClient( updatedClient );
-	}
-
-
-	public Boolean renameClient( String oldName, String newName )
-	{
-		return database.renameClient( oldName, newName );
 	}
 
 

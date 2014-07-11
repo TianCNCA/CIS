@@ -229,7 +229,7 @@ public class DataBaseAccess
 		try
         {
 			updateString = buildClientUpdateString( updatedClient );
-			where 		 = "WHERE id = " + updatedClient.getKey();
+			where 		 = "WHERE id = " + parseForSQLQuery( updatedClient.getKey().toString() );
 			sqlCommand 	 = "UPDATE clients " + updateString + " " + where + ";";
 			System.out.println(sqlCommand);
 			result 		 = sqlStatement.executeUpdate( sqlCommand );
@@ -248,21 +248,6 @@ public class DataBaseAccess
         }
 		
 		return didUpdate;
-	}
-
-
-	/*------------------------------------------------------
-	 * METHOD:			renameClient
-	 *
-	 * PURPOSE:			This method will change a clients name only. Since name is
-	 * 					the Primary Key, we have to change it in a separate method.
-	 * 					Will check to see if the name doesn't exist yet.
-	------------------------------------------------------*/
-	public Boolean renameClient( String oldName, String newName )
-	{
-		Boolean didRename = false;
-
-		return didRename;
 	}
 
 
@@ -990,7 +975,7 @@ public class DataBaseAccess
 		try
         {
 			updateString = buildHistBoolUpdateString( updateHistory );
-			where 		 = "WHERE key = " + updateHistory.getKey();
+			where 		 = "WHERE key = " + parseForSQLQuery( updateHistory.getKey().toString() );
 			sqlCommand 	 = "UPDATE HistoryBool " + updateString + " " + where + ";";
 			System.out.println(sqlCommand);
 			result 		 = sqlStatement.executeUpdate( sqlCommand );
@@ -1011,7 +996,7 @@ public class DataBaseAccess
 			try
 	        {
 				updateString = buildHistDiscUpdateString( updateHistory );
-				where 		 = "WHERE key = " + updateHistory.getKey();
+				where 		 = "WHERE key = " + parseForSQLQuery( updateHistory.getKey().toString() );
 				sqlCommand 	 = "UPDATE HistoryDisc " + updateString + " " + where + ";";
 				System.out.println(sqlCommand);
 				result 		 = sqlStatement.executeUpdate( sqlCommand );
