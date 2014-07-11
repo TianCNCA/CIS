@@ -94,8 +94,11 @@ public class Client implements Comparable<Client> {
 	}
 
 	public void setKey(UUID key) {
-		if (key != null) {
+		if (key != null) 
+		{
 			this.key = key;
+			soapBox.setClientID( key );
+			history.setClientID( key );
 		}
 	}
 	
@@ -103,6 +106,8 @@ public class Client implements Comparable<Client> {
 	public void genKey()
 	{
 		key = UUID.randomUUID();
+		soapBox.setClientID( key );
+		history.setClientID( key );
 	}
 
 	public UUID getKey() {

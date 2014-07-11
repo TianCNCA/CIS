@@ -8,7 +8,7 @@ import cis.buisness.HistoryItem;
 
 public class ClientHistory
 {
-	private UUID  		clientID;
+	private UUID  			clientID;
 	private UUID 			key;
 	private HistoryItem[] 	items;
 	
@@ -87,7 +87,7 @@ public class ClientHistory
 	
 	public void genKey()
 	{
-		key = UUID.randomUUID();
+		key = DBService.getCurrentKey();
 	}
 	
 	public UUID getClientID()

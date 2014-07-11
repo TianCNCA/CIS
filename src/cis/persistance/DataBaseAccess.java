@@ -114,25 +114,6 @@ public class DataBaseAccess
 	{
 		try
         {
-			if ( key > -1)
-			{
-				try
-				{
-					// Save the key to the DB
-					sqlCommand 	= "UPDATE ID SET ID = " + key + " WHERE KEY = 0;" ;
-					sqlStatement.executeUpdate( sqlCommand );
-					
-					System.out.println( sqlCommand );
-					sqlStatement.execute( sqlCommand );
-					
-					dbSize++;
-				}
-				catch ( SQLException ex )
-				{
-					System.out.println( ex );
-				}
-			}
-			
 			sqlCommand = "shutdown compact";
 	        dbResult = sqlStatement.executeQuery( sqlCommand );
 	        dbConnection.close();
@@ -175,7 +156,8 @@ public class DataBaseAccess
 			System.out.println( sqlCommand );
 			didInsert = sqlStatement.execute( sqlCommand );
 			
-			key++;			
+			System.out.println( didInsert );
+					
 			dbSize++;
 			
 			didInsert = true;
@@ -185,7 +167,7 @@ public class DataBaseAccess
 			System.out.println( ex );
 		}
 		
-		if ( didInsert )
+		if ( true )
 		{
 			// Now insert the soaps from the client
 			insertSoapBox( client.getSoaps() );
@@ -773,8 +755,7 @@ public class DataBaseAccess
 			return null;
 		}
 		
-		ClientHistory 	history 	= new ClientHistory( clientID );
-		
+		ClientHistory 	history = new ClientHistory( clientID );
 		Boolean b_heart = false;
 		Boolean b_tingle = false;
 		Boolean b_blood = false;
@@ -809,8 +790,8 @@ public class DataBaseAccess
 		String 	str_cort = "";
 		String 	str_skin = "";
 		String 	str_other = "";
-		String 	key1 = "-2"; 
-		String 	key2 = "-1";
+		String 	key1 = ""; 
+		String 	key2 = "";
 		
 		if ( clientID == null )
 		{
@@ -819,7 +800,7 @@ public class DataBaseAccess
 		
 		try
         {
-			sqlCommand 	= "SELECT * FROM HISTORYBOOL WHERE KEY = '" + clientID + "';";
+			sqlCommand 	= "SELECT * FROM HISTORYBOOL WHERE CLIENTID = '" + clientID + "';";
 	        dbResult 	= sqlStatement.executeQuery( sqlCommand );
         }
         catch ( SQLException e )
@@ -858,7 +839,7 @@ public class DataBaseAccess
 		
 		try
         {
-			sqlCommand 	= "SELECT * FROM HISTORYDISC WHERE KEY = '" + clientID + "';";
+			sqlCommand 	= "SELECT * FROM HISTORYDISC WHERE CLIENTID = '" + clientID + "';";
 	        dbResult 	= sqlStatement.executeQuery( sqlCommand );
         }
         catch ( SQLException e )
@@ -895,6 +876,8 @@ public class DataBaseAccess
         	System.out.println( e );
         }
 		
+		System.out.println("Key1: " + key1 );
+		System.out.println("Key2: " + key2 );
 		if ( key1.equals( key2 ) )
 		{
 	        history.setHeart( b_heart, str_heart );
@@ -932,9 +915,9 @@ public class DataBaseAccess
     {
 		Boolean didInsert = false;
 		String  insertStringBool, insertStringDisc;
-		UUID clientName = history.getKey();
+		UUID 	clientID = history.getClientID();
 		
-		if ( clientName == null )
+		if ( clientID == null )
 		{
 			return false;
 		}
@@ -943,6 +926,8 @@ public class DataBaseAccess
 		{
 			history.setKey( DBService.getCurrentKey() );
 		}
+		
+		System.out.println("History key set to: " + history.getKey() );
 		
 		insertStringBool = buildBoolHistString( history );			 
 		sqlCommand 		= "INSERT into HISTORYBOOL " + "VALUES (" + insertStringBool + ");";
