@@ -121,7 +121,8 @@ public class MainWindow extends Shell
 			@Override
 			public void widgetSelected(SelectionEvent arg0) 
 			{
-				TableItem[] list;
+				@SuppressWarnings( "unused" )
+                TableItem[] list;
 				list = table.getSelection();
 				
 				//TODO search for the string here, list contains the whole row selected from the table

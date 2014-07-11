@@ -2,8 +2,6 @@ package cis.buisness;
 
 import java.util.*;
 
-import app.DBService;
-
 public class Soap implements Comparable<Soap>
 {
 	private Date    date;
@@ -32,7 +30,7 @@ public class Soap implements Comparable<Soap>
 	@Override
 	public String toString()
 	{
-		return info + " - " + /*date.toString() +*/ " " + order;
+		return info + " - " + date.toString() + " " + order;
 	}
 
 

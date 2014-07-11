@@ -1,14 +1,8 @@
 package experiment;
 
-import java.text.DateFormat;
-import java.text.FieldPosition;
-import java.text.ParseException;
-import java.text.ParsePosition;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-
-import javax.swing.ImageIcon;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableEditor;
@@ -40,12 +34,9 @@ import cis.buisness.DataAccess;
 import cis.buisness.Soap;
 import cis.buisness.SoapBox;
 
-import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.hsqldb.Tokens;
-
 public class AppWindow extends Shell {
 	private DataAccess dataAccess;
 	private Table table;
@@ -309,7 +300,6 @@ public class AppWindow extends Shell {
 
 	}
 
-	@SuppressWarnings("deprecation")
 	protected void updateSoapBox() {
 		int count = soapTable.getItemCount();
 		//SoapBox soaps = new SoapBox(selected_client.getName());
@@ -331,7 +321,6 @@ public class AppWindow extends Shell {
 			else
 			{
 				insert = true;
-				//soap = new Soap( new Date( soapTable.getItem(i).getText(0) ), soapTable.getItem(i).getText(1) );
 				soap = new Soap( new Date(), soapTable.getItem(i).getText(1) );
 			}
 			
@@ -386,8 +375,6 @@ public class AppWindow extends Shell {
 		SoapBox soapbox = selected_client.getSoaps();
 		ArrayList<Soap> soaps = soapbox.getSoaps();
 		final TableColumn[] columns = soapTable.getColumns();
-		//Collections.sort( soaps );
-		System.out.println("Soaps As APP: " + soaps.toString() );
 
 		for (int i = 0; i < soaps.size(); i++) 
 		{
@@ -448,7 +435,6 @@ public class AppWindow extends Shell {
 	private void searchClient() {
 		clearTable();
 		String partialText = text.getText();
-		//System.out.println("Chars:" + partialText);
 		ArrayList<Client> clients = dataAccess.getAllClients();
 		ArrayList<Client> searchList = new ArrayList<Client>();
 		
@@ -465,7 +451,8 @@ public class AppWindow extends Shell {
 		fillTable(table, searchList);	
 	}
 	
-	private void messageBox(String text, String message, int style) {
+	@SuppressWarnings( "unused" )
+    private void messageBox(String text, String message, int style) {
 		MessageBox msg = new MessageBox(getShell(), style);
 		msg.setText(text);
 		msg.setMessage(message);

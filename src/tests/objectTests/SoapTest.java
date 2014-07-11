@@ -5,7 +5,6 @@ import java.util.Date;
 import app.DBService;
 import cis.buisness.DataAccess;
 import cis.buisness.Soap;
-import cis.buisness.SoapBox;
 import junit.framework.TestCase;
 
 public class SoapTest extends TestCase {

@@ -3,7 +3,6 @@ package tests.objectTests;
 import java.util.Date;
 
 import app.DBService;
-import cis.buisness.Client;
 import cis.buisness.DataAccess;
 import cis.buisness.Soap;
 import cis.buisness.SoapBox;

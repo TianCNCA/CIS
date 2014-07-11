@@ -16,7 +16,6 @@ public class DBService
 	private static 	DataBaseAccess 	database;
 	private 		Boolean 		valid;
 	private static 	Boolean 		testing;
-	private static  int 			currKey;
 
 
 	public DBService()
@@ -25,7 +24,6 @@ public class DBService
 		valid	 = false;
 		testing  = false;
 		database = null;
-		currKey  = -1;
 	}
 
 
@@ -34,11 +32,6 @@ public class DBService
 		System.out.println("Initializing DB Service");
 		database = new DataBaseAccess();
 		valid 	 = database.init();
-		
-		if ( valid )
-		{
-			currKey = database.getCurrentKeyNoUpdate();
-		}
 	}
 
 

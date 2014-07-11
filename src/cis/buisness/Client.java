@@ -1,12 +1,7 @@
 package cis.buisness;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
-
-import app.DBService;
-
 
 public class Client implements Comparable<Client> {
 	private boolean active;

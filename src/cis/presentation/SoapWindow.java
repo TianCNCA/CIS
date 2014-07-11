@@ -7,7 +7,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.SWT;
 
 import cis.buisness.Client;
-import cis.buisness.DataAccess;
 import cis.buisness.Soap;
 
 import org.eclipse.swt.widgets.Label;

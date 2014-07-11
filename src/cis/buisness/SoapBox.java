@@ -74,31 +74,7 @@ public class SoapBox
 
 	public ArrayList<Soap> getSoaps()
 	{
-		//Collections.sort( visits );
-		System.out.println("Not Sorted: " + visits);
-		//sort();
-		System.out.println("Sorted: " + visits);
 		return visits;
-	}
-	
-	
-	public void sort()
-	{
-		int j;
-		for ( int i = 1; i < visits.size(); i++ )
-        {
-			Soap tempVisit = visits.get( i );
-			
-	        for ( j = i; j > 0; j-- )
-            {
-	            if ( visits.get( j - 1 ).getOrder() < tempVisit.getOrder() )
-	            {
-	            	visits.set( j, visits.get( j - 1 ) );
-	            }
-            }
-	        
-	        visits.set( j, tempVisit );
-        }
 	}
 	
 	
