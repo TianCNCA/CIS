@@ -37,7 +37,6 @@ public class Soap implements Comparable<Soap>
 	public int compareTo( Soap other )
 	{
 		return this.date.compareTo( other.getDate() );
-		//return 1;
 	}
 
 
