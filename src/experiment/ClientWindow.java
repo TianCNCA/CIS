@@ -337,13 +337,12 @@ public class ClientWindow extends Shell {
 		fd_lblOccupation.top = new FormAttachment(0, 25);
 		fd_lblOccupation.left = new FormAttachment(0, 10);
 		lblOccupation.setLayoutData(fd_lblOccupation);
-		lblOccupation.setText("Occupation");
+		lblOccupation.setText("Occupation:");
 
 		text_10 = new Text(composite_2, SWT.BORDER);
 		FormData fd_text_10 = new FormData();
-		fd_text_10.right = new FormAttachment(lblOccupation, 176, SWT.RIGHT);
-		fd_text_10.top = new FormAttachment(0, 19);
-		fd_text_10.left = new FormAttachment(lblOccupation, 20);
+		fd_text_10.left = new FormAttachment(lblOccupation, 70);
+		fd_text_10.top = new FormAttachment(lblOccupation, -3, SWT.TOP);
 		text_10.setLayoutData(fd_text_10);
 
 		Label lblNewLabel_2 = new Label(composite_2, SWT.NONE);
@@ -352,13 +351,13 @@ public class ClientWindow extends Shell {
 		fd_lblNewLabel_2.left = new FormAttachment(lblOccupation, 0, SWT.LEFT);
 		lblNewLabel_2.setLayoutData(fd_lblNewLabel_2);
 		lblNewLabel_2
-				.setText("List any sport/exercise/hobbies you participate in:");
+				.setText("Sport/Exercise/Hobbies:");
 
 		text_11 = new Text(composite_2, SWT.BORDER);
+		fd_text_10.right = new FormAttachment(text_11, 0, SWT.RIGHT);
 		FormData fd_text_11 = new FormData();
-		fd_text_11.right = new FormAttachment(lblNewLabel_2, 267, SWT.RIGHT);
-		fd_text_11.top = new FormAttachment(0, 58);
-		fd_text_11.left = new FormAttachment(lblNewLabel_2, 31);
+		fd_text_11.left = new FormAttachment(lblNewLabel_2, 6);
+		fd_text_11.top = new FormAttachment(lblNewLabel_2, -3, SWT.TOP);
 		text_11.setLayoutData(fd_text_11);
 
 		Label lblNewLabel_3 = new Label(composite_2, SWT.NONE);
@@ -367,13 +366,14 @@ public class ClientWindow extends Shell {
 		fd_lblNewLabel_3.left = new FormAttachment(lblOccupation, 0, SWT.LEFT);
 		lblNewLabel_3.setLayoutData(fd_lblNewLabel_3);
 		lblNewLabel_3
-				.setText("Describe your sleep pattern (usual position, quality, etc.) :");
+				.setText("Sleep pattern:");
 
 		text_12 = new Text(composite_2, SWT.BORDER);
+		fd_text_11.right = new FormAttachment(text_12, 0, SWT.RIGHT);
 		FormData fd_text_12 = new FormData();
+		fd_text_12.right = new FormAttachment(100, -127);
+		fd_text_12.left = new FormAttachment(lblNewLabel_3, 60);
 		fd_text_12.top = new FormAttachment(lblNewLabel_3, -3, SWT.TOP);
-		fd_text_12.left = new FormAttachment(lblNewLabel_3, 16);
-		fd_text_12.right = new FormAttachment(text_11, 0, SWT.RIGHT);
 		text_12.setLayoutData(fd_text_12);
 
 		Label lblNewLabel_4 = new Label(composite_2, SWT.NONE);

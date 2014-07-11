@@ -519,10 +519,11 @@ public class DataBaseAccess
 		String 	date, disc;
 		SoapBox soap = new SoapBox( clientID );
 		UUID 	key;
+		int 	order;
 		
 		try
         {
-			sqlCommand 	= "SELECT * FROM SOAPS WHERE CLIENTID = '" + clientID.toString() + "';";
+			sqlCommand 	= "SELECT * FROM SOAPS WHERE CLIENTID = '" + clientID.toString() + "' ORDER BY ORD;";
 	        dbResult 	= sqlStatement.executeQuery( sqlCommand );
         }
         catch ( SQLException e )
@@ -538,10 +539,13 @@ public class DataBaseAccess
 	        	key = UUID.fromString( dbResult.getString( "Id" ) );
 	        	date = dbResult.getString( "Date" );
 	        	disc = dbResult.getString( "Disc" );
+	        	order = dbResult.getInt( "Ord" );
 	        	tempSoap.setDate( new Date( date ) );
 	        	tempSoap.setInfo( disc );
 	        	tempSoap.setKey( key );
+	        	tempSoap.setOrder( order );
 	        	
+	        	soap.setOrder( order );
 	        	soap.add( tempSoap );
 	        }
         }
@@ -566,6 +570,7 @@ public class DataBaseAccess
 		Soap 	newSoap = null;
 		String 	date, disc;
 		UUID 	key;
+		int 	order;
 		
 		try
         {
@@ -585,9 +590,11 @@ public class DataBaseAccess
 	        	key = UUID.fromString( dbResult.getString( "Id" ) );
 	        	date = dbResult.getString( "Date" );
 	        	disc = dbResult.getString( "Disc" );
+	        	order = dbResult.getInt( "Ord" );
 	        	tempSoap.setDate( new Date( date ) );
 	        	tempSoap.setInfo( disc );
 	        	tempSoap.setKey( key );
+	        	tempSoap.setOrder( order );
 	        	
 	        	newSoap = tempSoap;
 	        }
@@ -912,8 +919,6 @@ public class DataBaseAccess
 			history.setKey( DBService.getCurrentKey() );
 		}
 		
-		System.out.println("History key set to: " + history.getKey() );
-		
 		insertStringBool = buildBoolHistString( history );			 
 		sqlCommand 		= "INSERT into HISTORYBOOL " + "VALUES (" + insertStringBool + ");";
 		System.out.println( sqlCommand );
@@ -969,8 +974,6 @@ public class DataBaseAccess
 			assert( false );
 			return false;
 		}
-		
-		System.out.println("History key1: " + updateHistory.getKey() );
 		
 		try
         {
@@ -1146,7 +1149,8 @@ public class DataBaseAccess
 					  parseForSQLQuery( soap.getKey().toString() )	+ ","
 				 	+ parseForSQLQuery( clientName.toString() )		+ ","
 					+ parseForSQLQuery( soap.getDate().toString() )	+ ","
-					+ parseForSQLQuery( soap.getInfo() );
+					+ parseForSQLQuery( soap.getInfo() ) 			+ ","
+					+ soap.getOrder();
 
 		return insertString;
 	}

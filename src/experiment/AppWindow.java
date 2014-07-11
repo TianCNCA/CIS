@@ -331,7 +331,8 @@ public class AppWindow extends Shell {
 			else
 			{
 				insert = true;
-				soap = new Soap( new Date( soapTable.getItem(i).getText(0) ), soapTable.getItem(i).getText(1) );
+				//soap = new Soap( new Date( soapTable.getItem(i).getText(0) ), soapTable.getItem(i).getText(1) );
+				soap = new Soap( new Date(), soapTable.getItem(i).getText(1) );
 			}
 			
 			newSoaps.add( soap );
@@ -385,13 +386,17 @@ public class AppWindow extends Shell {
 		SoapBox soapbox = selected_client.getSoaps();
 		ArrayList<Soap> soaps = soapbox.getSoaps();
 		final TableColumn[] columns = soapTable.getColumns();
-		Collections.sort( soaps );
+		//Collections.sort( soaps );
+		System.out.println("Soaps As APP: " + soaps.toString() );
 
 		for (int i = 0; i < soaps.size(); i++) 
 		{
 			final TableItem item = new TableItem(soapTable, SWT.NONE);
 			String date = soaps.get( i ).getDate().toString();
-			item.setText( new String[] { date, soaps.get(i).getInfo() } );
+			String tokens[] = date.split( "\\s+" );
+			String parsedDate = tokens[0] + " " + tokens[1] + " " + tokens[2];
+			
+			item.setText( new String[] { parsedDate, soaps.get(i).getInfo() } );
 		}
 		
 		for (int i = 0; i < columns.length; i++)

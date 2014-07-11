@@ -9,6 +9,7 @@ public class Soap implements Comparable<Soap>
 	private Date    date;
 	private String  info;
 	private UUID 	key;
+	private int 	order;
 
 
 	public Soap()
@@ -16,6 +17,7 @@ public class Soap implements Comparable<Soap>
 		date = null;
 		info = null;
 		key  = null;
+		order = -1;
 	}
 
 	public Soap( Date date, String info )
@@ -23,21 +25,21 @@ public class Soap implements Comparable<Soap>
 		this.date = date;
 		this.info = info;
 		key  = null;
+		order = -1;
 	}
 
 
 	@Override
 	public String toString()
 	{
-		return info + " - " + date.toString();
+		return info + " - " + /*date.toString() +*/ " " + order;
 	}
 
 
 	@Override
 	public int compareTo( Soap other )
 	{
-		return this.date.compareTo( other.getDate() );
-		//return 1;
+		return Integer.compare( other.getOrder(), order );
 	}
 
 
@@ -77,6 +79,17 @@ public class Soap implements Comparable<Soap>
 	public UUID getKey()
 	{
 		return key;
+	}
+	
+	
+	public void setOrder( int order )
+	{
+		this.order = order;
+	}
+	
+	public int getOrder()
+	{
+		return order;
 	}
 	
 	
