@@ -14,3 +14,9 @@ delete from HISTORYDISC;
 delete from HISTORYBOOL;
 delete from id;
 delete from soaps;
+
+drop table clients;
+drop table HISTORYBOOL;
+drop table HISTORYDISC;
+drop table id;
+drop table soaps;
