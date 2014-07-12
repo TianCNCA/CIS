@@ -126,6 +126,11 @@ public class AppWindow extends Shell {
 				}
 				
 				System.out.println(arg0);
+
+				if ( selected == null )
+				{
+					return;
+				}
 				
 				btnSave.setEnabled(true);
 		        Control oldEditor = editor.getEditor();
