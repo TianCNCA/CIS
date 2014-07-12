@@ -868,8 +868,6 @@ public class DataBaseAccess
         	System.out.println( e );
         }
 		
-		System.out.println("Key1: " + key1 );
-		System.out.println("Key2: " + key2 );
 		if ( key1.equals( key2 ) )
 		{
 	        history.setHeart( b_heart, str_heart );
@@ -896,8 +894,6 @@ public class DataBaseAccess
 			System.out.println("Error Reading History, Key Mismatch!");
 			history = new ClientHistory( clientID );
 		}
-		
-		System.out.println("History key: " + key1);
 	    
 	    return history;
     }

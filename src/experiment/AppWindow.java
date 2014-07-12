@@ -8,10 +8,12 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
@@ -80,30 +82,101 @@ public class AppWindow extends Shell {
 	    editor.minimumWidth = 50;
 
 	    final int EDITABLECOLUMN = 1;
-	    soapTable.addSelectionListener(new SelectionAdapter() {
-	        public void widgetSelected(SelectionEvent e) {
+	    soapTable.addSelectionListener(new SelectionAdapter() 
+	    {
+	        public void widgetSelected(SelectionEvent e) 
+	        {
 	          
+				btnSave.setEnabled(true);
+		        Control oldEditor = editor.getEditor();
+		        
+		        if (oldEditor != null)
+		        {
+		        	oldEditor.dispose();
+		        }
+
+		        TableItem item = (TableItem) e.item;
+		        // The control that will be the editor must be a child of the
+		        // Table
+		        Text newEditor = new Text(soapTable, SWT.NONE);
+		        newEditor.setText(item.getText(EDITABLECOLUMN));
+		        
+		        newEditor.addModifyListener(new ModifyListener() 
+		        {
+		          public void modifyText(ModifyEvent me) {
+		            Text text = (Text) editor.getEditor();
+		            editor.getItem().setText(1, text.getText());
+		          }
+		        });
+		        
+		        newEditor.selectAll();
+		        newEditor.setFocus();
+		        editor.setEditor(newEditor, item, 1);
+	        }
+	      });
+	    
+	    soapTable.addMouseListener( new MouseListener()
+	    {
+			@Override
+            public void mouseUp( MouseEvent arg0 )
+            {
 				btnSave.setEnabled(true);
 		        Control oldEditor = editor.getEditor();
 		        if (oldEditor != null)
 		          oldEditor.dispose();
 
-		          TableItem item = (TableItem) e.item;
+		        TableItem item = new TableItem(soapTable, SWT.NONE);
+		        item.setText(new Date().toString());
 		        // The control that will be the editor must be a child of the
 		        // Table
 		        Text newEditor = new Text(soapTable, SWT.NONE);
-		          newEditor.setText(item.getText(EDITABLECOLUMN));
+		        newEditor.addKeyListener( new KeyListener() {
+
+					@Override
+                    public void keyPressed( KeyEvent arg0 )
+                    {
+	                    return;
+                    }
+
+					@Override
+                    public void keyReleased( KeyEvent arg0 )
+                    {
+	                    if ( arg0.keyCode == 13 )
+	                    {
+	                    	removeEditor();
+	                    	updateSoapBox();
+	                    }
+	                    
+                    }
+		        	
+		        });
+		        
 		        newEditor.addModifyListener(new ModifyListener() {
 		          public void modifyText(ModifyEvent me) {
 		            Text text = (Text) editor.getEditor();
 		            editor.getItem().setText(1, text.getText());
 		          }
 		        });
+		        
 		        newEditor.selectAll();
 		        newEditor.setFocus();
 		        editor.setEditor(newEditor, item, 1);
-	        }
-	      });
+            }
+
+			@Override
+            public void mouseDoubleClick( MouseEvent arg0 )
+            {
+	            return;
+	            
+            }
+
+			@Override
+            public void mouseDown( MouseEvent arg0 )
+            {
+	            return;
+            }
+	    	
+	    });
 	    
 	    tblclmnDate = new TableColumn(soapTable, SWT.NONE);
 		tblclmnDate.setWidth(115);
@@ -199,7 +272,7 @@ public class AppWindow extends Shell {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				removeEditor();
-					searchClient();
+				searchClient();
 			}
 		});
 		FormData fd_text = new FormData();
@@ -302,8 +375,6 @@ public class AppWindow extends Shell {
 
 	protected void updateSoapBox() {
 		int count = soapTable.getItemCount();
-		//SoapBox soaps = new SoapBox(selected_client.getName());
-		System.out.println( "ID" + selected_client.getKey().toString() );
 		SoapBox soaps = dataAccess.readSoaps( selected_client.getKey() );
 		SoapBox newSoaps = new SoapBox(selected_client.getKey());
 		Boolean update = false;
