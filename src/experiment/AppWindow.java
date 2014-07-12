@@ -120,6 +120,11 @@ public class AppWindow extends Shell {
 			@Override
             public void mouseUp( MouseEvent arg0 )
             {
+				if ( selected == null )
+				{
+					return;
+				}
+				
 				btnSave.setEnabled(true);
 		        Control oldEditor = editor.getEditor();
 		        if (oldEditor != null)
