@@ -170,7 +170,7 @@ public class DataBaseAccess
 		if ( true )
 		{
 			// Now insert the soaps from the client
-			insertSoapBox( client.getSoaps() );
+			insertSoapBox( client.getSoapBox() );
 			
 			// Now insert the history of the client
 			insertHistory( client.getHistory() );
@@ -209,7 +209,7 @@ public class DataBaseAccess
 	{
 		Boolean 		didUpdate = false;
 		String  		updateString, where;
-		SoapBox 		soaps = updatedClient.getSoaps();
+		SoapBox 		soaps = updatedClient.getSoapBox();
 		ClientHistory 	history = updatedClient.getHistory();
 		int 			result;
 		

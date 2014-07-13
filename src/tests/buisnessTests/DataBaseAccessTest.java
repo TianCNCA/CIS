@@ -361,7 +361,7 @@ public final class DataBaseAccessTest extends TestCase
 		database.insertSoap( new Soap( new Date(), "weee" ), test.getKey() );
 		
 		Client update = database.readClient( test.getKey() );
-		ArrayList<Soap> testsoap = update.getSoaps().getSoaps();
+		ArrayList<Soap> testsoap = update.getSoapBox().getSoaps();
 		System.out.println( testsoap.toString() );
 		assertEquals( 3, testsoap.size() );
 		

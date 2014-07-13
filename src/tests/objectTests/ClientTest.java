@@ -56,7 +56,7 @@ public final class ClientTest extends TestCase
 		test.addSoap( soap );
 		test.addSoap( new Date(), "Wee more soaps!" );
 		
-		SoapBox soapBox = test.getSoaps();		
+		SoapBox soapBox = test.getSoapBox();		
 		
 		Boolean found = false;
 		

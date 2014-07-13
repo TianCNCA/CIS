@@ -67,7 +67,7 @@ public class SoapBoxWindow extends Shell {
 		tblclmnNewColumn.setWidth(100);
 		tblclmnNewColumn.setText("Date");
 		
-		ArrayList<Soap> soaps = theClient.getSoaps().getSoaps();
+		ArrayList<Soap> soaps = theClient.getSoapBox().getSoaps();
 		final TableColumn [] columns = table.getColumns ();
 		for (int i=0; i<soaps.size(); i++) //iterate through the whole list here and fill the table with data
 		{

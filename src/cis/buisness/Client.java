@@ -147,7 +147,7 @@ public class Client implements Comparable<Client> {
 		soapBox.add(soap);
 	}
 
-	public SoapBox getSoaps() {
+	public SoapBox getSoapBox() {
 		return soapBox;
 	}
 	

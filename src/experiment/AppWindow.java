@@ -455,7 +455,7 @@ public class AppWindow extends Shell {
 
 		lblClientName.setText(selected_client.getName());
 		
-		SoapBox soapbox = selected_client.getSoaps();
+		SoapBox soapbox = selected_client.getSoapBox();
 		ArrayList<Soap> soaps = soapbox.getSoaps();
 		final TableColumn[] columns = soapTable.getColumns();
 
