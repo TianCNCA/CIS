@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import app.DBService;
-import cis.buisness.Client;
-import cis.buisness.ClientHistory;
 import cis.buisness.DataAccess;
-import cis.buisness.Soap;
-import cis.buisness.SoapBox;
+import cis.objects.Client;
+import cis.objects.ClientHistory;
+import cis.objects.Soap;
+import cis.objects.SoapBox;
 import cis.persistance.DataBaseAccess;
 import junit.framework.TestCase;
 

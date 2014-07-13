@@ -1,10 +1,10 @@
-package cis.buisness;
+package cis.objects;
 
 
 import java.util.UUID;
 
 import app.DBService;
-import cis.buisness.HistoryItem;
+import cis.objects.HistoryItem;
 
 public class ClientHistory
 {

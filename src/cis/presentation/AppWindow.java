@@ -1,4 +1,4 @@
-package experiment;
+package cis.presentation;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,10 +31,10 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 
-import cis.buisness.Client;
 import cis.buisness.DataAccess;
-import cis.buisness.Soap;
-import cis.buisness.SoapBox;
+import cis.objects.Client;
+import cis.objects.Soap;
+import cis.objects.SoapBox;
 
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.events.SelectionAdapter;

@@ -1,4 +1,4 @@
-package cis.buisness;
+package cis.objects;
 
 public class HistoryItem
 {

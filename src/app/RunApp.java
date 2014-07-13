@@ -1,11 +1,11 @@
-package experiment;
+package app;
 
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 import cis.buisness.DataAccess;
-import app.DBService;
+import cis.presentation.AppWindow;
 
 public class RunApp {
 

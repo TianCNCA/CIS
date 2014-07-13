@@ -1,4 +1,4 @@
-package experiment;
+package cis.presentation;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
@@ -18,10 +18,11 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import cis.buisness.Client;
-import cis.buisness.ClientHistory;
 import cis.buisness.DataAccess;
-import cis.buisness.HistoryItem;
+import cis.objects.Client;
+import cis.objects.ClientHistory;
+import cis.objects.HistoryItem;
+
 import org.eclipse.swt.widgets.Combo;
 
 public class ClientWindow extends Shell {

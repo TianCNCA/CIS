@@ -1,4 +1,4 @@
-package cis.buisness;
+package cis.objects;
 
 import java.util.Date;
 import java.util.UUID;

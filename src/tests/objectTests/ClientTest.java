@@ -3,10 +3,10 @@ package tests.objectTests;
 import java.util.Date;
 
 import app.DBService;
-import cis.buisness.Client;
 import cis.buisness.DataAccess;
-import cis.buisness.Soap;
-import cis.buisness.SoapBox;
+import cis.objects.Client;
+import cis.objects.Soap;
+import cis.objects.SoapBox;
 import junit.framework.TestCase;
 
 public final class ClientTest extends TestCase 

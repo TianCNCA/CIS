@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import app.DBService;
+import cis.objects.Client;
+import cis.objects.ClientHistory;
+import cis.objects.Soap;
+import cis.objects.SoapBox;
 import cis.persistance.DataBaseAccess;
 
 public class DataAccess

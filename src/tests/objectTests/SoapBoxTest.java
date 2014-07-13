@@ -4,8 +4,8 @@ import java.util.Date;
 
 import app.DBService;
 import cis.buisness.DataAccess;
-import cis.buisness.Soap;
-import cis.buisness.SoapBox;
+import cis.objects.Soap;
+import cis.objects.SoapBox;
 import junit.framework.TestCase;
 
 public class SoapBoxTest extends TestCase {

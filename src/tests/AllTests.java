@@ -1,7 +1,7 @@
 package tests;
 
 import tests.objectTests.*;
-import tests.buisnessTests.*;
+import tests.persistanceTests.*;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
