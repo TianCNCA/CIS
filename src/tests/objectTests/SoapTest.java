@@ -1,10 +1,12 @@
 package tests.objectTests;
 
 import java.util.Date;
+import java.util.UUID;
 
 import app.DBService;
 import cis.buisness.DataAccess;
 import cis.buisness.Soap;
+import cis.buisness.SoapBox;
 import junit.framework.TestCase;
 
 public class SoapTest extends TestCase {
@@ -36,16 +38,21 @@ public class SoapTest extends TestCase {
 	@SuppressWarnings("deprecation")
 	public void testChanges()
 	{
+		UUID random = UUID.randomUUID();
+		SoapBox soapBox = new SoapBox( random );
 		Soap test    = new Soap();
 		Date date = new Date();
 		test.setDate(date);
 		Soap other = new Soap(date, "info");
-		assertEquals(test.compareTo(other), 0);
 		
 		other.setDate(new Date("12/12/2012"));
 		test.setDate(new Date("11/12/2012"));
-		assertEquals(test.compareTo(other), -1);
-		assertEquals(other.compareTo(test), 1);
+		
+		soapBox.add( test );
+		soapBox.add( other );
+		
+		assertEquals( soapBox.getSoapByIndex( 0 ).getOrder(), 0 );
+		assertEquals( soapBox.getSoapByIndex( 1 ).getOrder(), 1 );
 
 		assertEquals(other.getInfo(), "info");
 		other.setInfo("changed info");

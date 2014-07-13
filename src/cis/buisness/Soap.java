@@ -2,7 +2,7 @@ package cis.buisness;
 
 import java.util.*;
 
-public class Soap implements Comparable<Soap>
+public class Soap
 {
 	private Date    date;
 	private String  info;
@@ -31,13 +31,6 @@ public class Soap implements Comparable<Soap>
 	public String toString()
 	{
 		return info + " - " + date.toString() + " " + order;
-	}
-
-
-	@Override
-	public int compareTo( Soap other )
-	{
-		return Integer.compare( other.getOrder(), order );
 	}
 
 
