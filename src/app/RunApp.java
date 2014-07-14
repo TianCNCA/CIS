@@ -4,8 +4,11 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
+import acceptanceTests.Register;
+import acceptanceTests.EventLoop;
 import cis.business.DataAccess;
 import cis.presentation.AppWindow;
+
 
 public class RunApp {
 
@@ -31,11 +34,15 @@ public class RunApp {
 			appWindow.open();
 			appWindow.layout();
 
-			while (!appWindow.isDisposed()) {
-				if (!display.readAndDispatch()) {
-					display.sleep();
+			if (EventLoop.isEnabled())
+				{
+				while (!appWindow.isDisposed()) {
+					if (!display.readAndDispatch()) {
+						display.sleep();
+					}
 				}
 			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

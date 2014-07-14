@@ -5,6 +5,8 @@ import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
@@ -24,6 +26,7 @@ import cis.objects.ClientHistory;
 import cis.objects.HistoryItem;
 
 import org.eclipse.swt.widgets.Combo;
+import acceptanceTests.Register;
 
 public class ClientWindow extends Shell {
 	private AppWindow mainWindow;
@@ -69,6 +72,8 @@ public class ClientWindow extends Shell {
 		this.client = client;
 
 		// TODO need a better coding
+		
+		Register.newWindow(this);
 
 		setLayout(new FormLayout());
 
@@ -455,9 +460,9 @@ public class ClientWindow extends Shell {
 		fd_btnNewButton.right = new FormAttachment(100, -10);
 		fd_btnNewButton.left = new FormAttachment(0, 611);
 		btnNewButton.setLayoutData(fd_btnNewButton);
-		btnNewButton.addMouseListener(new MouseAdapter() {
+		btnNewButton.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void mouseUp(MouseEvent e) {
+			public void widgetSelected(SelectionEvent e) {
 				closeWindow();
 			}
 		});
@@ -505,18 +510,18 @@ public class ClientWindow extends Shell {
 		if (null == this.client) { // add new client window
 			this.client = new Client();
 			setText("Add Client");
-			btnSave.addMouseListener(new MouseAdapter() {
+			btnSave.addSelectionListener(new SelectionAdapter() {
 				@Override
-				public void mouseUp(MouseEvent e) {
+				public void widgetSelected(SelectionEvent e) {
 					saveClient(0);
 				}
 			});
 		} else { // edit client
 			// initialize the texts
 			setText("Edit Client");
-			btnSave.addMouseListener(new MouseAdapter() {
+			btnSave.addSelectionListener(new SelectionAdapter() {
 				@Override
-				public void mouseUp(MouseEvent e) {
+				public void widgetSelected(SelectionEvent e) {
 					saveClient(1);
 				}
 			});
@@ -542,8 +547,8 @@ public class ClientWindow extends Shell {
 						closeWindow();
 
 					} else {
-						messageBox("Fail", "Client added unsuccessfully!",
-								SWT.ICON_ERROR);
+						//messageBox("Fail", "Client added unsuccessfully!",
+						//		SWT.ICON_ERROR);
 					}
 				} else {
 					if (dataAccess.updateClient(client)) {
@@ -553,13 +558,13 @@ public class ClientWindow extends Shell {
 						closeWindow();
 
 					} else {
-						messageBox("Fail", "Client not updated!",
-								SWT.ICON_ERROR);
+						//messageBox("Fail", "Client updated unsuccessfully!",
+						//		SWT.ICON_ERROR);
 					}
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				messageBox("Whoops!", e.getMessage(), SWT.ICON_ERROR);
+				//messageBox("Whoops!", e.getMessage(), SWT.ICON_ERROR);
 			}
 		}
 	}
@@ -647,16 +652,16 @@ public class ClientWindow extends Shell {
 
 		if (text.getText() == "") {
 			rc = false;
-			messageBox("No Client Name",
-					"Sorry, client name must not be empty.", SWT.ICON_ERROR);
+			//messageBox("No Client Name",
+			//		"Sorry, client name must not be empty.", SWT.ICON_ERROR);
 		}
 
 		try {
 			Integer.parseInt(text_5.getText());
 		} catch (NumberFormatException e) {
 			rc = false;
-			messageBox("Age is not correct",
-					"Sorry, age must be a number.", SWT.ICON_ERROR);
+			//messageBox("Age is not correct",
+			//		"Sorry, age must not be an integer.", SWT.ICON_ERROR);
 		}
 
 		return rc;
