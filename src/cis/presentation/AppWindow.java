@@ -168,6 +168,12 @@ public class AppWindow extends Shell {
 	                    	updateSoapBox();
 	                    }
 	                    
+	                    if ( arg0.keyCode == 27 )
+	                    {
+	                    	fillSoaps();
+	                    	removeEditor();
+	                    }
+	                    
                     }
 		        	
 		        });
