@@ -1,0 +1,81 @@
+Manual Acceptance Tests
+
+
+Editing Multiple Soaps (Create and edit soaps)
+
+1. Start the program
+2. Click on the “Add Client” button
+3. Enter a name into the “Name” field
+4. Enter a number (integer) into the “Age” field
+5. Click the “Save” button
+6. Click on the name that you entered into the name field in the left window
+    -if you do not see the name type the name into the search bar at the top
+7. Click on the “Add Soap” button
+8. Type “Hello” into the text field
+9. Click on the “Add Soap” button
+10. Type “Foo” into the text field
+11. Click the “Save” button
+12. Click on another client in the left panel
+    -if no other clients exist create another new client using steps 2-5
+13. Click on the original client you created
+Test: The right table should have 2 entries, 1 labeled “Hello” and one labeled “Foo”
+14. Click on the Field with the entry “Hello”
+15. Type “Hello World”
+16. Click the “Save” button
+17. Click on the Field with the entry “Foo”
+18. Type “Foo Bar”
+19. Click on another client in the left panel
+20. Click on the original client you created
+Test: The entries in the right table should read “Hello World” and “Foo”
+
+
+Searching for Similar Names (Search Clients)
+
+1. Start the program
+2. Click on the “Add Client” button
+3. Enter “SearchTest1” into the “Name” field
+4. Enter a number (integer) into the “Age” field
+5. Click the “Save” button
+6. Click on the “Add Client” button
+7. Enter “SearchTest2” into the “Name” field
+8. Enter a number into the “Age” field
+9. Click the “Save” button
+10. Click on the “Add Client” button
+11. Enter “SEARCHCASE” into the “Name” field
+12. Enter a number into the “Age” field
+13. Click the “Save” button
+14. In the search bar at the top left type “Search”
+Test: The left table should contain “SearchTest1”, “SearchTest2”, and “SEARCHCASE”
+    -It is possible that there may be more entries, it is only important that these 3 are there
+15. In the search bar at the top left type “T” 
+    -This should bring the text in the bar to “SearchT”
+Test: The entry “SEARCHCASE” is no longer visible in the left table
+16. In the search bar at the top left type “est” 
+-This should bring the text in the bar to “SearchTest”
+Test: The left table should still contain “SearchTest1” and “SearchTest2”
+17. In the search bar at the top left type “1”
+-This should bring the text in the bar to “SearchTest1”
+ Test: The left table should contain “SearchTest1” and not SearchTest2
+
+
+Identical Client Names (Client Creation)
+
+1. Start the program
+2. Click on the “Add Client” button
+3. Enter “Cat” into the “Name” field
+4. Enter a number (integer) into the “Age” field
+5. Click the “Save” button
+6. Click on the “Add Client” button
+7. Enter “Cat” into the “Name” field
+8. Enter a number into the “Age” field
+9. Click the “Save” button
+Test: The window should not close (a warning may appear if enabled)
+10. In the “Name” field delete “Cat” and enter “CopyCat”
+11. Click the “Save” button
+10. Click on the “CopyCat” entry in the left table
+11. Click on the “Edit Client” button
+12. In the “Name” field delete “CopyCat” and enter “Cat”
+13. Click the “Save” button
+Test: The window should not close (a warning may appear if enabled)
+14. Click on the “Close” button
+Test: The left table should contain the entries “Cat” and “CopyCat”
