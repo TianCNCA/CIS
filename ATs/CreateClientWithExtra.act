@@ -2,13 +2,15 @@ Package					cis.presentation
 
 InvokeMethod			app.RunApp 							runATs
 
+InvokeMethod 			app.DBService 						isTesting
+
+InvokeMethod 			cis.persistance.DataBaseAccess		resetID
+
 Click					AppWindow							btnAddClient
 
 Set						ClientWindow						text					PattyPat
 
 Set						ClientWindow						text_5					23
-
-Click 					ClientWindow 						
 
 Set 					ClientWindow 						text_10 				SuperDoctorMan
 
@@ -31,4 +33,3 @@ Test 					ClientWindow 						text_1 					Box1Billion
 Click 					ClientWindow 						btnSave
 
 InvokeMethod			app.RunApp 							shutdownATs
-

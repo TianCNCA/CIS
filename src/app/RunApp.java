@@ -86,5 +86,6 @@ public class RunApp {
 	{
 		DBService service = new DBService();
 		service.shutDownDB();
+		System.exit( 0 );
 	}
 }
