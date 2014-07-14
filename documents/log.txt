@@ -1,0 +1,67 @@
+﻿--LOG--
+
+Divide stories into tasks:
+
+Tian, Yuri, and Kene are taking the Client Creation Screen.
+	Tian is doing the GUI for the screen
+	Yuriy is making the Main Window
+	Kene is creating the Client Class
+
+Travis is Implementing the Search for Client feature.
+	Travis is building the GUI
+
+Chris is working on the Stub Database
+	Chris is Building the DB and interface.
+
+Quick update on how everyone is doing. Working on our stories, making sure we are on the right track.
+Unit tests are doing well, testing and fixing of bugs.
+
+We decided to Drop the Body Diagram Story, since we don’t believe that there is enough time in the dev time to finish it and the other higher priority stories.
+Print and Invoicing might be dropped, due to time constraints as well.
+
+Tian is taking the components and "glueing" them together.
+	We are each working in our own Branch, and merging them together
+
+GIT was providing problems, but we are overcoming it. Some members had a hard time using GIT.
+
+Time estimates seemed to be more or less accurate. Going ahead with current plan.
+
+Wasn't able to include Search for Client in iteration one, we will have to adjust our estimates accordingly. 
+
+We decided ultimately to drop the Body Diagram story. The team decided that it would take too much time to finish in the allotted time until release. We also had higher priority stories to do, thus it seemed the best thing to do.
+
+Main window screen took under 2 days to complete. Most of the time was spend on getting familiar with new technology and how to use it. Client table was filled with set of text not useful at the moment. Search will need to be implemented as soon as possible since we weren’t able to include it in the iteration 1. Also the table displaying clients needs to get that data from database, which will also be implemented in the next iteration. Will need to make the main window update properly when new client has been added and make the clients displaying properly. 
+ 
+The database stub took some time to implement, basically because we didn’t have a solid plan. We will work on the planning to do that better.
+
+The Client class had a lot of variables that made having individual variables and getters and setters verbose. So for all the descriptions that are Strings on the 2nd portion of the client’s information in a map. Since implementing the Client class did not take too much time and the SoapBox and Soap were related to each individual client, they were also implemented with the time left.
+
+Name		Task			Allocated Time		Actual  Time
+Tian		Create Client		5 Days				5 Days
+Yuriy		Main Window		2 Days				2 Days
+Chris 		Database		2 Days 			3 Days
+Kene		Client Class		2 Days				2 Days
+Travis		Search Functionality	4 Days				Not Completed
+		Soaps and SoapBox	Slack time		
+
+
+I showed our client the app from iteration one, she loved it! Thinks that it is going pretty well. She requested a logo, better layout, and resizable options - Chris
+
+The Database is not integrating properly, I am having lots of trouble :( I might need some help - Chris	
+
+Database is working! Everything is coming together Thanks guys! :) - Chris
+
+Continued adding to the Database, was obvious now that we should have done more planning for iteration1, hopefully we succeeded with this for the current iteration. Also I think we need to add a user story in- Chris
+
+
+Added in Primary Key as an integer into the classes, migrated away from using the Name as the key. The Primary Key should never mean anything - Chris
+
+Resize is being worked on. Search functionality is being implemented. need to be integrated. Will do the resizing for the next iteration as well as searching based on the key entered to update the table of clients. Having some issues when updating, will try to fix asap.
+
+Having problems with the updates - Chris
+
+Lots of problems with Git!!! We are having problems merging and getting things to work properly
+
+Regrets for not having Chris’ updated objects when working on my branch. Lot’s of conflicts. Tried adopting the source code from git branch ChrisIteration2 when merging. Could not get eclipse to accept the merge done. Group has decided to deliver a working copy and work on the problems in Iteration 3.
+
+Refresh working now, clients show up in real time :D - Chris

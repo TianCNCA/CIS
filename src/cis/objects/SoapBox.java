@@ -1,49 +1,58 @@
-package cis.buisness;
+package cis.objects;
 
 import java.util.*;
 
 public class SoapBox
 {
 	private ArrayList<Soap> visits;
-	private String clientName;
+	private UUID clientID;
+	private int order;
 
 
-	public SoapBox( String clientName )
+	public SoapBox( UUID clientID )
 	{
 		visits = new ArrayList<Soap>();
-		this.clientName = clientName;
+		this.clientID = clientID;
+		order = 0;
 	}
 
 
 	public SoapBox()
 	{
 		visits = new ArrayList<Soap>();
-		clientName = null;
+		clientID = null;
+		order = 0;
 	}
 
 
 	public void add( Date date, String info )
 	{
 		Soap newSoap = new Soap( date, info );
+		newSoap.setOrder( order );
+		order++;
 		visits.add( newSoap );
+		
 	}
 	
 	
 	public void add( Soap soap )
 	{
+		soap.setOrder( order );
+		order++;
 		visits.add( soap );
+		
 	}
 
 
-	public String getClientName()
+	public UUID getClientID()
 	{
-		return clientName;
+		return clientID;
 	}
 
 
-	public void setClientName( String clientName )
+	public void setClientID( UUID clientID )
 	{
-		this.clientName = clientName;
+		this.clientID = clientID;
 	}
 	
 	public boolean isEmpty(){
@@ -62,7 +71,6 @@ public class SoapBox
 			return null;
 		}
 	}
-
 
 	public ArrayList<Soap> getSoaps()
 	{
@@ -87,9 +95,21 @@ public class SoapBox
 		}
 	}
 
-
 	public int numSoaps()
 	{
 		return visits.size();
+	}
+	
+	public void setOrder( int order )
+	{
+		if ( order > 0 )
+		{
+			this.order = order;
+		}
+	}
+	
+	public int getOrder()
+	{
+		return order;
 	}
 }

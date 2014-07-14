@@ -1,5 +1,7 @@
 package app;
 
+import java.util.UUID;
+
 import cis.persistance.DataBaseAccess;
 
 /*------------------------------------------------------
@@ -14,7 +16,6 @@ public class DBService
 	private static 	DataBaseAccess 	database;
 	private 		Boolean 		valid;
 	private static 	Boolean 		testing;
-	private static  int 			currKey;
 
 
 	public DBService()
@@ -23,7 +24,6 @@ public class DBService
 		valid	 = false;
 		testing  = false;
 		database = null;
-		currKey  = -1;
 	}
 
 
@@ -32,11 +32,6 @@ public class DBService
 		System.out.println("Initializing DB Service");
 		database = new DataBaseAccess();
 		valid 	 = database.init();
-		
-		if ( valid )
-		{
-			currKey = database.getCurrentKeyNoUpdate();
-		}
 	}
 
 
@@ -80,9 +75,8 @@ public class DBService
 	}
 	
 	
-	public static int getCurrentKey()
+	public static UUID getCurrentKey()
 	{
-		currKey = database.getCurrentKey();
-		return currKey;
+		return UUID.randomUUID();
 	}
 }

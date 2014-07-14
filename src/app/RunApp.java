@@ -1,13 +1,14 @@
-package experiment;
+package app;
 
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
-import cis.buisness.DataAccess;
-import app.DBService;
-
 import acceptanceTests.Register;
 import acceptanceTests.EventLoop;
+import cis.business.DataAccess;
+import cis.presentation.AppWindow;
+
 
 public class RunApp {
 
@@ -20,25 +21,28 @@ public class RunApp {
 			service.shutDownDB();
 			System.exit(0);
 		}
-		service.genClients();
-		DataAccess dataAccess = new DataAccess();
 		
+		DataAccess dataAccess = new DataAccess();
 
 		// open the main window
 		try {
 			Display display = Display.getDefault();
 			Shell appWindow = new AppWindow(display, dataAccess);
+			
+			Image icon = new Image( display, "images/icon.ico" );
+			appWindow.setImage( icon );
 			appWindow.open();
 			appWindow.layout();
 
 			if (EventLoop.isEnabled())
-			{
+				{
 				while (!appWindow.isDisposed()) {
 					if (!display.readAndDispatch()) {
 						display.sleep();
 					}
 				}
 			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

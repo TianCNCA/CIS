@@ -3,10 +3,10 @@ package tests.objectTests;
 import java.util.Date;
 
 import app.DBService;
-import cis.buisness.Client;
-import cis.buisness.DataAccess;
-import cis.buisness.Soap;
-import cis.buisness.SoapBox;
+import cis.business.DataAccess;
+import cis.objects.Client;
+import cis.objects.Soap;
+import cis.objects.SoapBox;
 import junit.framework.TestCase;
 
 public final class ClientTest extends TestCase 
@@ -56,7 +56,7 @@ public final class ClientTest extends TestCase
 		test.addSoap( soap );
 		test.addSoap( new Date(), "Wee more soaps!" );
 		
-		SoapBox soapBox = test.getSoaps();		
+		SoapBox soapBox = test.getSoapBox();		
 		
 		Boolean found = false;
 		

@@ -2,7 +2,7 @@ package cis.persistance;
 
 import java.util.ArrayList;
 
-import cis.buisness.Client;
+import cis.objects.Client;
 
 /*------------------------------------------------------
 * CLASS:			DB_STub

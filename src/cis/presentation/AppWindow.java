@@ -1,9 +1,5 @@
-package experiment;
+package cis.presentation;
 
-import java.text.DateFormat;
-import java.text.FieldPosition;
-import java.text.ParseException;
-import java.text.ParsePosition;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -12,12 +8,12 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
-//import org.eclipse.swt.events.MouseAdapter;
-//import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
@@ -35,16 +31,15 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 
-import cis.buisness.Client;
-import cis.buisness.DataAccess;
-import cis.buisness.Soap;
-import cis.buisness.SoapBox;
+import cis.business.DataAccess;
+import cis.objects.Client;
+import cis.objects.Soap;
+import cis.objects.SoapBox;
 
-import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.hsqldb.Tokens;
+import org.eclipse.swt.events.SelectionListener;
 
 import acceptanceTests.Register;
 
@@ -66,12 +61,15 @@ public class AppWindow extends Shell {
 	private TableColumn tblclmnSoap;
 	private TableEditor editor;
 	
+	public AppWindow()
+	{
+		
+	}
+	
 	public AppWindow(Display display, DataAccess dataAccess) {
 		super(display);
 		setMinimumSize(new Point(794, 518));
 		this.dataAccess = dataAccess;
-		
-		Register.newWindow(this);
 
 		setText("Client Information System");
 		setSize(794, 518);
@@ -93,30 +91,113 @@ public class AppWindow extends Shell {
 	    editor.minimumWidth = 50;
 
 	    final int EDITABLECOLUMN = 1;
-	    soapTable.addSelectionListener(new SelectionAdapter() {
-	        public void widgetSelected(SelectionEvent e) {
+	    soapTable.addSelectionListener(new SelectionAdapter() 
+	    {
+	        public void widgetSelected(SelectionEvent e) 
+	        {
 	          
+				btnSave.setEnabled(true);
+		        Control oldEditor = editor.getEditor();
+		        
+		        if (oldEditor != null)
+		        {
+		        	oldEditor.dispose();
+		        }
+
+		        TableItem item = (TableItem) e.item;
+		        // The control that will be the editor must be a child of the
+		        // Table
+		        Text newEditor = new Text(soapTable, SWT.NONE);
+		        newEditor.setText(item.getText(EDITABLECOLUMN));
+		        
+		        newEditor.addModifyListener(new ModifyListener() 
+		        {
+		          public void modifyText(ModifyEvent me) {
+		            Text text = (Text) editor.getEditor();
+		            editor.getItem().setText(1, text.getText());
+		          }
+		        });
+		        
+		        newEditor.selectAll();
+		        newEditor.setFocus();
+		        editor.setEditor(newEditor, item, 1);
+	        }
+	      });
+	    
+	    soapTable.addMouseListener( new MouseListener()
+	    {
+			@Override
+            public void mouseUp( MouseEvent arg0 )
+            {
+				if ( selected == null || arg0.button != 1 )
+				{
+					return;
+				}
+				
+				System.out.println(arg0);
+
+				if ( selected == null )
+				{
+					return;
+				}
+				
 				btnSave.setEnabled(true);
 		        Control oldEditor = editor.getEditor();
 		        if (oldEditor != null)
 		          oldEditor.dispose();
 
-		          TableItem item = (TableItem) e.item;
+		        TableItem item = new TableItem(soapTable, SWT.NONE);
+		        item.setText(new Date().toString());
 		        // The control that will be the editor must be a child of the
 		        // Table
 		        Text newEditor = new Text(soapTable, SWT.NONE);
-		          newEditor.setText(item.getText(EDITABLECOLUMN));
+		        newEditor.addKeyListener( new KeyListener() {
+
+					@Override
+                    public void keyPressed( KeyEvent arg0 )
+                    {
+	                    return;
+                    }
+
+					@Override
+                    public void keyReleased( KeyEvent arg0 )
+                    {
+	                    if ( arg0.keyCode == 13 )
+	                    {
+	                    	removeEditor();
+	                    	updateSoapBox();
+	                    }
+	                    
+                    }
+		        	
+		        });
+		        
 		        newEditor.addModifyListener(new ModifyListener() {
 		          public void modifyText(ModifyEvent me) {
 		            Text text = (Text) editor.getEditor();
 		            editor.getItem().setText(1, text.getText());
 		          }
 		        });
+		        
 		        newEditor.selectAll();
 		        newEditor.setFocus();
 		        editor.setEditor(newEditor, item, 1);
-	        }
-	      });
+            }
+
+			@Override
+            public void mouseDoubleClick( MouseEvent arg0 )
+            {
+	            return;
+	            
+            }
+
+			@Override
+            public void mouseDown( MouseEvent arg0 )
+            {
+	            return;
+            }
+	    	
+	    });
 	    
 	    tblclmnDate = new TableColumn(soapTable, SWT.NONE);
 		tblclmnDate.setWidth(115);
@@ -212,7 +293,7 @@ public class AppWindow extends Shell {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				removeEditor();
-					searchClient();
+				searchClient();
 			}
 		});
 		FormData fd_text = new FormData();
@@ -310,15 +391,15 @@ public class AppWindow extends Shell {
 		fd_btnSave.left = new FormAttachment(btnAddSoap, 6);
 		btnSave.setLayoutData(fd_btnSave);
 		btnSave.setText("Save");
+		
+		Register.newWindow(this);
 
 	}
 
-	@SuppressWarnings("deprecation")
 	protected void updateSoapBox() {
 		int count = soapTable.getItemCount();
-		//SoapBox soaps = new SoapBox(selected_client.getName());
-		SoapBox soaps = dataAccess.readSoaps( selected_client.getName() );
-		SoapBox newSoaps = new SoapBox(selected_client.getName());
+		SoapBox soaps = dataAccess.readSoaps( selected_client.getKey() );
+		SoapBox newSoaps = new SoapBox(selected_client.getKey());
 		Boolean update = false;
 		Boolean insert = false;
 		
@@ -334,7 +415,7 @@ public class AppWindow extends Shell {
 			else
 			{
 				insert = true;
-				soap = new Soap( new Date( soapTable.getItem(i).getText(0) ), soapTable.getItem(i).getText(1) );
+				soap = new Soap( new Date(), soapTable.getItem(i).getText(1) );
 			}
 			
 			newSoaps.add( soap );
@@ -385,23 +466,18 @@ public class AppWindow extends Shell {
 
 		lblClientName.setText(selected_client.getName());
 		
-		SoapBox soapbox = selected_client.getSoaps();
+		SoapBox soapbox = selected_client.getSoapBox();
 		ArrayList<Soap> soaps = soapbox.getSoaps();
 		final TableColumn[] columns = soapTable.getColumns();
-		Collections.sort( soaps );
 
 		for (int i = 0; i < soaps.size(); i++) 
 		{
 			final TableItem item = new TableItem(soapTable, SWT.NONE);
-//			String parsedDateString = "";
-//			String tokens[] = soaps.get( i ).getDate().toString().split( "\\s+" );
-//			
-//			if ( tokens.length > 0 )
-//			{
-//				parsedDateString = tokens[0] + " " + tokens[1] + " " + tokens[2];
-//			}
 			String date = soaps.get( i ).getDate().toString();
-			item.setText( new String[] { date, soaps.get(i).getInfo() } );
+			String tokens[] = date.split( "\\s+" );
+			String parsedDate = tokens[0] + " " + tokens[1] + " " + tokens[2];
+			
+			item.setText( new String[] { parsedDate, soaps.get(i).getInfo() } );
 		}
 		
 		for (int i = 0; i < columns.length; i++)
@@ -433,6 +509,9 @@ public class AppWindow extends Shell {
 	private void addClient() {
 		Shell clientWindow = new ClientWindow(this, dataAccess,
 				null);
+		
+		Image icon = new Image( null, "images/icon.ico" );
+		clientWindow.setImage( icon );
 		clientWindow.open();
 		clientWindow.layout();
 	}
@@ -440,6 +519,8 @@ public class AppWindow extends Shell {
 	private void editClient() {
 		Shell clientWindow = new ClientWindow(this, dataAccess,
 				dataAccess.readClient(selected.getText()));
+		Image icon = new Image( null, "images/icon.ico" );
+		clientWindow.setImage( icon );
 		clientWindow.open();
 		clientWindow.layout();
 		
@@ -448,7 +529,6 @@ public class AppWindow extends Shell {
 	private void searchClient() {
 		clearTable();
 		String partialText = text.getText();
-		//System.out.println("Chars:" + partialText);
 		ArrayList<Client> clients = dataAccess.getAllClients();
 		ArrayList<Client> searchList = new ArrayList<Client>();
 		
@@ -465,7 +545,8 @@ public class AppWindow extends Shell {
 		fillTable(table, searchList);	
 	}
 	
-	private void messageBox(String text, String message, int style) {
+	@SuppressWarnings( "unused" )
+    private void messageBox(String text, String message, int style) {
 		MessageBox msg = new MessageBox(getShell(), style);
 		msg.setText(text);
 		msg.setMessage(message);

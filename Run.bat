@@ -4,7 +4,7 @@ call setClasspath
 
 REM @echo on
 
-java cis.presentation.MainWindow
+java app.RunApp
 
 
 pause

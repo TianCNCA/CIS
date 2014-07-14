@@ -1,14 +1,15 @@
-package tests.buisnessTests;
+package tests.persistanceTests;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.UUID;
 
 import app.DBService;
-import cis.buisness.Client;
-import cis.buisness.ClientHistory;
-import cis.buisness.DataAccess;
-import cis.buisness.Soap;
-import cis.buisness.SoapBox;
+import cis.business.DataAccess;
+import cis.objects.Client;
+import cis.objects.ClientHistory;
+import cis.objects.Soap;
+import cis.objects.SoapBox;
 import cis.persistance.DataBaseAccess;
 import junit.framework.TestCase;
 
@@ -204,7 +205,10 @@ public final class DataBaseAccessTest extends TestCase
 	{
 		database.dbResetForTesting();
 		System.out.println( "\nREAD SOAP TEST" );
-		SoapBox soapbox = new SoapBox( "Patty Rick" );
+		Client client = new Client( "Patty Rick" );
+		client.genKey();
+		
+		SoapBox soapbox = new SoapBox( client.getKey() );
 		soapbox.add( new Date(), "Everything seems to be well" );
 		
 		database.insertSoapBox( soapbox );
@@ -220,13 +224,19 @@ public final class DataBaseAccessTest extends TestCase
 	{
 		database.dbResetForTesting();
 		System.out.println( "\nREAD SOAP TEST" );
-		SoapBox soapbox = new SoapBox( "Patty Rick" );
+		Client client = new Client( "Patty Rick" );
+		client.genKey();
+		
+		Client client2 = new Client( "Hubert" );
+		client2.genKey();
+		
+		SoapBox soapbox = new SoapBox( client.getKey() );
 		soapbox.add( new Date(), "Everything seems to be well" );
 		soapbox.add( new Date(), "Land ho" );
 		soapbox.add( new Date(), "Treasure Planet" );
 		soapbox.add( new Date(), "Don't ask about all this..." );
 		
-		SoapBox soapbox2 = new SoapBox( "Hubert" );
+		SoapBox soapbox2 = new SoapBox( client2.getKey() );
 		soapbox2.add( new Date(), "Hubert seems nice" );
 		
 		database.insertSoapBox( soapbox );
@@ -246,12 +256,15 @@ public final class DataBaseAccessTest extends TestCase
 	{
 		database.dbResetForTesting();
 		System.out.println( "\nREAD SOAP TEST" );
-		SoapBox soapbox = new SoapBox( "Patty Rick" );
+		Client client = new Client( "Patty Rick" );
+		client.genKey();
+		
+		SoapBox soapbox = new SoapBox( client.getKey() );
 		soapbox.add( new Date(), "Everything seems to be well" );
 		
 		database.insertSoapBox( soapbox );
 		
-		SoapBox read = database.readSoaps( "Patty Rick" );
+		SoapBox read = database.readSoaps( client.getKey() );
 		ArrayList<Soap> soaps = read.getSoaps();
 		
 		assertEquals( soaps.size(), 1 );
@@ -339,20 +352,31 @@ public final class DataBaseAccessTest extends TestCase
 		database.dbResetForTesting();
 		System.out.println( "Test Update Soap\n" );
 		Client test   	= new Client( "George Patterson" );
+		test.genKey();
+		
 		test.addSoap( "A soap" );
 		test.addSoap( "Another soap ");
 		
 		database.insertClient( test );
+		database.insertSoap( new Soap( new Date(), "weee" ), test.getKey() );
 		
-		database.insertSoap( new Soap( new Date(), "weee" ), "George Patterson" );
-		
-		Client update = database.readClient( "George Patterson" );
-		ArrayList<Soap> testsoap = update.getSoaps().getSoaps();
-		
+		Client update = database.readClient( test.getKey() );
+		ArrayList<Soap> testsoap = update.getSoapBox().getSoaps();
 		System.out.println( testsoap.toString() );
-		
 		assertEquals( 3, testsoap.size() );
-		Boolean lastSoapMadeIt = testsoap.get( 2 ).getInfo().contains( "weee" );
+		
+		Boolean lastSoapMadeIt = false;
+		
+		for ( Soap soap : testsoap )
+		{
+			 lastSoapMadeIt = soap.getInfo().contains( "weee" );
+			 
+			 if ( lastSoapMadeIt )
+			 {
+				 break;
+			 }
+		}
+		
 		assertTrue( lastSoapMadeIt );
 	}
 	
@@ -361,7 +385,10 @@ public final class DataBaseAccessTest extends TestCase
 	{
 		System.out.println( "Insert Hist\n" );
 		database.dbResetForTesting();
-		ClientHistory hist = new ClientHistory( "Fred" );
+		Client client = new Client( "Fred" );
+		client.genKey();
+		
+		ClientHistory hist = new ClientHistory( client.getKey() );
 		
 		hist.setByIndex( true, "Something crazy is going on", 2 );
 		
@@ -376,7 +403,12 @@ public final class DataBaseAccessTest extends TestCase
 	{
 		System.out.println( "Read Hist\n" );
 		database.dbResetForTesting();
-		ClientHistory hist = new ClientHistory( "Fred" );
+		Client client = new Client( "Fred" );
+		client.genKey();
+		
+		ClientHistory hist = new ClientHistory( client.getKey() );
+		
+		database.insertClient( client );
 		
 		hist.setByIndex( true, "Dude", 2 );
 		hist.setByIndex( true, "Whoa", 5 );
@@ -385,7 +417,7 @@ public final class DataBaseAccessTest extends TestCase
 		
 		database.insertHistory( hist );
 		
-		ClientHistory read = database.readHistory( "Fred" );
+		ClientHistory read = database.readHistory( client.getKey() );
 		
 		assertTrue( hist.getByIndex( 2 ).getChecked() );
 		assertTrue( hist.getByIndex( 5 ).getChecked() );
@@ -404,20 +436,26 @@ public final class DataBaseAccessTest extends TestCase
 	{
 		System.out.println( "Update Hist\n" );
 		database.dbResetForTesting();
-		ClientHistory hist = new ClientHistory( "Fred" );
+		
+		Client client = new Client( "Fred" );
+		client.genKey();
+		
+		ClientHistory hist = new ClientHistory( client.getKey() );
+		
+		//database.insertClient( client );
 		
 		hist.setByIndex( true, "Dude", 2 );
 		hist.setByIndex( true, "Whoa", 5 );
 		
 		database.insertHistory( hist );
 		
-		ClientHistory toUpdate = database.readHistory( "Fred" );
+		ClientHistory toUpdate = database.readHistory( client.getKey() );
 		
-		toUpdate.setByIndex( false, "", 2 );
+		toUpdate.setByIndex( false, " ", 2 );
 		
 		database.updateHistory( toUpdate );
 		
-		ClientHistory shouldBeUpdated = database.readHistory( "Fred" );
+		ClientHistory shouldBeUpdated = database.readHistory( client.getKey() );
 		
 		assertFalse( shouldBeUpdated.getByIndex( 2 ).getChecked() );
 		assertTrue( shouldBeUpdated.getByIndex( 5 ).getChecked() );

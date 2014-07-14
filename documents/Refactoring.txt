@@ -1,0 +1,9 @@
+We were able to refactor the main window in a few ways. It suffered from Large Class and did not follow the Single Responsibility Principle. 
+We solved Single Responsibility Principle by refactoring the MainWindow into an RunApp.java and the MainWindow.java. Now MainWindow only focuses on itself.
+In this refactoring we also reduced the Large Class smell, which now makes MainWindow more lightweight. 
+
+Client suffered from Large Class as well, so we decided to refactor the SoapBox and the ClientHistory into their own classes, reducing the weight of the Client Class and the Client Table.
+
+The Database had some long methods that we refactored out into separate methods, such as SQLParser and the String Building methods.
+
+The structure of all the folders have been rearranged into a more clear manner.

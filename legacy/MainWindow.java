@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
-//import org.eclipse.swt.events.MouseAdapter;
-//import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
@@ -22,9 +22,6 @@ import org.eclipse.swt.widgets.Text;
 import app.DBService;
 import cis.buisness.Client;
 import cis.buisness.DataAccess;
-
-import acceptanceTests.Register;
-import acceptanceTests.EventLoop;
 
 public class MainWindow extends Shell 
 {
@@ -50,7 +47,7 @@ public class MainWindow extends Shell
 				System.exit( 0 );
 			}
 			
-			service.genClients();
+			//service.genClients();
 			
 			Display display = Display.getDefault();
 			MainWindow shell = new MainWindow(display);
@@ -59,14 +56,11 @@ public class MainWindow extends Shell
 			shell.layout();
 			shell.setBackgroundImage( new Image( null, "images/bg.png") );
 			
-			if (EventLoop.isEnabled())
+			while (!shell.isDisposed()) 
 			{
-				while (!shell.isDisposed()) 
+				if (!display.readAndDispatch()) 
 				{
-					if (!display.readAndDispatch()) 
-					{
-						display.sleep();
-					}
+					display.sleep();
 				}
 			}
 		} 
@@ -127,7 +121,8 @@ public class MainWindow extends Shell
 			@Override
 			public void widgetSelected(SelectionEvent arg0) 
 			{
-				TableItem[] list;
+				@SuppressWarnings( "unused" )
+                TableItem[] list;
 				list = table.getSelection();
 				
 				//TODO search for the string here, list contains the whole row selected from the table
@@ -138,9 +133,9 @@ public class MainWindow extends Shell
 		btnNewButton_1.setText("Edit Client Information");
 		
 		Button btnNewButton_2 = new Button(this, SWT.NONE);
-		btnNewButton_2.addSelectionListener(new SelectionAdapter() {
+		btnNewButton_2.addMouseListener(new MouseAdapter() {
 			@Override
-			public void widgetSelected(SelectionEvent arg0) {
+			public void mouseUp(MouseEvent arg0) {
 				try {
 					CreateClientWindow window = new CreateClientWindow(clientDataBase);
 					window.open();
@@ -250,8 +245,6 @@ public class MainWindow extends Shell
 		}
 		
 		 for (int i=0; i<columns.length; i++) columns [i].pack ();*/
-		
-		Register.newWindow(this);
 	}
 
 	/**

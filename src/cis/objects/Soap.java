@@ -1,47 +1,36 @@
-package cis.buisness;
+package cis.objects;
 
 import java.util.*;
 
-import app.DBService;
-
-public class Soap implements Comparable<Soap>
+public class Soap
 {
 	private Date    date;
 	private String  info;
-	private int 	key;
+	private UUID 	key;
+	private int 	order;
 
 
 	public Soap()
 	{
 		date = null;
 		info = null;
-		
-		key = -1;
-		//key  = DBService.getCurrentKey();
+		key  = null;
+		order = -1;
 	}
 
 	public Soap( Date date, String info )
 	{
 		this.date = date;
 		this.info = info;
-		
-		key = -1;
-		//key = DBService.getCurrentKey();
+		key  = null;
+		order = -1;
 	}
 
 
 	@Override
 	public String toString()
 	{
-		return info + " - " + date.toString();
-	}
-
-
-	@Override
-	public int compareTo( Soap other )
-	{
-		return this.date.compareTo( other.getDate() );
-		//return 1;
+		return info + " - " + date.toString() + " " + order;
 	}
 
 
@@ -69,17 +58,34 @@ public class Soap implements Comparable<Soap>
 	}
 	
 	
-	public void setKey( int key )
+	public void setKey( UUID key )
 	{
-		if ( key > -1 )
+		if ( key != null )
 		{
 			this.key = key;
 		}
 	}
 	
 	
-	public int getKey()
+	public UUID getKey()
 	{
 		return key;
+	}
+	
+	
+	public void setOrder( int order )
+	{
+		this.order = order;
+	}
+	
+	public int getOrder()
+	{
+		return order;
+	}
+	
+	
+	public void genKey()
+	{
+		key = UUID.randomUUID();
 	}
 }

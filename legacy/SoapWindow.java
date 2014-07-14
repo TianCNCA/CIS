@@ -7,19 +7,14 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.SWT;
 
 import cis.buisness.Client;
-import cis.buisness.DataAccess;
 import cis.buisness.Soap;
 
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Control;
-//import org.eclipse.swt.events.MouseAdapter;
-//import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-
-import acceptanceTests.Register;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
 
 public class SoapWindow extends Shell {
 	private Client client;
@@ -27,7 +22,6 @@ public class SoapWindow extends Shell {
 
 	public SoapWindow(Client client) {
 		this.client = client;
-		Register.newWindow(this);
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -37,9 +31,9 @@ public class SoapWindow extends Shell {
 		Button btnCancel = new Button(this, SWT.NONE);
 		btnCancel.setBounds(268, 226, 75, 25);
 		btnCancel.setText("Cancel");
-		btnCancel.addSelectionListener(new SelectionAdapter() {
+		btnCancel.addMouseListener(new MouseAdapter() {
 			@Override
-			public void widgetSelected(SelectionEvent arg0) {
+			public void mouseUp(MouseEvent arg0) {
 				getShell().dispose();
 			}
 		});
@@ -60,9 +54,9 @@ public class SoapWindow extends Shell {
 		text.setBounds(106, 46, 318, 175);
 		setTabList(new Control[]{dateTime, text, btnCancel, btnSave});
 		
-		btnSave.addSelectionListener(new SelectionAdapter() {
+		btnSave.addMouseListener(new MouseAdapter() {
 			@Override
-			public void widgetSelected(SelectionEvent arg0) {
+			public void mouseUp(MouseEvent arg0) {
 				Date theDate = new Date(dateTime.toString());
 				String info = text.getText();
 				Soap newSoap = new Soap(theDate, info);

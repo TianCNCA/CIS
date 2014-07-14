@@ -19,12 +19,8 @@ import cis.buisness.Client;
 import cis.buisness.DataAccess;
 import cis.buisness.Soap;
 
-//import org.eclipse.swt.events.MouseAdapter;
-//import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-
-import acceptanceTests.Register;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
 
 public class SoapBoxWindow extends Shell {
 	private Table table;
@@ -35,7 +31,6 @@ public class SoapBoxWindow extends Shell {
 		dataAccess = new DataAccess();
 		this.theClient = dataAccess.readClient(clientName);
 		open();
-		Register.newWindow(this);
 	}
 	
 	public void open(){
@@ -46,9 +41,9 @@ public class SoapBoxWindow extends Shell {
 		setLayout(new FormLayout());
 		
 		Button btnClose = new Button(this, SWT.NONE);
-		btnClose.addSelectionListener(new SelectionAdapter() {
+		btnClose.addMouseListener(new MouseAdapter() {
 			@Override
-			public void widgetSelected(SelectionEvent arg0) {
+			public void mouseUp(MouseEvent arg0) {
 				getShell().dispose();
 			}
 		});
@@ -72,7 +67,7 @@ public class SoapBoxWindow extends Shell {
 		tblclmnNewColumn.setWidth(100);
 		tblclmnNewColumn.setText("Date");
 		
-		ArrayList<Soap> soaps = theClient.getSoaps().getSoaps();
+		ArrayList<Soap> soaps = theClient.getSoapBox().getSoaps();
 		final TableColumn [] columns = table.getColumns ();
 		for (int i=0; i<soaps.size(); i++) //iterate through the whole list here and fill the table with data
 		{
@@ -106,9 +101,9 @@ public class SoapBoxWindow extends Shell {
 		
 		Button btnAdd = new Button(this, SWT.NONE);
 		fd_btnClose.left = new FormAttachment(btnAdd, 6);
-		btnAdd.addSelectionListener(new SelectionAdapter() {
+		btnAdd.addMouseListener(new MouseAdapter() {
 			@Override
-			public void widgetSelected(SelectionEvent arg0) {
+			public void mouseUp(MouseEvent arg0) {
 				SoapWindow window = new SoapWindow(theClient);
 				window.open();
 			}

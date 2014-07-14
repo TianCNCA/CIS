@@ -1,8 +1,13 @@
-package cis.buisness;
+package cis.business;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import app.DBService;
+import cis.objects.Client;
+import cis.objects.ClientHistory;
+import cis.objects.Soap;
+import cis.objects.SoapBox;
 import cis.persistance.DataBaseAccess;
 
 public class DataAccess
@@ -20,6 +25,12 @@ public class DataAccess
 		return database.getAllClients();
 	}
 
+	
+	public Client readClient( UUID id )
+	{
+		return database.readClient( id );
+	}
+	
 
 	public Client readClient( String name )
 	{
@@ -27,9 +38,9 @@ public class DataAccess
 	}
 
 
-	public Client readClient( Client name )
+	public Client readClient( Client client )
 	{
-		return database.readClient( name );
+		return database.readClient( client );
 	}
 
 
@@ -51,19 +62,13 @@ public class DataAccess
 	}
 
 
-	public Boolean renameClient( String oldName, String newName )
+	public SoapBox readSoaps( UUID clientID )
 	{
-		return database.renameClient( oldName, newName );
-	}
-
-
-	public SoapBox readSoaps( String clientName )
-	{
-		return database.readSoaps( clientName );
+		return database.readSoaps( clientID );
 	}
 	
 	
-	public Soap readSoap( int id )
+	public Soap readSoap( UUID id )
 	{
 		return database.readSoap( id );
 	}
@@ -75,7 +80,7 @@ public class DataAccess
 	}
 	
 	
-	public Boolean insertSoap( Soap soap, String clientName )
+	public Boolean insertSoap( Soap soap, UUID clientName )
 	{
 		return database.insertSoap( soap, clientName );
 	}
@@ -98,7 +103,7 @@ public class DataAccess
 		return database.insertHistory( history );
 	}
 	
-	public ClientHistory readHistory( String clientName )
+	public ClientHistory readHistory( UUID clientName )
 	{
 		return database.readHistory( clientName );
 	}
