@@ -19,7 +19,7 @@ public class HistoryItem
 		}
 		else
 		{
-			this.discription 	= discription;
+			this.discription = discription;
 		}
 		
 		if ( checked == null )
@@ -28,7 +28,7 @@ public class HistoryItem
 		}
 		else
 		{
-			this.checked 		= checked;
+			this.checked = checked;
 		}
 	}
 	
