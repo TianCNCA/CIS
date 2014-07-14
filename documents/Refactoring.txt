@@ -5,3 +5,5 @@ In this refactoring we also reduced the Large Class smell, which now makes MainW
 Client suffered from Large Class as well, so we decided to refactor the SoapBox and the ClientHistory into their own classes, reducing the weight of the Client Class and the Client Table.
 
 The Database had some long methods that we refactored out into separate methods, such as SQLParser and the String Building methods.
+
+The structure of all the folders have been rearranged into a more clear manner.
