@@ -24,6 +24,8 @@ public class AllTests
         suite.addTestSuite(ClientTest.class);
         suite.addTestSuite(SoapBoxTest.class);
         suite.addTestSuite(SoapTest.class);
+        suite.addTestSuite(HistoryItemTest.class);
+        suite.addTestSuite(ClientHistoryTest.class);
     }
 
     private static void testPersistance()
