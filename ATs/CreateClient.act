@@ -1,6 +1,6 @@
 Package					cis.presentation
 
-InvokeMethod			app.DBService						initializeDB
+InvokeMethod			app.RunApp 							runATs
 
 Click					AppWindow							btnAddClient
 

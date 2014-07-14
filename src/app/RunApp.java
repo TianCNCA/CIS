@@ -49,5 +49,46 @@ public class RunApp {
 		
 		service.shutDownDB();
 	}
+	
+	
+	// This is hacky as shit but I don't care
+	public static void runATs()
+	{
+		// initialize the data base
+		DBService service = new DBService();
+		service.initializeDB();
+		if (!service.getValid()) {
+			System.out.println("Error in building DB, exiting now");
+			service.shutDownDB();
+			System.exit(0);
+		}
+		
+		DataAccess dataAccess = new DataAccess();
+
+		// open the main window
+		try {
+			Display display = Display.getDefault();
+			Shell appWindow = new AppWindow(display, dataAccess);
+			
+			Image icon = new Image( display, "images/icon.ico" );
+			appWindow.setImage( icon );
+			appWindow.open();
+			appWindow.layout();
+
+			if (EventLoop.isEnabled())
+				{
+				while (!appWindow.isDisposed()) {
+					if (!display.readAndDispatch()) {
+						display.sleep();
+					}
+				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		service.shutDownDB();
+	}
 
 }
