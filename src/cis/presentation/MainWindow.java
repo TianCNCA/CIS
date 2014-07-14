@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
+//import org.eclipse.swt.events.MouseAdapter;
+//import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
@@ -22,6 +22,9 @@ import org.eclipse.swt.widgets.Text;
 import app.DBService;
 import cis.buisness.Client;
 import cis.buisness.DataAccess;
+
+import acceptanceTests.Register;
+import acceptanceTests.EventLoop;
 
 public class MainWindow extends Shell 
 {
@@ -56,11 +59,14 @@ public class MainWindow extends Shell
 			shell.layout();
 			shell.setBackgroundImage( new Image( null, "images/bg.png") );
 			
-			while (!shell.isDisposed()) 
+			if (EventLoop.isEnabled())
 			{
-				if (!display.readAndDispatch()) 
+				while (!shell.isDisposed()) 
 				{
-					display.sleep();
+					if (!display.readAndDispatch()) 
+					{
+						display.sleep();
+					}
 				}
 			}
 		} 
@@ -132,9 +138,9 @@ public class MainWindow extends Shell
 		btnNewButton_1.setText("Edit Client Information");
 		
 		Button btnNewButton_2 = new Button(this, SWT.NONE);
-		btnNewButton_2.addMouseListener(new MouseAdapter() {
+		btnNewButton_2.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void mouseUp(MouseEvent arg0) {
+			public void widgetSelected(SelectionEvent arg0) {
 				try {
 					CreateClientWindow window = new CreateClientWindow(clientDataBase);
 					window.open();
@@ -244,6 +250,8 @@ public class MainWindow extends Shell
 		}
 		
 		 for (int i=0; i<columns.length; i++) columns [i].pack ();*/
+		
+		Register.newWindow(this);
 	}
 
 	/**

@@ -14,8 +14,10 @@ import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
+//import org.eclipse.swt.events.MouseAdapter;
+//import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
@@ -44,6 +46,8 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.hsqldb.Tokens;
 
+import acceptanceTests.Register;
+
 public class AppWindow extends Shell {
 	private DataAccess dataAccess;
 	private Table table;
@@ -66,6 +70,8 @@ public class AppWindow extends Shell {
 		super(display);
 		setMinimumSize(new Point(794, 518));
 		this.dataAccess = dataAccess;
+		
+		Register.newWindow(this);
 
 		setText("Client Information System");
 		setSize(794, 518);
@@ -154,9 +160,9 @@ public class AppWindow extends Shell {
 
 		btnAddClient = new Button(this, SWT.NONE);
 		fd_table.bottom = new FormAttachment(100, -41);
-		btnAddClient.addMouseListener(new MouseAdapter() {
+		btnAddClient.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void mouseUp(MouseEvent e) {
+			public void widgetSelected(SelectionEvent e) {
 				removeEditor();
 				addClient();
 			}
@@ -170,9 +176,9 @@ public class AppWindow extends Shell {
 		btnEditClient = new Button(this, SWT.NONE);
 		fd_btnAddClient.right = new FormAttachment(btnEditClient, -6);
 		btnEditClient.setEnabled(false);
-		btnEditClient.addMouseListener(new MouseAdapter() {
+		btnEditClient.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void mouseUp(MouseEvent e) {
+			public void widgetSelected(SelectionEvent e) {
 				removeEditor();
 				editClient();
 			}
@@ -186,9 +192,9 @@ public class AppWindow extends Shell {
 		
 		Button btnExit = new Button(this, SWT.NONE);
 		fd_soapTable.bottom = new FormAttachment(100, -41);
-		btnExit.addMouseListener(new MouseAdapter() {
+		btnExit.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void mouseUp(MouseEvent e) {
+			public void widgetSelected(SelectionEvent e) {
 				removeEditor();
 				getShell().dispose();
 			}
@@ -218,9 +224,9 @@ public class AppWindow extends Shell {
 		fd_lblClientName.right = new FormAttachment(btnSearch, 494);
 		fd_table.top = new FormAttachment(btnSearch, 7);
 		fd_text.right = new FormAttachment(btnSearch, -6);
-		btnSearch.addMouseListener(new MouseAdapter() {
+		btnSearch.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void mouseUp(MouseEvent e) {
+			public void widgetSelected(SelectionEvent e) {
 				removeEditor();
 				searchClient();
 			}
@@ -234,9 +240,9 @@ public class AppWindow extends Shell {
 		btnClear = new Button(this, SWT.NONE);
 		fd_lblClientName.left = new FormAttachment(btnClear, 20);
 		fd_soapTable.left = new FormAttachment(0, 330);
-		btnClear.addMouseListener(new MouseAdapter() {
+		btnClear.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void mouseUp(MouseEvent e) {
+			public void widgetSelected(SelectionEvent e) {
 				removeEditor();
 				refreshTable();
 				text.setText( "" );
@@ -257,9 +263,9 @@ public class AppWindow extends Shell {
 
 		btnSave = new Button(this, SWT.NONE);
 		btnSave.setEnabled(false);
-		btnSave.addMouseListener(new MouseAdapter() {
+		btnSave.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void mouseUp(MouseEvent arg0) {
+			public void widgetSelected(SelectionEvent arg0) {
 				removeEditor();
 				updateSoapBox();
 			}
@@ -267,9 +273,9 @@ public class AppWindow extends Shell {
 		
 		btnAddSoap = new Button(this, SWT.NONE);
 		btnAddSoap.setEnabled(false);
-		btnAddSoap.addMouseListener(new MouseAdapter() {
+		btnAddSoap.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void mouseUp(MouseEvent arg0) {
+			public void widgetSelected(SelectionEvent arg0) {
 				btnSave.setEnabled(true);
 		        Control oldEditor = editor.getEditor();
 		        if (oldEditor != null)

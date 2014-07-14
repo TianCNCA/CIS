@@ -19,8 +19,12 @@ import cis.buisness.Client;
 import cis.buisness.DataAccess;
 import cis.buisness.Soap;
 
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
+//import org.eclipse.swt.events.MouseAdapter;
+//import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+
+import acceptanceTests.Register;
 
 public class SoapBoxWindow extends Shell {
 	private Table table;
@@ -31,6 +35,7 @@ public class SoapBoxWindow extends Shell {
 		dataAccess = new DataAccess();
 		this.theClient = dataAccess.readClient(clientName);
 		open();
+		Register.newWindow(this);
 	}
 	
 	public void open(){
@@ -41,9 +46,9 @@ public class SoapBoxWindow extends Shell {
 		setLayout(new FormLayout());
 		
 		Button btnClose = new Button(this, SWT.NONE);
-		btnClose.addMouseListener(new MouseAdapter() {
+		btnClose.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void mouseUp(MouseEvent arg0) {
+			public void widgetSelected(SelectionEvent arg0) {
 				getShell().dispose();
 			}
 		});
@@ -101,9 +106,9 @@ public class SoapBoxWindow extends Shell {
 		
 		Button btnAdd = new Button(this, SWT.NONE);
 		fd_btnClose.left = new FormAttachment(btnAdd, 6);
-		btnAdd.addMouseListener(new MouseAdapter() {
+		btnAdd.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void mouseUp(MouseEvent arg0) {
+			public void widgetSelected(SelectionEvent arg0) {
 				SoapWindow window = new SoapWindow(theClient);
 				window.open();
 			}

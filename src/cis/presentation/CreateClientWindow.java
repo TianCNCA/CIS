@@ -34,6 +34,8 @@ import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 
+import acceptanceTests.Register;
+
 @SuppressWarnings( "unused" )
 public class CreateClientWindow 
 {
@@ -88,10 +90,12 @@ public class CreateClientWindow
 
 	public CreateClientWindow() {
 		// TODO Auto-generated constructor stub
+		Register.newWindow(this);
 	}
 
 	public CreateClientWindow(DataAccess dataBase) {
 		this.dataBase = dataBase;
+		Register.newWindow(this);
 	}
 
 	/**
@@ -490,9 +494,9 @@ public class CreateClientWindow
 		text_11.setBounds(336, 107, 177, 21);
 
 		Button btnSave = new Button(composite, SWT.NONE);
-		btnSave.addMouseListener(new MouseAdapter() {
+		btnSave.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void mouseUp(MouseEvent arg0) {
+			public void widgetSelected(SelectionEvent arg0) {
 				// Save Client
 				history = new ClientHistory();
 				client = new Client(text_12.getText());
@@ -545,9 +549,9 @@ public class CreateClientWindow
 		btnSave.setText("Save");
 
 		Button btnCancel = new Button(composite, SWT.NONE);
-		btnCancel.addMouseListener(new MouseAdapter() {
+		btnCancel.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void mouseUp(MouseEvent arg0) {
+			public void widgetSelected(SelectionEvent arg0) {
 				shlCreatClient.dispose();
 			}
 		});

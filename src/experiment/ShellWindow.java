@@ -7,6 +7,9 @@ import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 
+import acceptanceTests.Register;
+import acceptanceTests.EventLoop;
+
 public class ShellWindow extends Shell {
 	private Table table;
 
@@ -20,9 +23,13 @@ public class ShellWindow extends Shell {
 			ShellWindow shell = new ShellWindow(display);
 			shell.open();
 			shell.layout();
-			while (!shell.isDisposed()) {
-				if (!display.readAndDispatch()) {
-					display.sleep();
+			
+			if (EventLoop.isEnabled())
+			{
+				while (!shell.isDisposed()) {
+					if (!display.readAndDispatch()) {
+						display.sleep();
+					}
 				}
 			}
 		} catch (Exception e) {
@@ -36,6 +43,8 @@ public class ShellWindow extends Shell {
 	 */
 	public ShellWindow(Display display) {
 		super(display, SWT.SHELL_TRIM);
+		
+		Register.newWindow(this);
 		
 		table = new Table(this, SWT.BORDER | SWT.FULL_SELECTION);
 		table.setBounds(10, 28, 140, 170);
