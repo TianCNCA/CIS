@@ -52,6 +52,39 @@ public class RunApp {
 	
 	public static void runATs()
 	{
-		main(null);
+		// initialize the data base
+		DBService service = new DBService();
+		service.initializeDB();
+		
+		DataAccess dataAccess = new DataAccess();
+
+		// open the main window
+		try {
+			Display display = Display.getDefault();
+			Shell appWindow = new AppWindow(display, dataAccess);
+			
+			Image icon = new Image( display, "images/icon.ico" );
+			appWindow.setImage( icon );
+			appWindow.open();
+			appWindow.layout();
+
+			if (EventLoop.isEnabled())
+				{
+				while (!appWindow.isDisposed()) {
+					if (!display.readAndDispatch()) {
+						display.sleep();
+					}
+				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void shutdownATs()
+	{
+		DBService service = new DBService();
+		service.shutDownDB();
 	}
 }

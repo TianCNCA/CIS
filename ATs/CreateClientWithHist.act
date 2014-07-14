@@ -1,0 +1,20 @@
+Package					cis.presentation
+
+InvokeMethod			app.RunApp 							runATs
+
+Click					AppWindow							btnAddClient
+
+Set						ClientWindow						text					PattyPat
+
+Set						ClientWindow						text_5					23
+
+Click 					ClientWindow 						
+
+Set 					ClientWindow 						text_10 				SuperDoctorMan
+
+Test 					ClientWindow 						text 					PattyPat
+
+Test 					ClientWindow 						text_5 					23
+
+InvokeMethod			app.RunApp 							shutdownATs
+
