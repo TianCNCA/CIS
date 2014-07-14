@@ -53,7 +53,7 @@ public class AppWindow extends Shell {
 	private Button btnSave;
 	private Button btnAddSoap;
 	private Text text;
-	Label lblClientName;
+	private Label lblClientName;
 	private Button btnSearch;
 	private Button btnClear;
 	private Table soapTable;
