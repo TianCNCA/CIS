@@ -16,5 +16,19 @@ Test 					ClientWindow 						text 					PattyPat
 
 Test 					ClientWindow 						text_5 					23
 
+Click 					ClientWindow 						btnSave
+
+Click 					AppWindow 							btnEditClient
+
+Test 					ClientWindow 						text 					PattyPat
+
+Test 					ClientWindow 						text_5 					23
+
+Set 					ClientWindow 						text_1 					Box1Billion
+
+Test 					ClientWindow 						text_1 					Box1Billion
+
+Click 					ClientWindow 						btnSave
+
 InvokeMethod			app.RunApp 							shutdownATs
 

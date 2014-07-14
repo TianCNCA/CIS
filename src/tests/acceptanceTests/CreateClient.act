@@ -1,0 +1,11 @@
+Package					cis.presentation
+
+InvokeMethod			app.RunApp 							runATs
+
+Click					AppWindow							btnAddClient
+
+Set						ClientWindow						text_5					TestPerson
+
+Set						ClientWindow						lblAge					10
+
+Click					AppWindow							btnSave
