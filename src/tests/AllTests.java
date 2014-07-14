@@ -17,11 +17,6 @@ public class AllTests
         testPersistance();
         return suite;
     }
-
-    private static void testIntegration()
-    {
-    	suite.addTestSuite(IntegrationTest.class);
-    }
     
     
     private static void testObjects()
