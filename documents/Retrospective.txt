@@ -1,0 +1,15 @@
+Branch Policy:
+	We found that the branch policy we had did not work at all. We ended up having to solve a lot of conflicts at the end of the iteration, which was very bad. It blocked a lot of work.
+	Therefore, we are switching to all committing in the main branch, this makes the conflicts smaller and easier to manage.
+	The auto-generated database scripts and property files were not ignored at the beginning, and that caused a lot of conflicts, and took us a while to figure out. We will now ignore them moving forward.
+
+Edit client was pushed back ultimately because of conflicts, which prevented us from testing a lot of functionality with the DB. We will fix this for iteration 3, and will try to stay more on top of our stories.
+	We worked to finish it and communicated more to prevent these problems, also the conflicts from git being resolved will hopefully help in this.
+
+Developer Task from iteration 0 were not very well defined. Searching for example, was not an important feature for a story. We treated it as a big user story, but it clearly wasn’t. We will divide big user stories into more meaningful stories, that are split up better and more intelligently. We ended up dropping 
+
+If we were to do it again, we would have 1 - 2 hours a day where we would pair program and get better results.
+
+There was no consensus on how the GUI was supposed to look, so it took a while to get all the pieces working together. We solved this by coming up with a concrete design much later.
+
+I (chris) realize now that I did the DB in a funny way, it was my first time using the DB, and I only added in random keys halfway through, rather than using the client name as the primary key. If I have time I will refactor this, but when we are updating or doing anything with the client name, it should really be the client id...
