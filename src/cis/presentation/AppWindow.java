@@ -118,6 +118,34 @@ public class AppWindow extends Shell {
 		          }
 		        });
 		        
+		        newEditor.addKeyListener( new KeyListener() {
+
+					@Override
+                    public void keyPressed( KeyEvent arg0 )
+                    {
+	                    return;
+                    }
+
+					@Override
+                    public void keyReleased( KeyEvent arg0 )
+                    {
+	                    if ( arg0.keyCode == 13 )
+	                    {
+	                    	removeEditor();
+	                    	updateSoapBox();
+	                    }
+	                    
+	                    if ( arg0.keyCode == 27 )
+	                    {
+	                    	fillSoaps();
+	                    	updateSoapBox();
+	                    	removeEditor();
+	                    }
+	                    
+                    }
+		        	
+		        });
+		        
 		        newEditor.selectAll();
 		        newEditor.setFocus();
 		        editor.setEditor(newEditor, item, 1);
