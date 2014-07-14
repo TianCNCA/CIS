@@ -8,19 +8,21 @@ InvokeMethod 			cis.persistance.DataBaseAccess		resetID
 
 Click					AppWindow							btnAddClient
 
-Set						ClientWindow						text					Fredrick
+Set						ClientWindow						text					"Fredrick"
 
-Set						ClientWindow						text_5					23
+Set						ClientWindow						text_5					"23"
 
-Test 					ClientWindow 						text 					Fredrick
+Test 					ClientWindow 						text 					"Fredrick"
 
-Test 					ClientWindow 						text_5 					23
+Test 					ClientWindow 						text_5 					"23"
 
 Click 					ClientWindow 						btnSave
 
+Click 					AppWindow 							table 					"Fredrick"
+
 Click 					AppWindow 							btnAddSoap
 
-Set 					AppWindow 							editor 					ThisIsASoap
+Set 					AppWindow 							editor 					"ThisIsASoap"
 
 Click 					AppWindow 							btnSave
 
