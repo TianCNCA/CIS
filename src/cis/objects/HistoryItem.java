@@ -7,7 +7,7 @@ public class HistoryItem
 	
 	public HistoryItem()
 	{
-		discription = "null";
+		discription = "";
 		checked 	= false;
 	}
 	
@@ -15,14 +15,21 @@ public class HistoryItem
 	{
 		if ( discription == null )
 		{
-			this.discription = "null";
+			this.discription = "";
 		}
 		else
 		{
 			this.discription 	= discription;
 		}
 		
-		this.checked 		= checked;
+		if ( checked == null )
+		{
+			this.checked = false;
+		}
+		else
+		{
+			this.checked 		= checked;
+		}
 	}
 	
 	public String getDisc()
@@ -35,31 +42,49 @@ public class HistoryItem
 		return checked;
 	}
 	
-	public String getDiscription() {
-		return discription;
-	}
-
 	public void setDisc( String disc )
 	{
-		if ( disc != null )
+		if ( disc == null)
 		{
-			discription = disc;
+			discription = "";
 		}
 		else
 		{
-			discription = "null";
+			discription = disc;
 		}
 	}
 	
 	public void setCheck( Boolean check )
 	{
-		checked = check;
+		if ( check == null )
+		{
+			check = false;
+		}
+		else
+		{
+			checked = check;
+		}
 	}
 	
 	
 	public void setCheckAndDisc( Boolean check, String disc )
 	{
-		checked = check;
-		discription = disc;
+		if ( check == null )
+		{
+			check = false;
+		}
+		else
+		{
+			checked = check;
+		}
+		
+		if ( disc == null)
+		{
+			discription = "";
+		}
+		else
+		{
+			discription = disc;
+		}
 	}
 }

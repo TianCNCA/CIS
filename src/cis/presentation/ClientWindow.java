@@ -628,7 +628,7 @@ public class ClientWindow extends Shell {
 		for (int i = 0; i < btns.length; i++) {
 			HistoryItem item = history.getByIndex(i);
 			btns[i].setSelection(item.getChecked());
-			texts[i].setText(item.getDiscription());
+			texts[i].setText(item.getDisc());
 		}
 	}
 
