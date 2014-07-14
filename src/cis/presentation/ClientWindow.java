@@ -18,7 +18,7 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import cis.buisness.DataAccess;
+import cis.business.DataAccess;
 import cis.objects.Client;
 import cis.objects.ClientHistory;
 import cis.objects.HistoryItem;

@@ -31,7 +31,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 
-import cis.buisness.DataAccess;
+import cis.business.DataAccess;
 import cis.objects.Client;
 import cis.objects.Soap;
 import cis.objects.SoapBox;

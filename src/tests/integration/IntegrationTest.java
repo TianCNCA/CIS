@@ -1,10 +1,10 @@
-package test.integration;
+package tests.integration;
 
 import java.util.ArrayList;
 import java.util.Date;
 
 import app.DBService;
-import cis.buisness.DataAccess;
+import cis.business.DataAccess;
 import cis.objects.Client;
 import cis.objects.ClientHistory;
 import cis.objects.Soap;

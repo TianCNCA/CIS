@@ -1,4 +1,4 @@
-package cis.buisness;
+package cis.business;
 
 import java.util.ArrayList;
 import java.util.UUID;

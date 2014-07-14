@@ -4,7 +4,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
-import cis.buisness.DataAccess;
+import cis.business.DataAccess;
 import cis.presentation.AppWindow;
 
 public class RunApp {

@@ -1,5 +1,6 @@
 package tests;
 
+import tests.integration.IntegrationTest;
 import tests.objectTests.*;
 import tests.persistanceTests.*;
 import junit.framework.Test;
@@ -13,10 +14,16 @@ public class AllTests
     {
         suite = new TestSuite("All tests");
         testObjects();
-        testBusiness();
+        testPersistance();
         return suite;
     }
 
+    private static void testIntegration()
+    {
+    	suite.addTestSuite(IntegrationTest.class);
+    }
+    
+    
     private static void testObjects()
     {
         suite.addTestSuite(ClientTest.class);
@@ -24,9 +31,9 @@ public class AllTests
         suite.addTestSuite(SoapTest.class);
     }
 
-    private static void testBusiness()
+    private static void testPersistance()
     {
-        //suite.addTestSuite(DataBaseAccessTest.class);
+        suite.addTestSuite(DataBaseAccessTest.class);
         suite.addTestSuite(DBIntermediaryTest.class);
     }
 }
