@@ -63,7 +63,8 @@ public class DataBaseAccess
 	{
 		Boolean initiated = false;
 		// The location for the DB : URL
-		String dbLocation = "jdbc:hsqldb:database/" + dbName;
+		//String dbLocation = "jdbc:hsqldb:database/" + dbName;
+		String dbLocation = "jdbc:mysql://localhost:3306";
 		
 		// Attempt to connect or create the DB. If the DB does not already exist,
 		// this will auto create it for us.
