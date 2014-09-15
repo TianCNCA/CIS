@@ -30,8 +30,6 @@ import cis.objects.SoapBox;
 @SuppressWarnings( "unused" )
 public class DataBaseAccess
 {
-	private String 				dbName;
-	private String 				dbDriver;
 	private Integer 			dbSize;
 	private Integer 			key;
 	
@@ -46,8 +44,6 @@ public class DataBaseAccess
 	------------------------------------------------------*/
 	public DataBaseAccess()
 	{
-		dbName 	 = "ClientSystem";
-		dbDriver = "org.hsqldb.jdbcDriver";
 		dbSize 	 = 0;
 		key 	 = -1;
 	}
@@ -63,15 +59,19 @@ public class DataBaseAccess
 	{
 		Boolean initiated = false;
 		// The location for the DB : URL
-		//String dbLocation = "jdbc:hsqldb:database/" + dbName;
-		String dbLocation = "jdbc:mysql://localhost:3306";
+		String dbLocation 	= "jdbc:mysql://localhost:3306";
+		String dbName 		= "ClientSystemDB";
+		String dbDriver 	= "com.mysql.jdbc.Driver";
+		String userName 	= "ClientDBAccessUser"; 
+		String password 	= "amuqE8sZSJDUcXmrGQmbC8QhRpArP31Qn3WIY1fN";
 		
 		// Attempt to connect or create the DB. If the DB does not already exist,
 		// this will auto create it for us.
 		try
 		{
 			Class.forName( dbDriver ).newInstance();
-			dbConnection = DriverManager.getConnection( dbLocation, "SA", "" );
+			//dbConnection = DriverManager.getConnection( dbLocation, "SA", "" );
+			dbConnection = DriverManager.getConnection( dbLocation + dbName, userName, password );
 			sqlStatement = dbConnection.createStatement();
 			
 		}
