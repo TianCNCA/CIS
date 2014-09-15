@@ -447,6 +447,12 @@ public class ClientWindow extends Shell {
 
 		btnSave = new Button(this, SWT.NONE);
 		fd_tabFolder.bottom = new FormAttachment(btnSave, -6);
+		
+		CTabItem tbtmNewItem_3 = new CTabItem(tabFolder, SWT.NONE);
+		tbtmNewItem_3.setText("Body Diagram");
+		
+		CTabItem tbtmNewItem_4 = new CTabItem(tabFolder, SWT.NONE);
+		tbtmNewItem_4.setText("Waver Form");
 		FormData fd_btnSave = new FormData();
 		fd_btnSave.left = new FormAttachment(0);
 		fd_btnSave.bottom = new FormAttachment(100);

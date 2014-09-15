@@ -22,7 +22,7 @@ public class DataAccess
 
 	public ArrayList<Client> getAllClients()
 	{
-		return database.getAllClients();
+		return database.getClientList();
 	}
 
 	

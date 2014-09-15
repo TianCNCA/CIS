@@ -459,10 +459,9 @@ public class DataBaseAccess
 	/*------------------------------------------------------
 	 * METHOD:			getAllClients
 	 *
-	 * PURPOSE:			This method will simply return a list of clients. There is not much more info
-	 * 					returned at the moment
+	 * PURPOSE:			This method will simply return a list of clients.
 	------------------------------------------------------*/
-	public ArrayList<Client> getAllClients()
+	public ArrayList<Client> getClientList()
 	{
 		Client 				client;
 		String 				name, address, city;
@@ -471,7 +470,7 @@ public class DataBaseAccess
 		
 		try
         {
-			sqlCommand = "SELECT * FROM CLIENTS;";
+			sqlCommand = "SELECT ID, NAME FROM CLIENTS;";
 	        dbResult = sqlStatement.executeQuery( sqlCommand );
         }
         catch ( SQLException e )
@@ -484,12 +483,8 @@ public class DataBaseAccess
 	        while( dbResult.next() )
 	        {
 	        	name 	= dbResult.getString( "Name" );
-	        	address = dbResult.getString( "Address" );
-	        	city 	= dbResult.getString( "City" );
 	        	key 	= UUID.fromString( dbResult.getString( "ID" ) );
 	        	client 	= new Client( name );
-	        	client.setAddress( address );
-	        	client.setCity( city );
 	        	allClients.add( client );
 	        }
         }
@@ -1041,7 +1036,7 @@ public class DataBaseAccess
 	------------------------------------------------------*/
 	public String DumpDB()
 	{
-		ArrayList<Client> temp = getAllClients();
+		ArrayList<Client> temp = getClientList();
 		
 		return temp.toString();
 	}
