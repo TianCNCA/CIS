@@ -75,7 +75,7 @@ public class DBService
 	}
 	
 	
-	public static UUID getCurrentKey()
+	public static UUID generateNewKey()
 	{
 		return UUID.randomUUID();
 	}

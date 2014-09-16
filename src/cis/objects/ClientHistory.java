@@ -87,7 +87,7 @@ public class ClientHistory
 	
 	public void genKey()
 	{
-		key = DBService.getCurrentKey();
+		key = DBService.generateNewKey();
 	}
 	
 	public UUID getClientID()

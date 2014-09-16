@@ -146,7 +146,7 @@ public class DataBaseAccess
 		
 		if ( client.getKey() == null )
 		{
-			client.setKey( DBService.getCurrentKey() );
+			client.setKey( DBService.generateNewKey() );
 		}
 		
 		try
@@ -615,7 +615,7 @@ public class DataBaseAccess
 		
 		if ( soap.getKey() == null )
 		{
-			soap.setKey( DBService.getCurrentKey() );
+			soap.setKey( DBService.generateNewKey() );
 		}
 		
 		insertString = buildSoapString( clientName, soap );			 
@@ -907,7 +907,7 @@ public class DataBaseAccess
 		
 		if ( history.getKey() == null )
 		{
-			history.setKey( DBService.getCurrentKey() );
+			history.setKey( DBService.generateNewKey() );
 		}
 		
 		insertStringBool = buildBoolHistString( history );			 
